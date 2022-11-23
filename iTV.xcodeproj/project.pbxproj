@@ -9,23 +9,35 @@
 /* Begin PBXBuildFile section */
 		D7FA0F17292D9D3F00EEFD17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */; };
 		D7FA0F19292D9D3F00EEFD17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */; };
-		D7FA0F1B292D9D3F00EEFD17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F1A292D9D3F00EEFD17 /* ViewController.swift */; };
-		D7FA0F1E292D9D3F00EEFD17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7FA0F1C292D9D3F00EEFD17 /* Main.storyboard */; };
 		D7FA0F21292D9D3F00EEFD17 /* iTV.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F1F292D9D3F00EEFD17 /* iTV.xcdatamodeld */; };
 		D7FA0F23292D9D4500EEFD17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7FA0F22292D9D4500EEFD17 /* Assets.xcassets */; };
 		D7FA0F26292D9D4500EEFD17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7FA0F24292D9D4500EEFD17 /* LaunchScreen.storyboard */; };
+		D7FA0F2E292D9FDB00EEFD17 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F2D292D9FDB00EEFD17 /* HomeController.swift */; };
+		D7FA0F31292DAAE400EEFD17 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F30292DAAE400EEFD17 /* Channel.swift */; };
+		D7FA0F35292DACBB00EEFD17 /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F34292DACBB00EEFD17 /* ChannelCell.swift */; };
+		D7FA0F39292DADD500EEFD17 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F38292DADD500EEFD17 /* Extensions.swift */; };
+		D7FA0F3C292DDEB300EEFD17 /* TestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F3A292DDEB200EEFD17 /* TestCell.swift */; };
+		D7FA0F3D292DDEB300EEFD17 /* TestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7FA0F3B292DDEB200EEFD17 /* TestCell.xib */; };
+		D7FA0F3F292E2AF200EEFD17 /* channels.json in Resources */ = {isa = PBXBuildFile; fileRef = D7FA0F3E292E2AF100EEFD17 /* channels.json */; };
+		D7FA0F41292E35FF00EEFD17 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F40292E35FF00EEFD17 /* Feed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D7FA0F13292D9D3F00EEFD17 /* iTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D7FA0F1A292D9D3F00EEFD17 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D7FA0F1D292D9D3F00EEFD17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D7FA0F20292D9D3F00EEFD17 /* iTV.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iTV.xcdatamodel; sourceTree = "<group>"; };
 		D7FA0F22292D9D4500EEFD17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7FA0F25292D9D4500EEFD17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7FA0F27292D9D4500EEFD17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7FA0F2D292D9FDB00EEFD17 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		D7FA0F30292DAAE400EEFD17 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		D7FA0F34292DACBB00EEFD17 /* ChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
+		D7FA0F38292DADD500EEFD17 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D7FA0F3A292DDEB200EEFD17 /* TestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCell.swift; sourceTree = "<group>"; };
+		D7FA0F3B292DDEB200EEFD17 /* TestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestCell.xib; sourceTree = "<group>"; };
+		D7FA0F3E292E2AF100EEFD17 /* channels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels.json; sourceTree = "<group>"; };
+		D7FA0F40292E35FF00EEFD17 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +70,54 @@
 		D7FA0F15292D9D3F00EEFD17 /* iTV */ = {
 			isa = PBXGroup;
 			children = (
+				D7FA0F37292DADAE00EEFD17 /* Utils */,
+				D7FA0F2F292DAACA00EEFD17 /* Model */,
+				D7FA0F32292DAB1600EEFD17 /* View */,
+				D7FA0F33292DAB1F00EEFD17 /* Controller */,
 				D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */,
 				D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */,
-				D7FA0F1A292D9D3F00EEFD17 /* ViewController.swift */,
-				D7FA0F1C292D9D3F00EEFD17 /* Main.storyboard */,
 				D7FA0F22292D9D4500EEFD17 /* Assets.xcassets */,
 				D7FA0F24292D9D4500EEFD17 /* LaunchScreen.storyboard */,
 				D7FA0F27292D9D4500EEFD17 /* Info.plist */,
 				D7FA0F1F292D9D3F00EEFD17 /* iTV.xcdatamodeld */,
+				D7FA0F3E292E2AF100EEFD17 /* channels.json */,
 			);
 			path = iTV;
+			sourceTree = "<group>";
+		};
+		D7FA0F2F292DAACA00EEFD17 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA0F30292DAAE400EEFD17 /* Channel.swift */,
+				D7FA0F40292E35FF00EEFD17 /* Feed.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D7FA0F32292DAB1600EEFD17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA0F34292DACBB00EEFD17 /* ChannelCell.swift */,
+				D7FA0F3A292DDEB200EEFD17 /* TestCell.swift */,
+				D7FA0F3B292DDEB200EEFD17 /* TestCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D7FA0F33292DAB1F00EEFD17 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA0F2D292D9FDB00EEFD17 /* HomeController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D7FA0F37292DADAE00EEFD17 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA0F38292DADD500EEFD17 /* Extensions.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,8 +179,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7FA0F26292D9D4500EEFD17 /* LaunchScreen.storyboard in Resources */,
+				D7FA0F3F292E2AF200EEFD17 /* channels.json in Resources */,
 				D7FA0F23292D9D4500EEFD17 /* Assets.xcassets in Resources */,
-				D7FA0F1E292D9D3F00EEFD17 /* Main.storyboard in Resources */,
+				D7FA0F3D292DDEB300EEFD17 /* TestCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,24 +192,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7FA0F1B292D9D3F00EEFD17 /* ViewController.swift in Sources */,
 				D7FA0F17292D9D3F00EEFD17 /* AppDelegate.swift in Sources */,
+				D7FA0F41292E35FF00EEFD17 /* Feed.swift in Sources */,
+				D7FA0F3C292DDEB300EEFD17 /* TestCell.swift in Sources */,
+				D7FA0F35292DACBB00EEFD17 /* ChannelCell.swift in Sources */,
+				D7FA0F31292DAAE400EEFD17 /* Channel.swift in Sources */,
 				D7FA0F19292D9D3F00EEFD17 /* SceneDelegate.swift in Sources */,
 				D7FA0F21292D9D3F00EEFD17 /* iTV.xcdatamodeld in Sources */,
+				D7FA0F2E292D9FDB00EEFD17 /* HomeController.swift in Sources */,
+				D7FA0F39292DADD500EEFD17 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D7FA0F1C292D9D3F00EEFD17 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D7FA0F1D292D9D3F00EEFD17 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D7FA0F24292D9D4500EEFD17 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -298,7 +346,6 @@
 				INFOPLIST_FILE = iTV/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -326,7 +373,6 @@
 				INFOPLIST_FILE = iTV/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
