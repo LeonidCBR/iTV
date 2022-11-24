@@ -20,7 +20,6 @@ final class ImageManager {
 
         // Check cache
         if let cachedImage = cacheImages.object(forKey: imagePath as NSString) {
-            print("DEBUG: Fetching from cache - \(imagePath)")
             completionHandler(.success(cachedImage), imagePath)
             return
         }

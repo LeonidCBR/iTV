@@ -15,7 +15,11 @@ class HomeController: UITableViewController {
     // MARK: - Properties
 
     private let channelCell = "channelCellIdentifier"
-    private var channels: [Channel] = []
+    private var channels: [Channel] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     private let imageManager = ImageManager()
 
     // MARK: - Lifecycle
@@ -41,11 +45,26 @@ class HomeController: UITableViewController {
         // TODO: fetch data from API and update UI
 
 
-
-        let url = Bundle.main.url(forResource: "channels", withExtension: "json")!
-        let json = try! Data(contentsOf: url)
-        let feed = try! JSONDecoder().decode(Feed.self, from: json)
-        channels = feed.channels
+        let channelsUrl = URL(string: K.channelsUrlString)!
+        ApiClient().downloadData(withUrl: channelsUrl) { [weak self] result in
+            switch result {
+            case .success(let jsonData):
+                do {
+                    let feed = try JSONDecoder().decode(Feed.self, from: jsonData)
+                    DispatchQueue.main.async {
+                        self?.channels = feed.channels
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self?.showErrorMessage(error.localizedDescription)
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showErrorMessage(error.localizedDescription)
+                }
+            }
+        }
     }
 
     private func showErrorMessage(_ message: String) {
