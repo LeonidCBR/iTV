@@ -99,7 +99,6 @@ class ChannelCell: UITableViewCell {
                                             constant: -16.0).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor,
                                              constant: -16.0).isActive = true
-//        favoriteButton.addTarget(self, action: #selector(clickToggle), for: .touchUpInside)
     }
 
     func setChannel(to channel: Channel) {
@@ -108,6 +107,19 @@ class ChannelCell: UITableViewCell {
         titleLabel.text = channel.title
         favoriteButton.isSelected = channel.isFavorite
     }
+
+    func clearLogoImage() {
+        logoImage.image = nil
+        logoImage.backgroundColor = .lightGray
+    }
+
+    func setLogoImage(to image: UIImage) {
+        logoImage.image = image
+        logoImage.backgroundColor = .white
+    }
+
+
+    // MARK: - Selectors
 
     @objc private func favoriteButtonTapped() {
         guard let id = channelID else {

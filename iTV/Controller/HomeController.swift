@@ -16,17 +16,12 @@ class HomeController: UITableViewController {
 
     private let channelCell = "channelCellIdentifier"
     private var channels: [Channel] = []
+    private let imageManager = ImageManager()
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         configureUI()
         fetchData()
     }
@@ -51,13 +46,6 @@ class HomeController: UITableViewController {
         let json = try! Data(contentsOf: url)
         let feed = try! JSONDecoder().decode(Feed.self, from: json)
         channels = feed.channels
-
-        /*
-        let chan1 = Channel(name: "Матч! Премьер",
-            image: "https://assets.iptv2022.com/static/channel/10180/logo_256_1658736853.png",
-            title: "Fonbet Кубок России. \"Урал\" - ЦСКА",
-            url: "http://mhd.iptv2022.com/p/FVfEP3aeAmDPchj6nJYepQ,1669209428/streaming/1kanalott/324/1/index.m3u8")
-        */
     }
 
     private func showErrorMessage(_ message: String) {
@@ -80,8 +68,26 @@ class HomeController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: channelCell, for: indexPath) as! ChannelCell
-        cell.setChannel(to: channels[indexPath.row])
         cell.delegate = self
+        cell.clearLogoImage()
+        let channel = channels[indexPath.row]
+        cell.setChannel(to: channel)
+
+        guard let imagePath = channel.image else {
+            print("DEBUG: ID[\(channel.id)] image is nil.")
+            return cell
+        }
+
+        imageManager.downloadImage(with: imagePath) { result, path in
+            guard path == channel.image else {
+                print("DEBUG: Image path mismatch")
+                return
+            }
+            if case .success(let image) = result {
+                cell.setLogoImage(to: image)
+            }
+        }
+
         return cell
     }
 
@@ -93,6 +99,9 @@ class HomeController: UITableViewController {
             showErrorMessage("Неверная ссылка!")
             return
         }
+
+        // TODO: Create a custom player controller
+
         let player = AVPlayer(url: url)
         let controller = AVPlayerViewController()
         controller.player = player
