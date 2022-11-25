@@ -14,7 +14,6 @@ struct Channel: Decodable {
     }
 
     let id: Int
-//    var isFavorite: Bool = false
     let name: String
     let url: String
     let image: String?

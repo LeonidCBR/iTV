@@ -8,7 +8,6 @@
 import UIKit
 
 protocol ChannelCellDelegate: AnyObject {
-//    func favoriteChanged(cell: UITableViewCell, channelId: Int, isFavorite: Bool)
     func favoriteChanged(cell: UITableViewCell, channel: CDChannel, isFavorite: Bool)
 }
 
@@ -45,16 +44,6 @@ class ChannelCell: UITableViewCell {
         btn.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
         return btn
     }()
-
-//    private var channelID: Int?
-
-
-
-
-//    var imagePath: String? consider to use it
-
-
-
 
     weak var delegate: ChannelCellDelegate?
 
@@ -120,38 +109,10 @@ class ChannelCell: UITableViewCell {
         guard let channel = channel else {
             return
         }
-
-//        channelID = Int(channel.id)
-        nameLabel.text = channel.name
-        titleLabel.text = channel.title
-        favoriteButton.isSelected = channel.isFavorite
-//        setNeedsLayout()
-
-/*
-        guard let refuel = refuel else { return }
-
-        dateLabel.text = refuel.date?.toString()
-        odometerLabel.text = "\(refuel.odometer)"
-
-        // Convert Double to String according with decimal separator
-        let litersSign = NSLocalizedString("l", comment: "")
-        let currencySymbol = Locale.current.currencySymbol ?? "" // "$"
-        if let liters = refuel.liters.toString(), let cost = refuel.cost.toString() {
-            descriptionLabel.text = "\(liters) \(litersSign), \(cost) \(currencySymbol)"
-        } else {
-            descriptionLabel.text = "\(refuel.liters) \(litersSign), \(refuel.cost) \(currencySymbol)"
-        }
-        */
-    }
-
-    /*
-    func setChannel(to channel: Channel) {
-        channelID = channel.id
         nameLabel.text = channel.name
         titleLabel.text = channel.title
         favoriteButton.isSelected = channel.isFavorite
     }
-    */
 
     func clearLogoImage() {
         logoImage.image = nil
@@ -167,15 +128,10 @@ class ChannelCell: UITableViewCell {
     // MARK: - Selectors
 
     @objc private func favoriteButtonTapped() {
-//        guard let id = channelID else {
-//            print("DEBUG: There is no ID!")
-//            return
-//        }
         guard let currentChannel = channel, let delegate = delegate else {
             return
         }
         favoriteButton.isSelected = !favoriteButton.isSelected
-//        delegate?.favoriteChanged(cell: self, channelId: id, isFavorite: favoriteButton.isSelected)
         delegate.favoriteChanged(cell: self, channel: currentChannel, isFavorite: favoriteButton.isSelected)
     }
 
