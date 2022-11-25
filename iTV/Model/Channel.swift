@@ -13,18 +13,16 @@ struct Channel: Decodable {
         let title: String
     }
 
-    private let current: Current?
-
     let id: Int
+//    var isFavorite: Bool = false
     let name: String
     let url: String
     let image: String?
+    private let current: Current?
 
     var title: String {
         return current?.title ?? ""
     }
-
-    var isFavorite: Bool = false
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
