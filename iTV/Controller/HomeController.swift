@@ -65,8 +65,8 @@ class HomeController: UITableViewController {
         fetchFromDB()
 
 
-        // TODO: Remember to uncomment!
-//        fetchFromAPI()
+        
+        fetchFromAPI()
 
 
     }
@@ -100,28 +100,23 @@ class HomeController: UITableViewController {
         let channelsUrl = URL(string: K.channelsUrlString)!
         ApiClient().downloadData(withUrl: channelsUrl) { [weak self] result in
 
-            // --- BACKGROUND ---
-
-            // TODO: Move the work to the background
-            /*
-             Create a new background context.
-             Fetch data in the context.
-             Look through the api channels, compare data, update it accordingly.
-             Save the context.
-             Notify the main thread to reload data from DB and update UI.
-            */
-
+            // MARK: --- BACKGROUND ---
+            let backgroundQueue = DispatchQueue(label: "com.motodolphin.iTVbg")
+            backgroundQueue.async {
+/*
             guard let self = self else {
                 return
             }
+*/
+                switch result {
+                case .success(let jsonData):
+                    do {
+                        print("DEBUG: Parsing json data")
+                        let feed = try JSONDecoder().decode(Feed.self, from: jsonData)
+                        let apiChannels = feed.channels
+                        try self?.syncData(with: apiChannels)
 
-            switch result {
-            case .success(let jsonData):
-                do {
-                    print("DEBUG: Parsing json data")
-                    let feed = try JSONDecoder().decode(Feed.self, from: jsonData)
-                    let apiChannels = feed.channels
-
+/*
                     DispatchQueue.main.async {
 
                         var shouldReloadTable = false
@@ -134,6 +129,7 @@ class HomeController: UITableViewController {
 
                             // TODO: - Fix it!
                             // now we don't want to refer to self.channels?.first
+                            // change it to bgChannels
 
 
                             if let channel = self.channels?.first(where: { $0.id == apiChannel.id }) {
@@ -177,21 +173,132 @@ class HomeController: UITableViewController {
                         }
 
                     } //DispatchQueue.main.async
-
-                } catch {
-                    DispatchQueue.main.async {
-                        self.showErrorMessage(error.localizedDescription)
+*/
+                    } catch {
+                        DispatchQueue.main.async {
+                            self?.showErrorMessage(error.localizedDescription)
+                        }
                     }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self.showErrorMessage(error.localizedDescription)
-                }
-            }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self?.showErrorMessage(error.localizedDescription)
+                    }
+                } // switch
+
+
+
+            } // backgroundQueue
         }
 
     }
 
+    private func syncData(with apiChannels: [Channel]) throws {
+        print("DEBUG: Sync data...")
+
+        // MARK: --- BACKGROUND ---
+
+        /*
+         Create a new background context.
+         Fetch data in the context.
+         Look through the api channels, compare data, update it accordingly.
+         Save the context.
+         Notify the main thread to reload data from DB and update UI.
+        */
+
+
+        let bgContainer = NSPersistentContainer(name: "iTV")
+        bgContainer.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+//                fatalError("Unresolved error \(error), \(error.userInfo)")
+                DispatchQueue.main.async {
+                    self.showErrorMessage(error.localizedDescription)
+                }
+            }
+        })
+        let bgContext = bgContainer.newBackgroundContext()
+
+
+
+
+        // fetch only count of records
+        let bgRequest: NSFetchRequest<CDChannel> = CDChannel.fetchRequest()
+        let countChannels = try bgContext.count(for: bgRequest)
+        print("DEBUG: There \(countChannels) channels in the DB and \(apiChannels.count) API channels.")
+        if countChannels != apiChannels.count {
+            print("DEBUG: Clear all records in DB")
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "CDChannel")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            try bgContext.execute(deleteRequest)
+            print("DEBUG: Saving apiChannels to DB...")
+            apiChannels.forEach { apiChannel in
+                // Add new channel to DB
+                let newChannel = CDChannel(context: bgContext)
+                newChannel.id = Int64(apiChannel.id)
+                newChannel.name = apiChannel.name
+                newChannel.url = apiChannel.url
+                newChannel.image = apiChannel.image
+                newChannel.title = apiChannel.title
+            }
+            print("DEBUG: Save context")
+            saveContext(bgContext)
+            // notify main thread to reload data
+            DispatchQueue.main.async {
+                print("DEBUG: Notify main thread")
+                self.fetchFromDB()
+            }
+
+        } else {
+
+            print("DEBUG: Counts are match. Compare the data.")
+
+            let bgChannels = try bgContext.fetch(bgRequest)
+//        var channelIDsToReload = [Int64]()
+            print("DEBUG: Iterate api channels")
+//            var shouldReloadTable = false
+            apiChannels.forEach { apiChannel in
+                if let channel = bgChannels.first(where: { $0.id == apiChannel.id }) {
+                    // Channel already exists
+                    // Check the fields
+                    if channel.name != apiChannel.name ||
+                        channel.url != apiChannel.url ||
+                        channel.image != apiChannel.image ||
+                        channel.title != apiChannel.title {
+                        channel.name = apiChannel.name
+                        channel.url = apiChannel.url
+                        channel.image = apiChannel.image
+                        channel.title = apiChannel.title
+//                        channelIDsToReload.append(channel.id)
+//                        shouldReloadTable = true
+                    }
+                } else {
+                    // Add new channel to DB
+                    let newChannel = CDChannel(context: bgContext)
+                    newChannel.id = Int64(apiChannel.id)
+                    newChannel.name = apiChannel.name
+                    newChannel.url = apiChannel.url
+                    newChannel.image = apiChannel.image
+                    newChannel.title = apiChannel.title
+//                    shouldReloadTable = true
+                }
+            } // apiChannels.forEach
+
+            if bgContext.hasChanges {
+                print("DEBUG: There changes. Save background context.")
+                saveContext(bgContext)
+                // notify main thread to reload data
+                DispatchQueue.main.async {
+                    print("DEBUG: Notify main thread")
+                    self.fetchFromDB()
+                }
+            } else {
+                print("DEBUG: There is nothing to change.")
+            }
+
+        }
+
+    }
+
+/*
     private func reloadCells(with ids: [Int64]) {
         let paths = ids.compactMap { channelId -> IndexPath? in
             if let rowId = channels?.firstIndex(where: { $0.id == channelId }) {
@@ -202,14 +309,16 @@ class HomeController: UITableViewController {
         }
         tableView.reloadRows(at: paths, with: .none)
     }
-
-    private func saveContext() { //saveContext(_ context: NSManagedObjectContext)
+*/
+    private func saveContext(_ context: NSManagedObjectContext) {
         if context.hasChanges {
             do {
                 try context.save()
             } catch {
-                let nserror = error as NSError
-                showErrorMessage("\(nserror), \(nserror.userInfo)")
+                DispatchQueue.main.async {
+                    let nserror = error as NSError
+                    self.showErrorMessage("\(nserror), \(nserror.userInfo)")
+                }
             }
         }
     }
@@ -290,7 +399,7 @@ extension HomeController: ChannelCellDelegate {
     func favoriteChanged(cell: UITableViewCell, channel: CDChannel, isFavorite: Bool) {
         if let row = tableView.indexPath(for: cell)?.row {
             channels?[row].isFavorite = isFavorite
-            saveContext()
+            saveContext(context)
         }
     }
 }
