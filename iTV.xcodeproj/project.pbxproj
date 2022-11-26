@@ -11,6 +11,7 @@
 		D70F2956292F2A7100AC5702 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2955292F2A7100AC5702 /* NetworkError.swift */; };
 		D70F2958292F2BE200AC5702 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2957292F2BE200AC5702 /* Constants.swift */; };
 		D70F295A292F35A100AC5702 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2959292F35A100AC5702 /* ImageManager.swift */; };
+		D75AC1112931E18E00FFCBCB /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75AC1102931E18E00FFCBCB /* VideoViewController.swift */; };
 		D7FA0F17292D9D3F00EEFD17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */; };
 		D7FA0F19292D9D3F00EEFD17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */; };
 		D7FA0F21292D9D3F00EEFD17 /* iTV.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F1F292D9D3F00EEFD17 /* iTV.xcdatamodeld */; };
@@ -29,6 +30,7 @@
 		D70F2955292F2A7100AC5702 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D70F2957292F2BE200AC5702 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D70F2959292F35A100AC5702 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		D75AC1102931E18E00FFCBCB /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		D7FA0F13292D9D3F00EEFD17 /* iTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				D7FA0F2D292D9FDB00EEFD17 /* HomeController.swift */,
+				D75AC1102931E18E00FFCBCB /* VideoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				D7FA0F41292E35FF00EEFD17 /* Feed.swift in Sources */,
 				D70F295A292F35A100AC5702 /* ImageManager.swift in Sources */,
 				D70F2954292F2A0300AC5702 /* ApiClient.swift in Sources */,
+				D75AC1112931E18E00FFCBCB /* VideoViewController.swift in Sources */,
 				D7FA0F35292DACBB00EEFD17 /* ChannelCell.swift in Sources */,
 				D7FA0F31292DAAE400EEFD17 /* Channel.swift in Sources */,
 				D7FA0F19292D9D3F00EEFD17 /* SceneDelegate.swift in Sources */,
@@ -373,7 +377,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -400,7 +404,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

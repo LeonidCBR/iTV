@@ -14,6 +14,7 @@ import CoreData
 class HomeController: UITableViewController {
 
     // MARK: - Properties
+
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let imageManager = ImageManager()
     private let channelCell = "channelCellIdentifier"
@@ -30,6 +31,10 @@ class HomeController: UITableViewController {
 
 
     // MARK: - Methods
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
 
     private func configureUI() {
         tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
@@ -215,19 +220,24 @@ class HomeController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let mediaUrlString = channels?[indexPath.row].url, let url = URL(string: mediaUrlString) else {
+//        guard let mediaUrlString = channels?[indexPath.row].url, let url = URL(string: mediaUrlString) else {
+        guard let channel = channels?[indexPath.row], let mediaUrlString = channel.url, let _ = URL(string: mediaUrlString) else {
             showErrorMessage("Неверная ссылка!")
             return
         }
 
-        // TODO: Create a custom player controller
-
+        /*
         let player = AVPlayer(url: url)
         let controller = AVPlayerViewController()
         controller.player = player
         present(controller, animated: true) {
             player.play()
         }
+        */
+
+        let videoViewController = VideoViewController(with: channel)
+        videoViewController.modalPresentationStyle = .fullScreen
+        present(videoViewController, animated: true, completion: nil)
     }
 
 }
