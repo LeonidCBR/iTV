@@ -53,6 +53,11 @@ class HomeController: UITableViewController {
         }
     }
 
+    /**
+     Find the channel from API in the DB
+     Update data in the DB if the channel exists and fields are mismatched
+     Add the channel to the DB if it does not exist
+    */
     private func fetchFromAPI() {
         print("DEBUG: Fetch from API")
         let channelsUrl = URL(string: K.channelsUrlString)!
@@ -60,10 +65,16 @@ class HomeController: UITableViewController {
 
             // --- BACKGROUND ---
 
-            // TODO: create here a new context
-            // TODO: use predicate
+            // TODO: Move the work to the background
+            /*
+             Create a new background context.
+             Fetch data in the context.
+             Look through the api channels, compare data, update it accordingly.
+             Save the context.
+             Notify the main thread to reload data from DB and update UI.
+            */
 
-            guard let self = self else { // !!! delete it
+            guard let self = self else {
                 return
             }
 
@@ -74,7 +85,6 @@ class HomeController: UITableViewController {
                     let feed = try JSONDecoder().decode(Feed.self, from: jsonData)
                     let apiChannels = feed.channels
 
-                    // TODO: Consider to delete it
                     DispatchQueue.main.async {
 
                         var shouldReloadTable = false
@@ -82,13 +92,7 @@ class HomeController: UITableViewController {
                         print("DEBUG: Iterate api channels")
                         apiChannels.forEach { apiChannel in
 
-                            // TODO: consider to use predicate!!!
 
-                            /**
-                             Find the channel from API in the DB
-                             Update data in the DB if the channel exists and fields are mismatched
-                             Add the channel to the DB if it does not exist
-                            */
                             if let channel = self.channels?.first(where: { $0.id == apiChannel.id }) {
                                 if channel.name != apiChannel.name ||
                                     channel.url != apiChannel.url ||
