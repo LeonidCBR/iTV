@@ -20,6 +20,8 @@ class HomeController: UITableViewController {
     private let channelCell = "channelCellIdentifier"
     private var channels: [CDChannel]?
 
+    private var searchController: UISearchController!
+
 
     // MARK: - Lifecycle
 
@@ -38,16 +40,46 @@ class HomeController: UITableViewController {
 
     private func configureUI() {
         tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
+        configureSearchController()
+    }
+
+    private func configureSearchController() {
+        searchController = UISearchController()
+
+
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Напишите название телеканала"
+//        searchController.searchResultsUpdater = self
+//        searchController.hidesNavigationBarDuringPresentation = false
+//        searchController.dimsBackgroundDuringPresentation = false
+
+//        searchController.searchBar.sizeToFit()
+
+        tableView.tableHeaderView = searchController.searchBar
+
+//        navigationItem.searchController = searchController
+//        navigationItem.hidesSearchBarWhenScrolling = false
     }
 
     private func fetchData() {
         fetchFromDB()
-        fetchFromAPI()
+
+
+        // TODO: Remember to uncomment!
+//        fetchFromAPI()
+
+
     }
 
     private func fetchFromDB() {
         print("DEBUG: Loding from local DB")
         let request: NSFetchRequest<CDChannel> = CDChannel.fetchRequest()
+
+
+        if let queryText = searchController.searchBar.text, !queryText.isEmpty {
+            request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@", queryText)
+        }
+
         do {
             channels = try context.fetch(request)
             print("DEBUG: DB channels: \(channels?.count ?? 0)")
@@ -96,6 +128,12 @@ class HomeController: UITableViewController {
                         var channelIDsToReload = [Int64]()
                         print("DEBUG: Iterate api channels")
                         apiChannels.forEach { apiChannel in
+
+
+
+
+                            // TODO: - Fix it!
+                            // now we don't want to refer to self.channels?.first
 
 
                             if let channel = self.channels?.first(where: { $0.id == apiChannel.id }) {
@@ -184,6 +222,13 @@ class HomeController: UITableViewController {
         present(alertController, animated: true)
     }
 
+//    private func search(for queryString: String) {
+//        print("DEBUG: Search for = \"\(queryString)\"")
+//
+//
+//
+//    }
+
 
     // MARK: - Table view data source
 
@@ -247,5 +292,26 @@ extension HomeController: ChannelCellDelegate {
             channels?[row].isFavorite = isFavorite
             saveContext()
         }
+    }
+}
+
+extension HomeController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+
+// ???
+        dismiss(animated: true, completion: nil)
+
+
+//        if let queryText = searchBar.text, !queryText.isEmpty {
+//            search(for: queryText)
+//        }
+        fetchFromDB()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.resignFirstResponder()
+        searchController.searchBar.text = ""
+        fetchFromDB()
     }
 }
