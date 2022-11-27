@@ -35,8 +35,7 @@ class ChannelCell: UITableViewCell {
 
     private let logoImage: UIImageView = {
         let iv = UIImageView()
-//        iv.backgroundColor = .lightGray
-        iv.backgroundColor = .clear //K.bgColor
+        iv.backgroundColor = .clear
         return iv
     }()
 
@@ -120,12 +119,10 @@ class ChannelCell: UITableViewCell {
 
     func clearLogoImage() {
         logoImage.image = nil
-        //logoImage.backgroundColor = .lightGray
     }
 
     func setLogoImage(to image: UIImage) {
         logoImage.image = image
-        //logoImage.backgroundColor = .white
     }
 
 

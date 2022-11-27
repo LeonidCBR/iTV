@@ -19,7 +19,7 @@ class HomeController: UIViewController { // UITableViewController {
     private let channelCell = "channelCellIdentifier"
     private var channels: [CDChannel]?
     private var searchBar: UISearchBar!
-    private var favoriteFilter: UISegmentedControl!
+    private var favoriteFilter: FavoriteFilterView!
     private var tableView: UITableView!
 
 
@@ -61,19 +61,13 @@ class HomeController: UIViewController { // UITableViewController {
     }
 
     private func configureFavoriteFilter() {
-        let favoriteFilterOptions: [FavoriteFilterOption] = [.all, .favorites]
-        let options = favoriteFilterOptions.map { $0.description }
-        favoriteFilter = UISegmentedControl(items: options)
-//        favoriteFilter.backgroundColor = .white
-//        favoriteFilter.selectedSegmentTintColor = .blue
-//        favoriteFilter.tintColor = K.bgColor
-        favoriteFilter.selectedSegmentIndex = 0
-        favoriteFilter.backgroundColor = .white
-        favoriteFilter.addTarget(self, action: #selector(filterValueChanged), for: .valueChanged)
+        favoriteFilter = FavoriteFilterView()
+        favoriteFilter.delegate = self
         view.addSubview(favoriteFilter)
         favoriteFilter.anchor(top: searchBar.bottomAnchor,
                               leading: view.safeAreaLayoutGuide.leadingAnchor,
-                              trailing: view.safeAreaLayoutGuide.trailingAnchor)
+                              trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                              height: 50.0)
     }
 
     private func configureTableView() {
@@ -282,12 +276,6 @@ class HomeController: UIViewController { // UITableViewController {
         present(alertController, animated: true)
     }
 
-
-    // MARK: - Selectors
-    @objc private func filterValueChanged() {
-        fetchFromDB()
-    }
-
 }
 
 
@@ -388,6 +376,16 @@ extension HomeController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         searchBar.showsCancelButton = false
         searchBar.text = ""
+        fetchFromDB()
+    }
+}
+
+
+// MARK: - FavoriteFilterViewDelegate
+
+extension HomeController: FavoriteFilterViewDelegate {
+    func filterValueChanged() {
+        print("DEBUG: Call delegate of the filter view")
         fetchFromDB()
     }
 }
