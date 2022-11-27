@@ -296,6 +296,19 @@ class HomeController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        guard case .all = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex) else {
+            // Удаляем из избранных канал
+            print("DEBUG: Delete channel from favorites")
+            let channel = channels![indexPath.row]
+            channel.isFavorite = false
+            saveContext(context)
+            fetchFromDB()
+            return
+        }
+
+        // Открываем плеер, так как выбраны "Все" каналы
+
         guard let channel = channels?[indexPath.row], let mediaUrlString = channel.url, let _ = URL(string: mediaUrlString) else {
             showErrorMessage("Неверная ссылка!")
             return
