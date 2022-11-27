@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum FavoriteFilterOption: CaseIterable, CustomStringConvertible { //Int
-    case all
-    case favorites
+enum FavoriteFilterOption: Int, CaseIterable, CustomStringConvertible { //Int
+    case all = 0
+    case favorites = 1
 
     var description: String {
         switch self {
@@ -20,3 +20,4 @@ enum FavoriteFilterOption: CaseIterable, CustomStringConvertible { //Int
         }
     }
 }
+

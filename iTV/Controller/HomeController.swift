@@ -24,8 +24,8 @@ class HomeController: UITableViewController {
 
 
     // TODO: Consider to use UISegmentedControll
-
 //    private var favoriteFilterView: FavoriteFilterView!
+    private var segmentedControl: UISegmentedControl!
 
 
     // MARK: - Lifecycle
@@ -74,10 +74,15 @@ class HomeController: UITableViewController {
         navigationItem.searchController = searchController
 
         //self.navigationItem.titleView = segmentedControl
-        let favoriteFilterOption = FavoriteFilterOption.allCases
-        let options = favoriteFilterOption.map { $0.description }
-        let segmentedControl = UISegmentedControl(items: options)
+
+//        let favoriteFilterOptions = FavoriteFilterOption.allCases
+        let favoriteFilterOptions: [FavoriteFilterOption] = [.all, .favorites]
+        let options = favoriteFilterOptions.map { $0.description }
+//        let options = ["Все", "Избранные"]
+
+        segmentedControl = UISegmentedControl(items: options)
         segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(filterValueChanged), for: .valueChanged)
         navigationItem.titleView = segmentedControl
     }
 /*
@@ -115,10 +120,30 @@ class HomeController: UITableViewController {
         print("DEBUG: Loding from local DB")
         let request: NSFetchRequest<CDChannel> = CDChannel.fetchRequest()
 
+        // TODO: use filter
+//        let option = FavoriteFilterOption(rawValue: segmentedControl.selectedSegmentIndex)
+//        let idOption = segmentedControl.selectedSegmentIndex
+        let favoriteFilterOption = FavoriteFilterOption(rawValue: segmentedControl.selectedSegmentIndex)!
+        print("DEBUG: Filter index=\(favoriteFilterOption.description)")
+
         if let queryText = searchController.searchBar.text, !queryText.isEmpty {
-            request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@", queryText)
+            if case .favorites = favoriteFilterOption {  //idOption == 1 {
+                request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@ AND isFavorite == YES", queryText)
+            } else {
+                request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@", queryText)
+            }
+        } else {
+            if case .favorites = favoriteFilterOption { // idOption == 1 {
+                request.predicate = NSPredicate(format: "isFavorite == YES")
+            }
         }
 
+
+/*
+        if let queryText = searchController.searchBar.text, !queryText.isEmpty {
+            request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@" + favoritesQuery, queryText)
+        }
+*/
         do {
             channels = try context.fetch(request)
             print("DEBUG: DB channels: \(channels?.count ?? 0)")
@@ -287,6 +312,14 @@ class HomeController: UITableViewController {
     }
 
 
+    // MARK: - Selectors
+    @objc private func filterValueChanged() {
+        print("DEBUG: \(#function)")
+        //print("DEBUG: Filter index=\(segmentedControl.selectedSegmentIndex)")
+        fetchFromDB()
+    }
+
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -349,6 +382,9 @@ extension HomeController: ChannelCellDelegate {
         }
     }
 }
+
+
+// MARK: - UISearchBarDelegate
 
 extension HomeController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
