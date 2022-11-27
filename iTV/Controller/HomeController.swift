@@ -23,15 +23,29 @@ class HomeController: UITableViewController {
     private var searchController: UISearchController!
 
 
+    // TODO: Consider to use UISegmentedControll
+
+//    private var favoriteFilterView: FavoriteFilterView!
+
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         fetchFromDB()
-        fetchFromAPI()
-    }
 
+
+        // TODO: Uncomment !!!
+
+//        fetchFromAPI()
+    }
+/*
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.tableHeaderView!.frame.size = CGSize(width: tableView.frame.width, height: CGFloat(100.0))
+    }
+*/
 
     // MARK: - Methods
 
@@ -42,14 +56,56 @@ class HomeController: UITableViewController {
     private func configureUI() {
         tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
         configureSearchController()
+//        configureFavoriteFilterView()
+//        configureHeaderView()
     }
 
     private func configureSearchController() {
         searchController = UISearchController()
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Напишите название телеканала"
-        tableView.tableHeaderView = searchController.searchBar
+//        searchController.searchResultsUpdater = self
+//        searchController.dimsBackgroundDuringPresentation = false
+//        searchController.searchBar.sizeToFit()
+        searchController.hidesNavigationBarDuringPresentation = false
+        navigationItem.hidesSearchBarWhenScrolling = false
+
+//        tableView.tableHeaderView = searchController.searchBar
+        navigationItem.searchController = searchController
+
+        //self.navigationItem.titleView = segmentedControl
+        let favoriteFilterOption = FavoriteFilterOption.allCases
+        let options = favoriteFilterOption.map { $0.description }
+        let segmentedControl = UISegmentedControl(items: options)
+        segmentedControl.selectedSegmentIndex = 0
+        navigationItem.titleView = segmentedControl
     }
+/*
+    private func configureHeaderView() {
+        // Configure search bar
+        searchController = UISearchController()
+        let searchBar = searchController.searchBar
+        searchBar.delegate = self
+        searchBar.placeholder = "Напишите название телеканала"
+        // Configure header view
+        let headerView = UIView()
+        headerView.addSubview(searchBar)
+        searchBar.anchor(top: headerView.topAnchor,
+                         bottom: headerView.bottomAnchor, // !!!
+                         leading: headerView.leadingAnchor,
+                         trailing: headerView.trailingAnchor)
+
+        favoriteFilterView = FavoriteFilterView()
+//        headerView.addSubview(favoriteFilterView)
+//        favoriteFilterView.anchor(top: searchBar.bottomAnchor,
+//                                  bottom: headerView.bottomAnchor,
+//                                  leading: headerView.leadingAnchor,
+//                                  trailing: headerView.trailingAnchor)
+
+//        headerView.frame.size = CGSize(width: tableView.frame.width, height: CGFloat(100.0))
+        tableView.tableHeaderView = headerView
+    }
+*/
 
     /**
      Load channels from DB.
