@@ -17,6 +17,7 @@ class ChannelCell: UITableViewCell {
 
     private let nameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
@@ -25,6 +26,7 @@ class ChannelCell: UITableViewCell {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
@@ -33,7 +35,8 @@ class ChannelCell: UITableViewCell {
 
     private let logoImage: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .lightGray
+//        iv.backgroundColor = .lightGray
+        iv.backgroundColor = .clear //K.bgColor
         return iv
     }()
 
@@ -71,6 +74,7 @@ class ChannelCell: UITableViewCell {
     private func configureUI() {
 //        selectionStyle = .none
         clipsToBounds = true
+        backgroundColor = K.bgColor
 
         contentView.addSubview(logoImage)
         logoImage.anchor(leading: contentView.leadingAnchor, paddingLeading: 8,
@@ -116,12 +120,12 @@ class ChannelCell: UITableViewCell {
 
     func clearLogoImage() {
         logoImage.image = nil
-        logoImage.backgroundColor = .lightGray
+        //logoImage.backgroundColor = .lightGray
     }
 
     func setLogoImage(to image: UIImage) {
         logoImage.image = image
-        logoImage.backgroundColor = .white
+        //logoImage.backgroundColor = .white
     }
 
 

@@ -40,7 +40,7 @@ class HomeController: UIViewController { // UITableViewController {
     }
 
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = K.bgColor
         configureSearchBar()
         configureFavoriteFilter()
         configureTableView()
@@ -48,6 +48,10 @@ class HomeController: UIViewController { // UITableViewController {
 
     private func configureSearchBar() {
         searchBar = UISearchBar()
+        searchBar.backgroundColor = K.bgColor
+        searchBar.barTintColor = K.bgColor
+        searchBar.tintColor = .white
+        searchBar.searchTextField.textColor = .white
         searchBar.delegate = self
         searchBar.placeholder = "Напишите название телеканала"
         view.addSubview(searchBar)
@@ -60,6 +64,9 @@ class HomeController: UIViewController { // UITableViewController {
         let favoriteFilterOptions: [FavoriteFilterOption] = [.all, .favorites]
         let options = favoriteFilterOptions.map { $0.description }
         favoriteFilter = UISegmentedControl(items: options)
+//        favoriteFilter.backgroundColor = .white
+//        favoriteFilter.selectedSegmentTintColor = .blue
+//        favoriteFilter.tintColor = K.bgColor
         favoriteFilter.selectedSegmentIndex = 0
         favoriteFilter.backgroundColor = .white
         favoriteFilter.addTarget(self, action: #selector(filterValueChanged), for: .valueChanged)
@@ -71,6 +78,7 @@ class HomeController: UIViewController { // UITableViewController {
 
     private func configureTableView() {
         tableView = UITableView()
+        tableView.backgroundColor = K.dark
         tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
         view.addSubview(tableView)
         tableView.anchor(top: favoriteFilter.bottomAnchor,
