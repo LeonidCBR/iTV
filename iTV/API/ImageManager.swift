@@ -25,7 +25,6 @@ final class ImageManager {
         }
 
         // Download image
-
         guard let imageUrl = URL(string: imagePath) else {
             completionHandler(.failure(.unexpectedURL), imagePath)
             return

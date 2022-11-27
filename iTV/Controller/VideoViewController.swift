@@ -150,6 +150,7 @@ class VideoViewController: UIViewController {
         logoImage.image = image
     }
 
+    
     // MARK: - Selectors
 
     @objc private func dismissButtonTapped() {

@@ -48,7 +48,7 @@ final class ApiClient {
                   let data = data else {
                       completionHandler(.failure(.unexpectedData))
                       return
-                  }
+            }
             completionHandler(.success(data))
         }
         dataTask.resume()

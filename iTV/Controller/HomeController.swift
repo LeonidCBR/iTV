@@ -28,7 +28,8 @@ class HomeController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        fetchData()
+        fetchFromDB()
+        fetchFromAPI()
     }
 
 
@@ -45,36 +46,18 @@ class HomeController: UITableViewController {
 
     private func configureSearchController() {
         searchController = UISearchController()
-
-
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Напишите название телеканала"
-//        searchController.searchResultsUpdater = self
-//        searchController.hidesNavigationBarDuringPresentation = false
-//        searchController.dimsBackgroundDuringPresentation = false
-
-//        searchController.searchBar.sizeToFit()
-
         tableView.tableHeaderView = searchController.searchBar
-
-//        navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = false
     }
 
-    private func fetchData() {
-        fetchFromDB()
-
-
-        
-        fetchFromAPI()
-
-
-    }
-
+    /**
+     Load channels from DB.
+     Reload the table view.
+     */
     private func fetchFromDB() {
         print("DEBUG: Loding from local DB")
         let request: NSFetchRequest<CDChannel> = CDChannel.fetchRequest()
-
 
         if let queryText = searchController.searchBar.text, !queryText.isEmpty {
             request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@", queryText)
@@ -91,23 +74,17 @@ class HomeController: UITableViewController {
     }
 
     /**
-     Find the channel from API in the DB
-     Update data in the DB if the channel exists and fields are mismatched
-     Add the channel to the DB if it does not exist
+     Fetch channels from API.
+     Find the channels from API in the DB.
+     Update data in the DB if the channel exists and fields are mismatched.
+     Add the channel to the DB if it does not exist.
     */
     private func fetchFromAPI() {
         print("DEBUG: Fetch from API")
         let channelsUrl = URL(string: K.channelsUrlString)!
         ApiClient().downloadData(withUrl: channelsUrl) { [weak self] result in
-
-            // MARK: --- BACKGROUND ---
             let backgroundQueue = DispatchQueue(label: "com.motodolphin.iTVbg")
             backgroundQueue.async {
-/*
-            guard let self = self else {
-                return
-            }
-*/
                 switch result {
                 case .success(let jsonData):
                     do {
@@ -116,64 +93,6 @@ class HomeController: UITableViewController {
                         let apiChannels = feed.channels
                         try self?.syncData(with: apiChannels)
 
-/*
-                    DispatchQueue.main.async {
-
-                        var shouldReloadTable = false
-                        var channelIDsToReload = [Int64]()
-                        print("DEBUG: Iterate api channels")
-                        apiChannels.forEach { apiChannel in
-
-
-
-
-                            // TODO: - Fix it!
-                            // now we don't want to refer to self.channels?.first
-                            // change it to bgChannels
-
-
-                            if let channel = self.channels?.first(where: { $0.id == apiChannel.id }) {
-                                if channel.name != apiChannel.name ||
-                                    channel.url != apiChannel.url ||
-                                    channel.image != apiChannel.image ||
-                                    channel.title != apiChannel.title {
-                                    channel.name = apiChannel.name
-                                    channel.url = apiChannel.url
-                                    channel.image = apiChannel.image
-                                    channel.title = apiChannel.title
-                                    channelIDsToReload.append(channel.id)
-                                }
-                            } else {
-                                // Add new channel to DB
-                                let newChannel = CDChannel(context: self.context)
-                                newChannel.id = Int64(apiChannel.id)
-                                newChannel.name = apiChannel.name
-                                newChannel.url = apiChannel.url
-                                newChannel.image = apiChannel.image
-                                newChannel.title = apiChannel.title
-                                shouldReloadTable = true
-                            }
-
-                        } //apiChannels.forEach
-
-                        // TODO: Remember about main or background thread
-                        self.saveContext()
-
-                        if shouldReloadTable {
-                            print("DEBUG: Should reload table")
-                            // TODO: Remember about main thread
-                            self.fetchFromDB()
-                        } else {
-                            print("DEBUG: There is no new channels")
-                            if channelIDsToReload.count > 0 {
-                                print("DEBUG: Reload updated channels \(channelIDsToReload.count)...")
-                                // TODO: Remember about main or background thread
-                                self.reloadCells(with: channelIDsToReload)
-                            }
-                        }
-
-                    } //DispatchQueue.main.async
-*/
                     } catch {
                         DispatchQueue.main.async {
                             self?.showErrorMessage(error.localizedDescription)
@@ -184,32 +103,25 @@ class HomeController: UITableViewController {
                         self?.showErrorMessage(error.localizedDescription)
                     }
                 } // switch
-
-
-
             } // backgroundQueue
-        }
-
+        } // ApiClient().downloadData
     }
 
+    /**
+     Create a new background context.
+     Fetch data in the context.
+     Look through the api channels, compare data, update it accordingly.
+     Save the context.
+     Notify the main thread to reload data from DB and update UI.
+    */
     private func syncData(with apiChannels: [Channel]) throws {
+
+        // TODO: Do a refactoring
+
         print("DEBUG: Sync data...")
-
-        // MARK: --- BACKGROUND ---
-
-        /*
-         Create a new background context.
-         Fetch data in the context.
-         Look through the api channels, compare data, update it accordingly.
-         Save the context.
-         Notify the main thread to reload data from DB and update UI.
-        */
-
-
         let bgContainer = NSPersistentContainer(name: "iTV")
         bgContainer.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-//                fatalError("Unresolved error \(error), \(error.userInfo)")
                 DispatchQueue.main.async {
                     self.showErrorMessage(error.localizedDescription)
                 }
@@ -217,12 +129,10 @@ class HomeController: UITableViewController {
         })
         let bgContext = bgContainer.newBackgroundContext()
 
-
-
-
-        // fetch only count of records
+        // Fetch only count of records
         let bgRequest: NSFetchRequest<CDChannel> = CDChannel.fetchRequest()
         let countChannels = try bgContext.count(for: bgRequest)
+
         print("DEBUG: There \(countChannels) channels in the DB and \(apiChannels.count) API channels.")
         if countChannels != apiChannels.count {
             print("DEBUG: Clear all records in DB")
@@ -241,24 +151,18 @@ class HomeController: UITableViewController {
             }
             print("DEBUG: Save context")
             saveContext(bgContext)
-            // notify main thread to reload data
+            // Notify main thread to reload data and update UI
             DispatchQueue.main.async {
                 print("DEBUG: Notify main thread")
                 self.fetchFromDB()
             }
 
         } else {
-
-            print("DEBUG: Counts are match. Compare the data.")
-
+            print("DEBUG: Counts are match. Compare the data by iterating API channels.")
             let bgChannels = try bgContext.fetch(bgRequest)
-//        var channelIDsToReload = [Int64]()
-            print("DEBUG: Iterate api channels")
-//            var shouldReloadTable = false
             apiChannels.forEach { apiChannel in
                 if let channel = bgChannels.first(where: { $0.id == apiChannel.id }) {
-                    // Channel already exists
-                    // Check the fields
+                    // Channel already exists. Check the fields.
                     if channel.name != apiChannel.name ||
                         channel.url != apiChannel.url ||
                         channel.image != apiChannel.image ||
@@ -267,8 +171,6 @@ class HomeController: UITableViewController {
                         channel.url = apiChannel.url
                         channel.image = apiChannel.image
                         channel.title = apiChannel.title
-//                        channelIDsToReload.append(channel.id)
-//                        shouldReloadTable = true
                     }
                 } else {
                     // Add new channel to DB
@@ -278,12 +180,11 @@ class HomeController: UITableViewController {
                     newChannel.url = apiChannel.url
                     newChannel.image = apiChannel.image
                     newChannel.title = apiChannel.title
-//                    shouldReloadTable = true
                 }
             } // apiChannels.forEach
 
             if bgContext.hasChanges {
-                print("DEBUG: There changes. Save background context.")
+                print("DEBUG: There are changes. Save background context.")
                 saveContext(bgContext)
                 // notify main thread to reload data
                 DispatchQueue.main.async {
@@ -293,9 +194,7 @@ class HomeController: UITableViewController {
             } else {
                 print("DEBUG: There is nothing to change.")
             }
-
-        }
-
+        } // if countChannels != apiChannels.count
     }
 
 /*
@@ -331,13 +230,6 @@ class HomeController: UITableViewController {
         present(alertController, animated: true)
     }
 
-//    private func search(for queryString: String) {
-//        print("DEBUG: Search for = \"\(queryString)\"")
-//
-//
-//
-//    }
-
 
     // MARK: - Table view data source
 
@@ -364,9 +256,7 @@ class HomeController: UITableViewController {
                 return
             }
             if case .success(let image) = result {
-                // TODO: Consider to use [weak cell]
                 cell.setLogoImage(to: image)
-//                cell?.setLogoImage(to: image)
             }
         }
         return cell
@@ -407,19 +297,11 @@ extension HomeController: ChannelCellDelegate {
 extension HomeController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-
-// ???
         dismiss(animated: true, completion: nil)
-
-
-//        if let queryText = searchBar.text, !queryText.isEmpty {
-//            search(for: queryText)
-//        }
         fetchFromDB()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.resignFirstResponder()
         searchController.searchBar.text = ""
         fetchFromDB()
     }
