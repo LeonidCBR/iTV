@@ -19,13 +19,8 @@ class HomeController: UITableViewController {
     private let imageManager = ImageManager()
     private let channelCell = "channelCellIdentifier"
     private var channels: [CDChannel]?
-
     private var searchController: UISearchController!
-
-
-    // TODO: Consider to use UISegmentedControll
-//    private var favoriteFilterView: FavoriteFilterView!
-    private var segmentedControl: UISegmentedControl!
+    private var favoriteFilter: UISegmentedControl!
 
 
     // MARK: - Lifecycle
@@ -34,18 +29,9 @@ class HomeController: UITableViewController {
         super.viewDidLoad()
         configureUI()
         fetchFromDB()
-
-
-        // TODO: Uncomment !!!
-
-//        fetchFromAPI()
+        fetchFromAPI()
     }
-/*
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.tableHeaderView!.frame.size = CGSize(width: tableView.frame.width, height: CGFloat(100.0))
-    }
-*/
+
 
     // MARK: - Methods
 
@@ -56,61 +42,26 @@ class HomeController: UITableViewController {
     private func configureUI() {
         tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
         configureSearchController()
-//        configureFavoriteFilterView()
-//        configureHeaderView()
+        configureFavoriteFilter()
     }
 
     private func configureSearchController() {
         searchController = UISearchController()
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Напишите название телеканала"
-//        searchController.searchResultsUpdater = self
-//        searchController.dimsBackgroundDuringPresentation = false
-//        searchController.searchBar.sizeToFit()
         searchController.hidesNavigationBarDuringPresentation = false
         navigationItem.hidesSearchBarWhenScrolling = false
-
-//        tableView.tableHeaderView = searchController.searchBar
         navigationItem.searchController = searchController
+    }
 
-        //self.navigationItem.titleView = segmentedControl
-
-//        let favoriteFilterOptions = FavoriteFilterOption.allCases
+    private func configureFavoriteFilter() {
         let favoriteFilterOptions: [FavoriteFilterOption] = [.all, .favorites]
         let options = favoriteFilterOptions.map { $0.description }
-//        let options = ["Все", "Избранные"]
-
-        segmentedControl = UISegmentedControl(items: options)
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(filterValueChanged), for: .valueChanged)
-        navigationItem.titleView = segmentedControl
+        favoriteFilter = UISegmentedControl(items: options)
+        favoriteFilter.selectedSegmentIndex = 0
+        favoriteFilter.addTarget(self, action: #selector(filterValueChanged), for: .valueChanged)
+        navigationItem.titleView = favoriteFilter
     }
-/*
-    private func configureHeaderView() {
-        // Configure search bar
-        searchController = UISearchController()
-        let searchBar = searchController.searchBar
-        searchBar.delegate = self
-        searchBar.placeholder = "Напишите название телеканала"
-        // Configure header view
-        let headerView = UIView()
-        headerView.addSubview(searchBar)
-        searchBar.anchor(top: headerView.topAnchor,
-                         bottom: headerView.bottomAnchor, // !!!
-                         leading: headerView.leadingAnchor,
-                         trailing: headerView.trailingAnchor)
-
-        favoriteFilterView = FavoriteFilterView()
-//        headerView.addSubview(favoriteFilterView)
-//        favoriteFilterView.anchor(top: searchBar.bottomAnchor,
-//                                  bottom: headerView.bottomAnchor,
-//                                  leading: headerView.leadingAnchor,
-//                                  trailing: headerView.trailingAnchor)
-
-//        headerView.frame.size = CGSize(width: tableView.frame.width, height: CGFloat(100.0))
-        tableView.tableHeaderView = headerView
-    }
-*/
 
     /**
      Load channels from DB.
@@ -120,30 +71,24 @@ class HomeController: UITableViewController {
         print("DEBUG: Loding from local DB")
         let request: NSFetchRequest<CDChannel> = CDChannel.fetchRequest()
 
-        // TODO: use filter
-//        let option = FavoriteFilterOption(rawValue: segmentedControl.selectedSegmentIndex)
-//        let idOption = segmentedControl.selectedSegmentIndex
-        let favoriteFilterOption = FavoriteFilterOption(rawValue: segmentedControl.selectedSegmentIndex)!
+        let favoriteFilterOption = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex)!
         print("DEBUG: Filter index=\(favoriteFilterOption.description)")
 
         if let queryText = searchController.searchBar.text, !queryText.isEmpty {
-            if case .favorites = favoriteFilterOption {  //idOption == 1 {
+            if case .favorites = favoriteFilterOption {
+                // search by name & favorite
                 request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@ AND isFavorite == YES", queryText)
             } else {
+                // search by name
                 request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@", queryText)
             }
         } else {
-            if case .favorites = favoriteFilterOption { // idOption == 1 {
+            if case .favorites = favoriteFilterOption {
+                // only favorite
                 request.predicate = NSPredicate(format: "isFavorite == YES")
             }
         }
 
-
-/*
-        if let queryText = searchController.searchBar.text, !queryText.isEmpty {
-            request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@" + favoritesQuery, queryText)
-        }
-*/
         do {
             channels = try context.fetch(request)
             print("DEBUG: DB channels: \(channels?.count ?? 0)")
@@ -314,8 +259,6 @@ class HomeController: UITableViewController {
 
     // MARK: - Selectors
     @objc private func filterValueChanged() {
-        print("DEBUG: \(#function)")
-        //print("DEBUG: Filter index=\(segmentedControl.selectedSegmentIndex)")
         fetchFromDB()
     }
 

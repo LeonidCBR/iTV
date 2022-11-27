@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FavoriteFilterOption: Int, CaseIterable, CustomStringConvertible { //Int
+enum FavoriteFilterOption: Int, CustomStringConvertible {
     case all = 0
     case favorites = 1
 
