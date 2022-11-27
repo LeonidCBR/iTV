@@ -7,11 +7,10 @@
 
 import UIKit
 import AVFoundation
-
-import AVKit
 import CoreData
 
-class HomeController: UITableViewController {
+
+class HomeController: UIViewController { // UITableViewController {
 
     // MARK: - Properties
 
@@ -19,8 +18,9 @@ class HomeController: UITableViewController {
     private let imageManager = ImageManager()
     private let channelCell = "channelCellIdentifier"
     private var channels: [CDChannel]?
-    private var searchController: UISearchController!
+    private var searchBar: UISearchBar!
     private var favoriteFilter: UISegmentedControl!
+    private var tableView: UITableView!
 
 
     // MARK: - Lifecycle
@@ -40,18 +40,20 @@ class HomeController: UITableViewController {
     }
 
     private func configureUI() {
-        tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
-        configureSearchController()
+        view.backgroundColor = .white
+        configureSearchBar()
         configureFavoriteFilter()
+        configureTableView()
     }
 
-    private func configureSearchController() {
-        searchController = UISearchController()
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Напишите название телеканала"
-        searchController.hidesNavigationBarDuringPresentation = false
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.searchController = searchController
+    private func configureSearchBar() {
+        searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.placeholder = "Напишите название телеканала"
+        view.addSubview(searchBar)
+        searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                         leading: view.safeAreaLayoutGuide.leadingAnchor,
+                         trailing: view.safeAreaLayoutGuide.trailingAnchor)
     }
 
     private func configureFavoriteFilter() {
@@ -59,8 +61,24 @@ class HomeController: UITableViewController {
         let options = favoriteFilterOptions.map { $0.description }
         favoriteFilter = UISegmentedControl(items: options)
         favoriteFilter.selectedSegmentIndex = 0
+        favoriteFilter.backgroundColor = .white
         favoriteFilter.addTarget(self, action: #selector(filterValueChanged), for: .valueChanged)
-        navigationItem.titleView = favoriteFilter
+        view.addSubview(favoriteFilter)
+        favoriteFilter.anchor(top: searchBar.bottomAnchor,
+                              leading: view.safeAreaLayoutGuide.leadingAnchor,
+                              trailing: view.safeAreaLayoutGuide.trailingAnchor)
+    }
+
+    private func configureTableView() {
+        tableView = UITableView()
+        tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
+        view.addSubview(tableView)
+        tableView.anchor(top: favoriteFilter.bottomAnchor,
+                         bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                         leading: view.safeAreaLayoutGuide.leadingAnchor,
+                         trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
     /**
@@ -74,7 +92,7 @@ class HomeController: UITableViewController {
         let favoriteFilterOption = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex)!
         print("DEBUG: Filter index=\(favoriteFilterOption.description)")
 
-        if let queryText = searchController.searchBar.text, !queryText.isEmpty {
+        if let queryText = searchBar.text, !queryText.isEmpty {
             if case .favorites = favoriteFilterOption {
                 // search by name & favorite
                 request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@ AND isFavorite == YES", queryText)
@@ -262,18 +280,22 @@ class HomeController: UITableViewController {
         fetchFromDB()
     }
 
+}
 
-    // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+// MARK: - Table view data source
+
+extension HomeController: UITableViewDelegate, UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return channels?.count ?? 0
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: channelCell, for: indexPath) as! ChannelCell
         cell.delegate = self
         cell.clearLogoImage()
@@ -294,7 +316,7 @@ class HomeController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
         guard case .all = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex) else {
@@ -343,14 +365,21 @@ extension HomeController: ChannelCellDelegate {
 // MARK: - UISearchBarDelegate
 
 extension HomeController: UISearchBarDelegate {
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        dismiss(animated: true, completion: nil)
+        searchBar.showsCancelButton = false
         fetchFromDB()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchController.searchBar.text = ""
+        searchBar.resignFirstResponder()
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
         fetchFromDB()
     }
 }
