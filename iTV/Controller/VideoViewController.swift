@@ -11,11 +11,13 @@ import AVFoundation
 class VideoViewController: UIViewController {
 
     // MARK: - Properties
-    
-    let videoView = UIView()
-    var videoPlayer: AVPlayer!
-    var playerLayer: AVPlayerLayer!
-    var channel: CDChannel!
+
+    private var mediaItems: [MediaItem] = []
+    private let videoView = UIView()
+    private var videoPlayer: AVPlayer!
+    private var playerLayer: AVPlayerLayer!
+    private var channel: CDChannel!
+    private let qualityCellIdentifier = "qualityCellIdentifier"
 
     private lazy var dismissButton: UIButton = {
         let btn = UIButton()
@@ -53,6 +55,16 @@ class VideoViewController: UIViewController {
         return label
     }()
 
+    private lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.isHidden = true
+        table.backgroundColor = .lightGray
+        table.register(UITableViewCell.self, forCellReuseIdentifier: qualityCellIdentifier)
+        table.delegate = self
+        table.dataSource = self
+        return table
+    }()
+
 
     // MARK: - Lifecycle
     
@@ -74,13 +86,13 @@ class VideoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UIApplication.shared.isIdleTimerDisabled = true
-        configurePlayer()
         configureUI()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         videoPlayer.play()
+        fetchMediaItems()
     }
 
     override func viewDidLayoutSubviews() {
@@ -144,6 +156,37 @@ class VideoViewController: UIViewController {
         nameLabel.anchor(top: titleLabel.bottomAnchor, paddingTop: 2.0,
                          leading: titleLabel.leadingAnchor,
                          trailing: titleLabel.trailingAnchor)
+        configureTableView()
+        configurePlayer()
+    }
+
+    private func configureTableView() {
+        view.addSubview(tableView)
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 100.0,
+                    bottom: settingsButton.topAnchor, paddingBottom: 20.0,
+                    trailing: view.safeAreaLayoutGuide.trailingAnchor, paddingTrailing: 16.0,
+                    width: 100.0)
+    }
+
+    private func fetchMediaItems() {
+        // Do the work in the background
+        DispatchQueue.global(qos: .userInitiated).async {
+            print("DEBUG: Fetch media items in order to get a quality list")
+            guard let path = self.channel.url, let mediaUrl = URL(string: path) else {
+                print("DEBUG: The url is not valid.")
+                return
+            }
+            let parser = M3UParser(withUrl: mediaUrl)
+            if let mediaItems = try? parser.getMediaItems() {
+                DispatchQueue.main.async {
+                    self.mediaItems = mediaItems
+                    print("DEBUG: Got media assets. Count = \(mediaItems.count)")
+                    self.tableView.reloadData()
+                }
+            } else {
+                print("DEBUG: Could not fetch media assets.")
+            }
+        }
     }
 
     func setLogoImage(to image: UIImage) {
@@ -159,6 +202,35 @@ class VideoViewController: UIViewController {
 
     @objc private func settingsButtonTapped() {
         print("DEBUG: \(#function)")
+        tableView.isHidden = !tableView.isHidden
     }
 
+}
+
+
+// MARK: - UITableViewDataSource, UITableViewDelegate
+
+extension VideoViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        mediaItems.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: qualityCellIdentifier) else {
+            return UITableViewCell()
+        }
+        cell.textLabel?.text = mediaItems[indexPath.row].bitRateString
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let mediaItem = mediaItems[indexPath.row]
+        videoPlayer.currentItem?.preferredPeakBitRate = mediaItem.bitrate
+        tableView.isHidden = true
+    }
 }
