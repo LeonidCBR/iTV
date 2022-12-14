@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ChannelCellDelegate: AnyObject {
-    func favoriteChanged(cell: UITableViewCell, channel: CDChannel, isFavorite: Bool)
+    func favoriteChanged(cell: UITableViewCell, channel: Channel, isFavorite: Bool)
 }
 
 class ChannelCell: UITableViewCell {
@@ -49,7 +49,7 @@ class ChannelCell: UITableViewCell {
 
     weak var delegate: ChannelCellDelegate?
 
-    var channel: CDChannel? {
+    var channel: Channel? {
         didSet {
             updateUI()
         }

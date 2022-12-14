@@ -2,33 +2,20 @@
 //  Channel.swift
 //  iTV
 //
-//  Created by Яна Латышева on 23.11.2022.
+//  Created by Яна Латышева on 14.12.2022.
 //
 
 import Foundation
+import CoreData
 
-struct Channel: Decodable {
+class Channel: NSManagedObject {
+    // A unique identifier used to avoid duplicates in the persistent store.
+    // Constrain the Channel entity on this attribute in the data model editor.
+    @NSManaged var id: Int
 
-    struct Current: Decodable {
-        let title: String
-    }
-
-    let id: Int
-    let name: String
-    let url: String
-    let image: String?
-    private let current: Current?
-
-    var title: String {
-        return current?.title ?? ""
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name_ru"
-        case image = "image"
-        case current = "current"
-        case url = "url"
-    }
-
+    @NSManaged var name: String
+    @NSManaged var url: String
+    @NSManaged var image: String
+    @NSManaged var title: String
+    @NSManaged var isFavorite: Bool
 }

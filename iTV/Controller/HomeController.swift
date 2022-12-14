@@ -14,10 +14,10 @@ class HomeController: UIViewController { // UITableViewController {
 
     // MARK: - Properties
 
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let imageManager = ImageManager()
     private let channelCell = "channelCellIdentifier"
-    private var channels: [CDChannel]?
+    private var channels: [Channel] = []
     private var searchBar: UISearchBar!
     private var favoriteFilter: FavoriteFilterView!
     private var tableView: UITableView!
@@ -28,8 +28,8 @@ class HomeController: UIViewController { // UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        fetchFromDB()
-        fetchFromAPI()
+        loadPersistentChannels()
+        importChannelsFromAPI()
     }
 
 
@@ -87,9 +87,18 @@ class HomeController: UIViewController { // UITableViewController {
      Load channels from DB.
      Reload the table view.
      */
-    private func fetchFromDB() {
+    private func loadPersistentChannels() {
+        let favoriteFilterOption = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex)!
+        do {
+            channels = try ChannelsProvider.shared.fetchChannels(searchText: searchBar.text, filter: favoriteFilterOption)
+        tableView.reloadData()
+        } catch {
+            let nserror = error as NSError
+            showErrorMessage(nserror.localizedDescription)
+        }
+/*
         print("DEBUG: Loding from local DB")
-        let request: NSFetchRequest<CDChannel> = CDChannel.fetchRequest()
+        let request: NSFetchRequest<Channel> = CDChannel.fetchRequest()
 
         let favoriteFilterOption = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex)!
         print("DEBUG: Filter index=\(favoriteFilterOption.description)")
@@ -117,6 +126,7 @@ class HomeController: UIViewController { // UITableViewController {
             let nserror = error as NSError
             showErrorMessage(nserror.localizedDescription)
         }
+*/
     }
 
     /**
@@ -125,7 +135,11 @@ class HomeController: UIViewController { // UITableViewController {
      Update data in the DB if the channel exists and fields are mismatched.
      Add the channel to the DB if it does not exist.
     */
-    private func fetchFromAPI() {
+    private func importChannelsFromAPI() {
+        Task {
+            try! await ChannelsProvider.shared.importChannels()
+        }
+/*
         print("DEBUG: Fetch from API")
         let channelsUrl = URL(string: K.channelsUrlString)!
         ApiClient().downloadData(withUrl: channelsUrl) { [weak self] result in
@@ -151,6 +165,8 @@ class HomeController: UIViewController { // UITableViewController {
                 } // switch
             } // backgroundQueue
         } // ApiClient().downloadData
+
+*/
     }
 
     /**
@@ -160,7 +176,8 @@ class HomeController: UIViewController { // UITableViewController {
      Save the context.
      Notify the main thread to reload data from DB and update UI.
     */
-    private func syncData(with apiChannels: [Channel]) throws {
+/*
+    private func syncData(with apiChannels: [ChannelProperties]) throws {
 
         // TODO: Do a refactoring
 
@@ -200,7 +217,7 @@ class HomeController: UIViewController { // UITableViewController {
             // Notify main thread to reload data and update UI
             DispatchQueue.main.async {
                 print("DEBUG: Notify main thread")
-                self.fetchFromDB()
+                self.loadPersistentChannels()
             }
 
         } else {
@@ -235,13 +252,14 @@ class HomeController: UIViewController { // UITableViewController {
                 // notify main thread to reload data
                 DispatchQueue.main.async {
                     print("DEBUG: Notify main thread")
-                    self.fetchFromDB()
+                    self.loadPersistentChannels()
                 }
             } else {
                 print("DEBUG: There is nothing to change.")
             }
         } // if countChannels != apiChannels.count
     }
+*/
 
 /*
     private func reloadCells(with ids: [Int64]) {
@@ -255,6 +273,8 @@ class HomeController: UIViewController { // UITableViewController {
         tableView.reloadRows(at: paths, with: .none)
     }
 */
+
+/*
     private func saveContext(_ context: NSManagedObjectContext) {
         if context.hasChanges {
             do {
@@ -267,7 +287,7 @@ class HomeController: UIViewController { // UITableViewController {
             }
         }
     }
-
+*/
     private func showErrorMessage(_ message: String) {
         print(message)
         let alertController = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
@@ -288,16 +308,18 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels?.count ?? 0
+        return channels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: channelCell, for: indexPath) as! ChannelCell
         cell.delegate = self
         cell.clearLogoImage()
-        cell.channel = channels?[indexPath.row]
-        guard let imagePath = channels?[indexPath.row].image else {
-            print("DEBUG: ID[\(channels?[indexPath.row].id ?? 0)] image is nil.")
+        cell.channel = channels[indexPath.row]
+
+        let imagePath = channels[indexPath.row].image
+        guard !imagePath.isEmpty else {
+            print("DEBUG: ID[\(channels[indexPath.row].id)] image is nil or empty.")
             return cell
         }
         imageManager.downloadImage(with: imagePath) { result, path in
@@ -318,22 +340,29 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         guard case .all = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex) else {
             // Удаляем из избранных канал
             print("DEBUG: Delete channel from favorites")
-            let channel = channels![indexPath.row]
+            let channel = channels[indexPath.row]
             channel.isFavorite = false
-            saveContext(context)
-            fetchFromDB()
+
+
+            // TODO: Consider to remove the channel from the list and remove the row
+
+//            saveContext(context)
+            ChannelsProvider.shared.saveContext()
+
+
+            loadPersistentChannels()
             return
         }
 
         // Открываем плеер, так как выбраны "Все" каналы
-
-        guard let channel = channels?[indexPath.row], let mediaUrlString = channel.url, let _ = URL(string: mediaUrlString) else {
+        let channel = channels[indexPath.row]
+        guard let _ = URL(string: channel.url) else {
             showErrorMessage("Неверная ссылка!")
             return
         }
         let videoViewController = VideoViewController(with: channel)
-        if let imagePath = channel.image {
-            imageManager.downloadImage(with: imagePath) { result, path in
+        if !channel.image.isEmpty {
+            imageManager.downloadImage(with: channel.image) { result, path in
                 if case .success(let image) = result {
                     videoViewController.setLogoImage(to: image)
                 }
@@ -349,10 +378,12 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - ChannelCellDelegate
 
 extension HomeController: ChannelCellDelegate {
-    func favoriteChanged(cell: UITableViewCell, channel: CDChannel, isFavorite: Bool) {
+    func favoriteChanged(cell: UITableViewCell, channel: Channel, isFavorite: Bool) {
         if let row = tableView.indexPath(for: cell)?.row {
-            channels?[row].isFavorite = isFavorite
-            saveContext(context)
+            channels[row].isFavorite = isFavorite
+
+//            saveContext(context)
+            ChannelsProvider.shared.saveContext()
         }
     }
 }
@@ -369,14 +400,14 @@ extension HomeController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.showsCancelButton = false
-        fetchFromDB()
+        loadPersistentChannels()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.showsCancelButton = false
         searchBar.text = ""
-        fetchFromDB()
+        loadPersistentChannels()
     }
 }
 
@@ -386,6 +417,6 @@ extension HomeController: UISearchBarDelegate {
 extension HomeController: FavoriteFilterViewDelegate {
     func filterValueChanged() {
         print("DEBUG: Call delegate of the filter view")
-        fetchFromDB()
+        loadPersistentChannels()
     }
 }

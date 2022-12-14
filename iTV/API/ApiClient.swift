@@ -15,13 +15,13 @@ final class ApiClient {
     }
 
     func downloadData(withUrl url: URL,
-                      completionHandler: @escaping (Result<Data, NetworkError>) -> Void) {
+                      completionHandler: @escaping (Result<Data, ChannelError>) -> Void) {
         let request = URLRequest(url: url)
         downloadData(with: request, completionHandler: completionHandler)
     }
 
     func downloadData(with request: URLRequest,
-                      completionHandler: @escaping (Result<Data, NetworkError>) -> Void) {
+                      completionHandler: @escaping (Result<Data, ChannelError>) -> Void) {
         let dataTask = urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
                 completionHandler(.failure(.urlSessionError(error)))

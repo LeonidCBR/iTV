@@ -16,7 +16,7 @@ class VideoViewController: UIViewController {
     private let videoView = UIView()
     private var videoPlayer: AVPlayer!
     private var playerLayer: AVPlayerLayer!
-    private var channel: CDChannel!
+    private var channel: Channel!
     private let qualityCellIdentifier = "qualityCellIdentifier"
 
     private lazy var dismissButton: UIButton = {
@@ -68,7 +68,7 @@ class VideoViewController: UIViewController {
 
     // MARK: - Lifecycle
     
-    init(with channel: CDChannel) {
+    init(with channel: Channel) {
         self.channel = channel
         nameLabel.text = channel.name
         titleLabel.text = channel.title
@@ -108,7 +108,7 @@ class VideoViewController: UIViewController {
     }
 
     private func configurePlayer() {
-        guard let path = channel.url, let mediaUrl = URL(string: path) else {
+        guard let mediaUrl = URL(string: channel.url) else {
             videoPlayer = AVPlayer()
             playerLayer = AVPlayerLayer()
             return
@@ -172,7 +172,7 @@ class VideoViewController: UIViewController {
         // Do the work in the background
         DispatchQueue.global(qos: .userInitiated).async {
             print("DEBUG: Fetch media items in order to get a quality list")
-            guard let path = self.channel.url, let mediaUrl = URL(string: path) else {
+            guard let mediaUrl = URL(string: self.channel.url) else {
                 print("DEBUG: The url is not valid.")
                 return
             }

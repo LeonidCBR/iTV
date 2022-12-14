@@ -16,7 +16,7 @@ final class ImageManager {
     }
 
     func downloadImage(with imagePath: String,
-                       completionHandler: @escaping (Result<UIImage, NetworkError>, String) -> Void) {
+                       completionHandler: @escaping (Result<UIImage, ChannelError>, String) -> Void) {
 
         // Check cache
         if let cachedImage = cacheImages.object(forKey: imagePath as NSString) {
