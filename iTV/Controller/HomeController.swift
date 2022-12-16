@@ -26,6 +26,7 @@ class HomeController: UIViewController { // UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        ChannelsProvider.shared.delegate = self
         configureUI()
         loadPersistentChannels()
         importChannelsFromAPI()
@@ -292,6 +293,7 @@ class HomeController: UIViewController { // UITableViewController {
         }
     }
 */
+/*
     private func showErrorMessage(_ message: String) {
         print(message)
         let alertController = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
@@ -299,6 +301,7 @@ class HomeController: UIViewController { // UITableViewController {
         alertController.addAction(alertAction)
         present(alertController, animated: true)
     }
+*/
 
 }
 
@@ -341,8 +344,12 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
+        // Check if all channels are selected
         guard case .all = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex) else {
-            // Удаляем из избранных канал
+            /**
+             There is the favorite tab has been selected
+             Delete the channel from favorites and update UI
+            */
             print("DEBUG: Delete channel from favorites")
             let channel = channels[indexPath.row]
             channel.isFavorite = false
@@ -364,7 +371,8 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             showErrorMessage("Неверная ссылка!")
             return
         }
-        let videoViewController = VideoViewController(with: channel)
+        let channelProperties = ChannelProperties(from: channel)
+        let videoViewController = VideoViewController(with: channelProperties)
         if !channel.image.isEmpty {
             imageManager.downloadImage(with: channel.image) { result, path in
                 if case .success(let image) = result {
@@ -422,5 +430,18 @@ extension HomeController: FavoriteFilterViewDelegate {
     func filterValueChanged() {
         print("DEBUG: Call delegate of the filter view")
         loadPersistentChannels()
+    }
+}
+
+
+// MARK: - ChannelsProviderDelegate
+
+extension HomeController: ChannelsProviderDelegate {
+    func dataDidUpdate() {
+        loadPersistentChannels()
+    }
+
+    func didGetError(_ error: Error) {
+        showErrorMessage("\(error.localizedDescription)")
     }
 }

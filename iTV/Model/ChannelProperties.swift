@@ -7,42 +7,6 @@
 
 import Foundation
 
-/*
- {
-     "channels": [
-         {
-             "id": 10180,
-             "name_ru": "Матч! Премьер",
-             "url": "",
-             "image": "https://assets.iptv2022.com/static/channel/10180/logo_256_1658736853.png",
-             "current": {
-                 "title": "Fonbet Кубок России. \"Урал\" - ЦСКА",
-             },
-         }
-     ]
- }
- */
-
-struct GeoJSON: Decodable {
-
-    private enum RootCodingKeys: String, CodingKey {
-        case channels
-    }
-
-    private(set) var channelPropertiesList = [ChannelProperties]()
-
-    init(from decoder: Decoder) throws {
-        let rootContainer = try decoder.container(keyedBy: RootCodingKeys.self)
-        var channelsContainer = try rootContainer.nestedUnkeyedContainer(forKey: .channels)
-
-        while !channelsContainer.isAtEnd {
-            if let properties = try? channelsContainer.decode(ChannelProperties.self) {
-                channelPropertiesList.append(properties)
-            }
-        }
-    }
-}
-
 struct ChannelProperties: Decodable {
 
     private enum CodingKeys: String, CodingKey {
@@ -86,6 +50,14 @@ struct ChannelProperties: Decodable {
         self.url = rawUrl ?? ""
         self.image = rawImage ?? ""
         self.title = rawTitle ?? ""
+    }
+
+    init(from channel: Channel) {
+        self.id = channel.id
+        self.name = channel.name
+        self.url = channel.url
+        self.image = channel.image
+        self.title = channel.title
     }
 
     // The keys must have the same name as the attributes of the Channel entity.

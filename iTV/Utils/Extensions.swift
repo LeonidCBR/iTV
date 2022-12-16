@@ -73,3 +73,16 @@ extension UIView {
     }
 
 }
+
+
+// MARK: - UIViewController
+
+extension UIViewController {
+    func showErrorMessage(_ message: String) {
+        print(message)
+        let alertController = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(alertAction)
+        present(alertController, animated: true)
+    }
+}

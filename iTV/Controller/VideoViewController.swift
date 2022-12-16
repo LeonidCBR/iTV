@@ -16,7 +16,8 @@ class VideoViewController: UIViewController {
     private let videoView = UIView()
     private var videoPlayer: AVPlayer!
     private var playerLayer: AVPlayerLayer!
-    private var channel: Channel!
+//    private var channel: Channel!
+    private var channelProperties: ChannelProperties!
     private let qualityCellIdentifier = "qualityCellIdentifier"
 
     private lazy var dismissButton: UIButton = {
@@ -67,11 +68,19 @@ class VideoViewController: UIViewController {
 
 
     // MARK: - Lifecycle
-    
+/*
     init(with channel: Channel) {
         self.channel = channel
         nameLabel.text = channel.name
         titleLabel.text = channel.title
+        super.init(nibName: nil, bundle: nil)
+    }
+*/
+
+    init(with channelProperties: ChannelProperties) {
+        self.channelProperties = channelProperties
+        nameLabel.text = channelProperties.name
+        titleLabel.text = channelProperties.title
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -108,7 +117,7 @@ class VideoViewController: UIViewController {
     }
 
     private func configurePlayer() {
-        guard let mediaUrl = URL(string: channel.url) else {
+        guard let mediaUrl = URL(string: channelProperties.url) else {
             videoPlayer = AVPlayer()
             playerLayer = AVPlayerLayer()
             return
@@ -169,23 +178,20 @@ class VideoViewController: UIViewController {
     }
 
     private func fetchMediaItems() {
-        // Do the work in the background
-        DispatchQueue.global(qos: .userInitiated).async {
-            print("DEBUG: Fetch media items in order to get a quality list")
-            guard let mediaUrl = URL(string: self.channel.url) else {
-                print("DEBUG: The url is not valid.")
-                return
-            }
-            let parser = M3UParser(withUrl: mediaUrl)
-            if let mediaItems = try? parser.getMediaItems() {
-                DispatchQueue.main.async {
-                    self.mediaItems = mediaItems
-                    print("DEBUG: Got media assets. Count = \(mediaItems.count)")
-                    self.tableView.reloadData()
-                }
-            } else {
-                print("DEBUG: Could not fetch media assets.")
-            }
+        // TODO: Do the work in the background by passing channelID
+
+        print("DEBUG: Fetch media items in order to get a quality list")
+        guard let mediaUrl = URL(string: channelProperties.url) else {
+            showErrorMessage("The url \"\(channelProperties.url)\" is not valid.")
+            return
+        }
+        let parser = M3UParser(withUrl: mediaUrl)
+        if let mediaItems = try? parser.getMediaItems() {
+            self.mediaItems = mediaItems
+            print("DEBUG: Got media assets. Count = \(mediaItems.count)")
+            tableView.reloadData()
+        } else {
+            print("DEBUG: Could not fetch media assets.")
         }
     }
 

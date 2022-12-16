@@ -9,11 +9,18 @@ import Foundation
 import CoreData
 import OSLog
 
+protocol ChannelsProviderDelegate: AnyObject {
+    func dataDidUpdate()
+    func didGetError(_ error: Error)
+}
+
 final class ChannelsProvider {
 
     let url = URL(string: "http://limehd.online/playlist/channels.json")!
+    weak var delegate: ChannelsProviderDelegate?
     
     private var notificationToken: NSObjectProtocol?
+    private var notificationMergeToken: NSObjectProtocol?
 
     /// A peristent history token used for fetching transactions from the store.
     private var lastToken: NSPersistentHistoryToken?
@@ -21,7 +28,6 @@ final class ChannelsProvider {
     let logger = Logger(subsystem: "com.motodolphin.iTV", category: "persistence")
 
     static let shared = ChannelsProvider()
-
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "iTV")
@@ -48,7 +54,15 @@ final class ChannelsProvider {
         container.viewContext.automaticallyMergesChangesFromParent = false
         container.viewContext.name = "viewContext"
         /// - Tag: viewContextMergePolicy
-        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
+
+
+        // TODO: - if channel exists - update all fields except isFavorite while importing
+
+//        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+
+
         container.viewContext.undoManager = nil
         container.viewContext.shouldDeleteInaccessibleFaults = true
         return container
@@ -58,23 +72,29 @@ final class ChannelsProvider {
         // Observe Core Data remote change notifications on the queue where the changes were made.
         notificationToken = NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: nil, queue: nil, using: { _ in
             self.logger.debug("Received a persistent store remote change notification.")
-
             Task {
-//                do {
-                    try! await self.fetchPersistentHistoryTransactionsAndChanges()
-//                } catch {
-//                    delegate?.didGetError(error)
-//                }
+                do {
+                    try await self.fetchPersistentHistoryTransactionsAndChanges()
+                } catch {
+                    self.delegate?.didGetError(error)
+                }
             }
         })
 
-
-        // TODO: - Notify main thread to update UI
+        // Notify delegate in order to update UI
+        notificationMergeToken = NotificationCenter.default.addObserver(forName: NSManagedObjectContext.didMergeChangesObjectIDsNotification, object: persistentContainer.viewContext, queue: .main) { /*notification*/ _ in
+            self.logger.debug("Received a merge notification.")
+            self.delegate?.dataDidUpdate()
+        }
         
     }
 
     deinit {
         if let observer = notificationToken {
+            NotificationCenter.default.removeObserver(observer)
+        }
+
+        if let observer = notificationMergeToken {
             NotificationCenter.default.removeObserver(observer)
         }
     }
@@ -118,7 +138,8 @@ final class ChannelsProvider {
     /// Creates and configures a private queue context.
     private func newTaskContext() -> NSManagedObjectContext {
         let taskContext = persistentContainer.newBackgroundContext()
-        taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+//        taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        taskContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         return taskContext
     }
 
