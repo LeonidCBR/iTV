@@ -59,12 +59,13 @@ final class ChannelsProvider {
         notificationToken = NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: nil, queue: nil, using: { _ in
             self.logger.debug("Received a persistent store remote change notification.")
 
-
-            // TODO: - Fetch persistent history
-
-//            Task {
-//                await self.fetchPersistentHistory()
-//            }
+            Task {
+//                do {
+                    try! await self.fetchPersistentHistoryTransactionsAndChanges()
+//                } catch {
+//                    delegate?.didGetError(error)
+//                }
+            }
         })
 
 
@@ -78,6 +79,42 @@ final class ChannelsProvider {
         }
     }
 
+    private func fetchPersistentHistoryTransactionsAndChanges() async throws {
+        let taskContext = newTaskContext()
+        taskContext.name = "persistentHistoryContext"
+        logger.debug("Start fetching persistent history changes from the store...")
+
+        try await taskContext.perform {
+            // Execute the persistent history change since the last transaction.
+            /// - Tag: fetchHistory
+            let changeRequest = NSPersistentHistoryChangeRequest.fetchHistory(after: self.lastToken)
+            let historyResult = try taskContext.execute(changeRequest) as? NSPersistentHistoryResult
+            if let history = historyResult?.result as? [NSPersistentHistoryTransaction],
+               !history.isEmpty {
+                self.mergePersistentHistoryChanges(from: history)
+                return
+            }
+
+            self.logger.debug("No persistent history transactions found.")
+            throw ChannelError.persistentHistoryChangeError
+        }
+
+        logger.debug("Finished merging history changes.")
+    }
+
+    private func mergePersistentHistoryChanges(from history: [NSPersistentHistoryTransaction]) {
+        self.logger.debug("Received \(history.count) persistent history transactions.")
+        // Update view context with objectIDs from history change request.
+        /// - Tag: mergeChanges
+        let viewContext = persistentContainer.viewContext
+        viewContext.perform {
+            for transaction in history {
+                viewContext.mergeChanges(fromContextDidSave: transaction.objectIDNotification())
+                self.lastToken = transaction.token
+            }
+        }
+    }
+
     /// Creates and configures a private queue context.
     private func newTaskContext() -> NSManagedObjectContext {
         let taskContext = persistentContainer.newBackgroundContext()
@@ -87,6 +124,9 @@ final class ChannelsProvider {
 
     /// Fetches the channels feed from the remote server, and imports it into Core Data.
     func importChannels() async throws {
+
+        // TODO: use ApiClient
+
         let session = URLSession.shared
         guard let (data, response) = try? await session.data(from: url),
               let httpResponse = response as? HTTPURLResponse,
@@ -97,18 +137,10 @@ final class ChannelsProvider {
         }
 
         do {
-            // Decode the GeoJSON into a data model.
-            let jsonDecoder = JSONDecoder()
-            jsonDecoder.dateDecodingStrategy = .secondsSince1970
-            let geoJSON = try jsonDecoder.decode(GeoJSON.self, from: data)
-            let channelPropertiesList = geoJSON.channelPropertiesList
+            let channelPropertiesList = try getChannelPropertiesList(from: data)
             logger.debug("Received \(channelPropertiesList.count) records.")
 
-            let test = channelPropertiesList.first!
-            logger.debug("id=\(test.id) name=\(test.name) title=\(test.title)")
-
             // Import the GeoJSON into Core Data.
-            logger.debug("Start importing data to the store...")
             try await saveChannels(from: channelPropertiesList)
             logger.debug("Finished importing data.")
         } catch {
@@ -116,8 +148,17 @@ final class ChannelsProvider {
         }
     }
 
+    private func getChannelPropertiesList(from data: Data) throws -> [ChannelProperties] {
+        // Decode the GeoJSON into a data model.
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .secondsSince1970
+        let geoJSON = try jsonDecoder.decode(GeoJSON.self, from: data)
+        return geoJSON.channelPropertiesList
+    }
+
     /// Uses `NSBatchInsertRequest` (BIR) to import a JSON dictionary into the Core Data store on a private queue.
     private func saveChannels(from propertiesList: [ChannelProperties]) async throws {
+        logger.debug("Start importing data to the store...")
         guard !propertiesList.isEmpty else { return }
 
         let taskContext = newTaskContext()

@@ -14,7 +14,6 @@ class HomeController: UIViewController { // UITableViewController {
 
     // MARK: - Properties
 
-//    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let imageManager = ImageManager()
     private let channelCell = "channelCellIdentifier"
     private var channels: [Channel] = []
@@ -135,9 +134,14 @@ class HomeController: UIViewController { // UITableViewController {
      Update data in the DB if the channel exists and fields are mismatched.
      Add the channel to the DB if it does not exist.
     */
+//    @MainActor
     private func importChannelsFromAPI() {
         Task {
-            try! await ChannelsProvider.shared.importChannels()
+            do {
+                try await ChannelsProvider.shared.importChannels()
+            } catch {
+                showErrorMessage(error.localizedDescription)
+            }
         }
 /*
         print("DEBUG: Fetch from API")
