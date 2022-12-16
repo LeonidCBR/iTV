@@ -31,6 +31,9 @@ final class ImageManager {
         }
 
         ApiClient().downloadData(withUrl: imageUrl) { [weak self] result in
+
+            // TODO: use async/await
+
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
