@@ -17,6 +17,10 @@ protocol ChannelsProviderDelegate: AnyObject {
 final class ChannelsProvider {
 
     let url = URL(string: "http://limehd.online/playlist/channels.json")!
+
+    // update fields by json values if the channel exists
+    private let defaultMergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
     weak var delegate: ChannelsProviderDelegate?
     
     private var notificationToken: NSObjectProtocol?
@@ -54,15 +58,7 @@ final class ChannelsProvider {
         container.viewContext.automaticallyMergesChangesFromParent = false
         container.viewContext.name = "viewContext"
         /// - Tag: viewContextMergePolicy
-
-
-
-        // TODO: - if channel exists - update all fields except isFavorite while importing
-
-//        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-
-
+        container.viewContext.mergePolicy = defaultMergePolicy
         container.viewContext.undoManager = nil
         container.viewContext.shouldDeleteInaccessibleFaults = true
         return container
@@ -138,8 +134,7 @@ final class ChannelsProvider {
     /// Creates and configures a private queue context.
     private func newTaskContext() -> NSManagedObjectContext {
         let taskContext = persistentContainer.newBackgroundContext()
-//        taskContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        taskContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        taskContext.mergePolicy = defaultMergePolicy
         return taskContext
     }
 

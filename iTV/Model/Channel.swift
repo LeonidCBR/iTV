@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class Channel: NSManagedObject {
+final class Channel: NSManagedObject {
     // A unique identifier used to avoid duplicates in the persistent store.
     // Constrain the Channel entity on this attribute in the data model editor.
     @NSManaged var id: Int
@@ -18,4 +18,9 @@ class Channel: NSManagedObject {
     @NSManaged var image: String
     @NSManaged var title: String
     @NSManaged var isFavorite: Bool
+
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+        setPrimitiveValue(false, forKey: #keyPath(Channel.isFavorite))
+    }
 }

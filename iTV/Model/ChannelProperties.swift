@@ -67,8 +67,7 @@ struct ChannelProperties: Decodable {
             "name": name,
             "url": url,
             "image": image,
-            "title": title,
-            "isFavorite": false
+            "title": title
         ]
     }
 
