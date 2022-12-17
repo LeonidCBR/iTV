@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D70F2954292F2A0300AC5702 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2953292F2A0200AC5702 /* ApiClient.swift */; };
+		D70F2954292F2A0300AC5702 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2953292F2A0200AC5702 /* NetworkProvider.swift */; };
 		D70F2956292F2A7100AC5702 /* ChannelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2955292F2A7100AC5702 /* ChannelError.swift */; };
 		D70F2958292F2BE200AC5702 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2957292F2BE200AC5702 /* Constants.swift */; };
-		D70F295A292F35A100AC5702 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2959292F35A100AC5702 /* ImageManager.swift */; };
+		D70F295A292F35A100AC5702 /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2959292F35A100AC5702 /* ImageProvider.swift */; };
+		D70F4036294D8524003CB566 /* ChannelsProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F4035294D8524003CB566 /* ChannelsProviderTests.swift */; };
 		D7399AEA29332E7900825C60 /* FavoriteFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7399AE929332E7900825C60 /* FavoriteFilterOption.swift */; };
 		D7399AEE293387DE00825C60 /* FavoriteFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7399AED293387DE00825C60 /* FavoriteFilterView.swift */; };
 		D7399AF0293388D000825C60 /* FavoriteFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7399AEF293388D000825C60 /* FavoriteFilterCell.swift */; };
@@ -20,6 +21,7 @@
 		D774910B293ED6F4002CE2D0 /* ChannelsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */; };
 		D785D9F3294988470011A79F /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D785D9F2294988470011A79F /* Channel.swift */; };
 		D7A7FFFF294C2E4F001AA01F /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A7FFFE294C2E4F001AA01F /* GeoJSON.swift */; };
+		D7E965A8294D936F009ABB77 /* channels.json in Resources */ = {isa = PBXBuildFile; fileRef = D7E965A7294D936F009ABB77 /* channels.json */; };
 		D7FA0F17292D9D3F00EEFD17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */; };
 		D7FA0F19292D9D3F00EEFD17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */; };
 		D7FA0F21292D9D3F00EEFD17 /* iTV.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F1F292D9D3F00EEFD17 /* iTV.xcdatamodeld */; };
@@ -29,14 +31,25 @@
 		D7FA0F31292DAAE400EEFD17 /* ChannelProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F30292DAAE400EEFD17 /* ChannelProperties.swift */; };
 		D7FA0F35292DACBB00EEFD17 /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F34292DACBB00EEFD17 /* ChannelCell.swift */; };
 		D7FA0F39292DADD500EEFD17 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F38292DADD500EEFD17 /* Extensions.swift */; };
-		D7FA0F3F292E2AF200EEFD17 /* channels.json in Resources */ = {isa = PBXBuildFile; fileRef = D7FA0F3E292E2AF100EEFD17 /* channels.json */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D70F4030294D8287003CB566 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7FA0F0B292D9D3F00EEFD17 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7FA0F12292D9D3F00EEFD17;
+			remoteInfo = iTV;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		D70F2953292F2A0200AC5702 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		D70F2953292F2A0200AC5702 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		D70F2955292F2A7100AC5702 /* ChannelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelError.swift; sourceTree = "<group>"; };
 		D70F2957292F2BE200AC5702 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		D70F2959292F35A100AC5702 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		D70F2959292F35A100AC5702 /* ImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProvider.swift; sourceTree = "<group>"; };
+		D70F402C294D8287003CB566 /* iTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D70F4035294D8524003CB566 /* ChannelsProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsProviderTests.swift; sourceTree = "<group>"; };
 		D7399AE929332E7900825C60 /* FavoriteFilterOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFilterOption.swift; sourceTree = "<group>"; };
 		D7399AED293387DE00825C60 /* FavoriteFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFilterView.swift; sourceTree = "<group>"; };
 		D7399AEF293388D000825C60 /* FavoriteFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFilterCell.swift; sourceTree = "<group>"; };
@@ -46,6 +59,7 @@
 		D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsProvider.swift; sourceTree = "<group>"; };
 		D785D9F2294988470011A79F /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		D7A7FFFE294C2E4F001AA01F /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSON.swift; sourceTree = "<group>"; };
+		D7E965A7294D936F009ABB77 /* channels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels.json; sourceTree = "<group>"; };
 		D7FA0F13292D9D3F00EEFD17 /* iTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,10 +71,16 @@
 		D7FA0F30292DAAE400EEFD17 /* ChannelProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelProperties.swift; sourceTree = "<group>"; };
 		D7FA0F34292DACBB00EEFD17 /* ChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
 		D7FA0F38292DADD500EEFD17 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		D7FA0F3E292E2AF100EEFD17 /* channels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D70F4029294D8287003CB566 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7FA0F10292D9D3F00EEFD17 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,21 +91,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D70F2952292F29DA00AC5702 /* API */ = {
+		D70F2952292F29DA00AC5702 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
-				D70F2953292F2A0200AC5702 /* ApiClient.swift */,
 				D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */,
-				D70F2959292F35A100AC5702 /* ImageManager.swift */,
-				D73EC89B29347F3F00C71BAF /* M3UParser.swift */,
+				D70F2953292F2A0200AC5702 /* NetworkProvider.swift */,
+				D70F2959292F35A100AC5702 /* ImageProvider.swift */,
 			);
-			path = API;
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		D70F4027294D81E3003CB566 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D7FA0F22292D9D4500EEFD17 /* Assets.xcassets */,
+				D7FA0F24292D9D4500EEFD17 /* LaunchScreen.storyboard */,
+				D7FA0F27292D9D4500EEFD17 /* Info.plist */,
+				D7FA0F1F292D9D3F00EEFD17 /* iTV.xcdatamodeld */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D70F402D294D8287003CB566 /* iTVTests */ = {
+			isa = PBXGroup;
+			children = (
+				D70F4037294D8F35003CB566 /* Mocks */,
+				D70F4035294D8524003CB566 /* ChannelsProviderTests.swift */,
+			);
+			path = iTVTests;
+			sourceTree = "<group>";
+		};
+		D70F4037294D8F35003CB566 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				D7E965A7294D936F009ABB77 /* channels.json */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		D7FA0F0A292D9D3F00EEFD17 = {
 			isa = PBXGroup;
 			children = (
 				D7FA0F15292D9D3F00EEFD17 /* iTV */,
+				D70F402D294D8287003CB566 /* iTVTests */,
 				D7FA0F14292D9D3F00EEFD17 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				D7FA0F13292D9D3F00EEFD17 /* iTV.app */,
+				D70F402C294D8287003CB566 /* iTVTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,52 +150,49 @@
 		D7FA0F15292D9D3F00EEFD17 /* iTV */ = {
 			isa = PBXGroup;
 			children = (
-				D70F2952292F29DA00AC5702 /* API */,
+				D7FA0F2F292DAACA00EEFD17 /* Models */,
+				D7FA0F32292DAB1600EEFD17 /* Views */,
+				D7FA0F33292DAB1F00EEFD17 /* Controllers */,
+				D70F2952292F29DA00AC5702 /* Providers */,
 				D7FA0F37292DADAE00EEFD17 /* Utils */,
-				D7FA0F2F292DAACA00EEFD17 /* Model */,
-				D7FA0F32292DAB1600EEFD17 /* View */,
-				D7FA0F33292DAB1F00EEFD17 /* Controller */,
+				D70F4027294D81E3003CB566 /* Resources */,
 				D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */,
 				D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */,
-				D7FA0F22292D9D4500EEFD17 /* Assets.xcassets */,
-				D7FA0F24292D9D4500EEFD17 /* LaunchScreen.storyboard */,
-				D7FA0F27292D9D4500EEFD17 /* Info.plist */,
-				D7FA0F1F292D9D3F00EEFD17 /* iTV.xcdatamodeld */,
-				D7FA0F3E292E2AF100EEFD17 /* channels.json */,
 			);
 			path = iTV;
 			sourceTree = "<group>";
 		};
-		D7FA0F2F292DAACA00EEFD17 /* Model */ = {
+		D7FA0F2F292DAACA00EEFD17 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D785D9F2294988470011A79F /* Channel.swift */,
+				D70F2955292F2A7100AC5702 /* ChannelError.swift */,
 				D7A7FFFE294C2E4F001AA01F /* GeoJSON.swift */,
 				D7FA0F30292DAAE400EEFD17 /* ChannelProperties.swift */,
 				D7399AE929332E7900825C60 /* FavoriteFilterOption.swift */,
-				D70F2955292F2A7100AC5702 /* ChannelError.swift */,
+				D73EC89B29347F3F00C71BAF /* M3UParser.swift */,
 				D73EC89929347EEB00C71BAF /* MediaItem.swift */,
-				D785D9F2294988470011A79F /* Channel.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		D7FA0F32292DAB1600EEFD17 /* View */ = {
+		D7FA0F32292DAB1600EEFD17 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				D7FA0F34292DACBB00EEFD17 /* ChannelCell.swift */,
 				D7399AEF293388D000825C60 /* FavoriteFilterCell.swift */,
 				D7399AED293387DE00825C60 /* FavoriteFilterView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		D7FA0F33292DAB1F00EEFD17 /* Controller */ = {
+		D7FA0F33292DAB1F00EEFD17 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				D7FA0F2D292D9FDB00EEFD17 /* HomeController.swift */,
 				D75AC1102931E18E00FFCBCB /* VideoViewController.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		D7FA0F37292DADAE00EEFD17 /* Utils */ = {
@@ -161,6 +207,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D70F402B294D8287003CB566 /* iTVTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D70F4032294D8287003CB566 /* Build configuration list for PBXNativeTarget "iTVTests" */;
+			buildPhases = (
+				D70F4028294D8287003CB566 /* Sources */,
+				D70F4029294D8287003CB566 /* Frameworks */,
+				D70F402A294D8287003CB566 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D70F4031294D8287003CB566 /* PBXTargetDependency */,
+			);
+			name = iTVTests;
+			productName = iTVTests;
+			productReference = D70F402C294D8287003CB566 /* iTVTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D7FA0F12292D9D3F00EEFD17 /* iTV */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7FA0F2A292D9D4500EEFD17 /* Build configuration list for PBXNativeTarget "iTV" */;
@@ -188,6 +252,10 @@
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					D70F402B294D8287003CB566 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = D7FA0F12292D9D3F00EEFD17;
+					};
 					D7FA0F12292D9D3F00EEFD17 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -207,17 +275,25 @@
 			projectRoot = "";
 			targets = (
 				D7FA0F12292D9D3F00EEFD17 /* iTV */,
+				D70F402B294D8287003CB566 /* iTVTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D70F402A294D8287003CB566 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7E965A8294D936F009ABB77 /* channels.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7FA0F11292D9D3F00EEFD17 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D7FA0F26292D9D4500EEFD17 /* LaunchScreen.storyboard in Resources */,
-				D7FA0F3F292E2AF200EEFD17 /* channels.json in Resources */,
 				D7FA0F23292D9D4500EEFD17 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,6 +301,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D70F4028294D8287003CB566 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D70F4036294D8524003CB566 /* ChannelsProviderTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7FA0F0F292D9D3F00EEFD17 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -235,9 +319,9 @@
 				D73EC89C29347F3F00C71BAF /* M3UParser.swift in Sources */,
 				D70F2958292F2BE200AC5702 /* Constants.swift in Sources */,
 				D7A7FFFF294C2E4F001AA01F /* GeoJSON.swift in Sources */,
-				D70F295A292F35A100AC5702 /* ImageManager.swift in Sources */,
+				D70F295A292F35A100AC5702 /* ImageProvider.swift in Sources */,
 				D7399AEA29332E7900825C60 /* FavoriteFilterOption.swift in Sources */,
-				D70F2954292F2A0300AC5702 /* ApiClient.swift in Sources */,
+				D70F2954292F2A0300AC5702 /* NetworkProvider.swift in Sources */,
 				D75AC1112931E18E00FFCBCB /* VideoViewController.swift in Sources */,
 				D7FA0F35292DACBB00EEFD17 /* ChannelCell.swift in Sources */,
 				D7399AF0293388D000825C60 /* FavoriteFilterCell.swift in Sources */,
@@ -254,6 +338,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D70F4031294D8287003CB566 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7FA0F12292D9D3F00EEFD17 /* iTV */;
+			targetProxy = D70F4030294D8287003CB566 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		D7FA0F24292D9D4500EEFD17 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -266,6 +358,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D70F4033294D8287003CB566 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 973295K87L;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motodolphin.iTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTV.app/iTV";
+			};
+			name = Debug;
+		};
+		D70F4034294D8287003CB566 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 973295K87L;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motodolphin.iTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTV.app/iTV";
+			};
+			name = Release;
+		};
 		D7FA0F28292D9D4500EEFD17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -317,6 +445,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -372,6 +501,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -391,7 +521,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 973295K87L;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iTV/Info.plist;
+				INFOPLIST_FILE = iTV/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -418,7 +548,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 973295K87L;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iTV/Info.plist;
+				INFOPLIST_FILE = iTV/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -439,6 +569,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D70F4032294D8287003CB566 /* Build configuration list for PBXNativeTarget "iTVTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D70F4033294D8287003CB566 /* Debug */,
+				D70F4034294D8287003CB566 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D7FA0F0E292D9D3F00EEFD17 /* Build configuration list for PBXProject "iTV" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -29,6 +29,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       enableASanStackUseAfterReturn = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D70F402B294D8287003CB566"
+               BuildableName = "iTVTests.xctest"
+               BlueprintName = "iTVTests"
+               ReferencedContainer = "container:iTV.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

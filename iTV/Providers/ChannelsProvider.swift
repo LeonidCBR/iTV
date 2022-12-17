@@ -16,6 +16,10 @@ protocol ChannelsProviderDelegate: AnyObject {
 
 final class ChannelsProvider {
 
+    // MARK: - Properties
+
+    let logger = Logger(subsystem: "com.motodolphin.iTV", category: "persistence")
+
     let url = URL(string: "http://limehd.online/playlist/channels.json")!
 
     // update fields by json values if the channel exists
@@ -28,8 +32,6 @@ final class ChannelsProvider {
 
     /// A peristent history token used for fetching transactions from the store.
     private var lastToken: NSPersistentHistoryToken?
-
-    let logger = Logger(subsystem: "com.motodolphin.iTV", category: "persistence")
 
     static let shared = ChannelsProvider()
 
@@ -64,6 +66,9 @@ final class ChannelsProvider {
         return container
     }()
 
+
+    // MARK: - Lifecycle
+
     private init() {
         // Observe Core Data remote change notifications on the queue where the changes were made.
         notificationToken = NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: nil, queue: nil, using: { _ in
@@ -95,6 +100,9 @@ final class ChannelsProvider {
         }
     }
 
+
+    // MARK: - Methods
+    
     private func fetchPersistentHistoryTransactionsAndChanges() async throws {
         let taskContext = newTaskContext()
         taskContext.name = "persistentHistoryContext"
@@ -141,7 +149,7 @@ final class ChannelsProvider {
     /// Fetches the channels feed from the remote server, and imports it into Core Data.
     func importChannels() async throws {
 
-        // TODO: use ApiClient
+        // TODO: use NetworkProvider
 
         let session = URLSession.shared
         guard let (data, response) = try? await session.data(from: url),
@@ -153,7 +161,7 @@ final class ChannelsProvider {
         }
 
         do {
-            let channelPropertiesList = try getChannelPropertiesList(from: data)
+            let channelPropertiesList = try parseChannelPropertiesList(from: data)
             logger.debug("Received \(channelPropertiesList.count) records.")
 
             // Import the GeoJSON into Core Data.
@@ -164,7 +172,7 @@ final class ChannelsProvider {
         }
     }
 
-    private func getChannelPropertiesList(from data: Data) throws -> [ChannelProperties] {
+    func parseChannelPropertiesList(from data: Data) throws -> [ChannelProperties] {
         // Decode the GeoJSON into a data model.
         let jsonDecoder = JSONDecoder()
         jsonDecoder.dateDecodingStrategy = .secondsSince1970

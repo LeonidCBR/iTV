@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class M3UParser {
+struct M3UParser {
     let source: URL
 
     init(withUrl url: URL) {
@@ -24,7 +24,7 @@ final class M3UParser {
         var mediaItems = [MediaItem]()
 
         
-        // TODO: - Use ApiClient in order to get source data
+        // TODO: - Use NetworkProvider in order to get source data
         let lines = try String(contentsOf: source)
 
 

@@ -16,7 +16,6 @@ class VideoViewController: UIViewController {
     private let videoView = UIView()
     private var videoPlayer: AVPlayer!
     private var playerLayer: AVPlayerLayer!
-//    private var channel: Channel!
     private var channelProperties: ChannelProperties
     private let qualityCellIdentifier = "qualityCellIdentifier"
 
@@ -68,14 +67,6 @@ class VideoViewController: UIViewController {
 
 
     // MARK: - Lifecycle
-/*
-    init(with channel: Channel) {
-        self.channel = channel
-        nameLabel.text = channel.name
-        titleLabel.text = channel.title
-        super.init(nibName: nil, bundle: nil)
-    }
-*/
 
     init(with channelProperties: ChannelProperties) {
         self.channelProperties = channelProperties

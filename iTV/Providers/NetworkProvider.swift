@@ -1,5 +1,5 @@
 //
-//  ApiClient.swift
+//  NetworkProvider.swift
 //  iTV
 //
 //  Created by Яна Латышева on 24.11.2022.
@@ -10,13 +10,22 @@ import Foundation
 
 // TODO: - Use async / await
 
-final class ApiClient {
-    private let urlSession: URLSession
+final class NetworkProvider {
+
+    // MARK: - Properties
     
+    private let urlSession: URLSession
+
+
+    // MARK: - Lifecycle
+
     init(urlSession: URLSession = .shared) {
         self.urlSession = urlSession
     }
 
+
+    // MARK: - Methods
+    
     func downloadData(withUrl url: URL,
                       completionHandler: @escaping (Result<Data, ChannelError>) -> Void) {
         let request = URLRequest(url: url)

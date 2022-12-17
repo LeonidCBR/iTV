@@ -10,11 +10,11 @@ import AVFoundation
 import CoreData
 
 
-class HomeController: UIViewController { // UITableViewController {
+class HomeController: UIViewController {
 
     // MARK: - Properties
 
-    private let imageManager: ImageManager  //= ImageManager()
+    private let imageManager: ImageProvider
     private let channelCell = "channelCellIdentifier"
     private var channels: [Channel] = []
     private var searchBar: UISearchBar!
@@ -24,7 +24,7 @@ class HomeController: UIViewController { // UITableViewController {
 
     // MARK: - Lifecycle
 
-    init(with imageManager: ImageManager) {
+    init(with imageManager: ImageProvider) {
         self.imageManager = imageManager
         super.init(nibName: nil, bundle: nil)
     }
@@ -97,7 +97,8 @@ class HomeController: UIViewController { // UITableViewController {
      Reload the table view.
      */
     private func loadPersistentChannels() {
-        let favoriteFilterOption = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex)!
+        let idx = favoriteFilter.selectedSegmentIndex
+        let favoriteFilterOption = FavoriteFilterOption(rawValue: idx)!
         do {
             channels = try ChannelsProvider.shared.fetchChannels(searchText: searchBar.text, filter: favoriteFilterOption)
         tableView.reloadData()
@@ -105,37 +106,6 @@ class HomeController: UIViewController { // UITableViewController {
             let nserror = error as NSError
             showErrorMessage(nserror.localizedDescription)
         }
-/*
-        print("DEBUG: Loding from local DB")
-        let request: NSFetchRequest<Channel> = CDChannel.fetchRequest()
-
-        let favoriteFilterOption = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex)!
-        print("DEBUG: Filter index=\(favoriteFilterOption.description)")
-
-        if let queryText = searchBar.text, !queryText.isEmpty {
-            if case .favorites = favoriteFilterOption {
-                // search by name & favorite
-                request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@ AND isFavorite == YES", queryText)
-            } else {
-                // search by name
-                request.predicate = NSPredicate(format: "name BEGINSWITH[c] %@", queryText)
-            }
-        } else {
-            if case .favorites = favoriteFilterOption {
-                // only favorite
-                request.predicate = NSPredicate(format: "isFavorite == YES")
-            }
-        }
-
-        do {
-            channels = try context.fetch(request)
-            print("DEBUG: DB channels: \(channels?.count ?? 0)")
-            tableView.reloadData()
-        } catch {
-            let nserror = error as NSError
-            showErrorMessage(nserror.localizedDescription)
-        }
-*/
     }
 
     /**
@@ -144,7 +114,6 @@ class HomeController: UIViewController { // UITableViewController {
      Update data in the DB if the channel exists and fields are mismatched.
      Add the channel to the DB if it does not exist.
     */
-//    @MainActor
     private func importChannelsFromAPI() {
         Task {
             do {
@@ -153,164 +122,7 @@ class HomeController: UIViewController { // UITableViewController {
                 showErrorMessage(error.localizedDescription)
             }
         }
-/*
-        print("DEBUG: Fetch from API")
-        let channelsUrl = URL(string: K.channelsUrlString)!
-        ApiClient().downloadData(withUrl: channelsUrl) { [weak self] result in
-            let backgroundQueue = DispatchQueue(label: "com.motodolphin.iTVbg")
-            backgroundQueue.async {
-                switch result {
-                case .success(let jsonData):
-                    do {
-                        print("DEBUG: Parsing json data")
-                        let feed = try JSONDecoder().decode(Feed.self, from: jsonData)
-                        let apiChannels = feed.channels
-                        try self?.syncData(with: apiChannels)
-
-                    } catch {
-                        DispatchQueue.main.async {
-                            self?.showErrorMessage(error.localizedDescription)
-                        }
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        self?.showErrorMessage(error.localizedDescription)
-                    }
-                } // switch
-            } // backgroundQueue
-        } // ApiClient().downloadData
-
-*/
     }
-
-    /**
-     Create a new background context.
-     Fetch data in the context.
-     Look through the api channels, compare data, update it accordingly.
-     Save the context.
-     Notify the main thread to reload data from DB and update UI.
-    */
-/*
-    private func syncData(with apiChannels: [ChannelProperties]) throws {
-
-        // TODO: Do a refactoring
-
-        print("DEBUG: Sync data...")
-        let bgContainer = NSPersistentContainer(name: "iTV")
-        bgContainer.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                DispatchQueue.main.async {
-                    self.showErrorMessage(error.localizedDescription)
-                }
-            }
-        })
-        let bgContext = bgContainer.newBackgroundContext()
-
-        // Fetch only count of records
-        let bgRequest: NSFetchRequest<CDChannel> = CDChannel.fetchRequest()
-        let countChannels = try bgContext.count(for: bgRequest)
-
-        print("DEBUG: There \(countChannels) channels in the DB and \(apiChannels.count) API channels.")
-        if countChannels != apiChannels.count {
-            print("DEBUG: Clear all records in DB")
-            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "CDChannel")
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            try bgContext.execute(deleteRequest)
-            print("DEBUG: Saving apiChannels to DB...")
-            apiChannels.forEach { apiChannel in
-                // Add new channel to DB
-                let newChannel = CDChannel(context: bgContext)
-                newChannel.id = Int64(apiChannel.id)
-                newChannel.name = apiChannel.name
-                newChannel.url = apiChannel.url
-                newChannel.image = apiChannel.image
-                newChannel.title = apiChannel.title
-            }
-            print("DEBUG: Save context")
-            saveContext(bgContext)
-            // Notify main thread to reload data and update UI
-            DispatchQueue.main.async {
-                print("DEBUG: Notify main thread")
-                self.loadPersistentChannels()
-            }
-
-        } else {
-            print("DEBUG: Counts are match. Compare the data by iterating API channels.")
-            let bgChannels = try bgContext.fetch(bgRequest)
-            apiChannels.forEach { apiChannel in
-                if let channel = bgChannels.first(where: { $0.id == apiChannel.id }) {
-                    // Channel already exists. Check the fields.
-                    if channel.name != apiChannel.name ||
-                        channel.url != apiChannel.url ||
-                        channel.image != apiChannel.image ||
-                        channel.title != apiChannel.title {
-                        channel.name = apiChannel.name
-                        channel.url = apiChannel.url
-                        channel.image = apiChannel.image
-                        channel.title = apiChannel.title
-                    }
-                } else {
-                    // Add new channel to DB
-                    let newChannel = CDChannel(context: bgContext)
-                    newChannel.id = Int64(apiChannel.id)
-                    newChannel.name = apiChannel.name
-                    newChannel.url = apiChannel.url
-                    newChannel.image = apiChannel.image
-                    newChannel.title = apiChannel.title
-                }
-            } // apiChannels.forEach
-
-            if bgContext.hasChanges {
-                print("DEBUG: There are changes. Save background context.")
-                saveContext(bgContext)
-                // notify main thread to reload data
-                DispatchQueue.main.async {
-                    print("DEBUG: Notify main thread")
-                    self.loadPersistentChannels()
-                }
-            } else {
-                print("DEBUG: There is nothing to change.")
-            }
-        } // if countChannels != apiChannels.count
-    }
-*/
-
-/*
-    private func reloadCells(with ids: [Int64]) {
-        let paths = ids.compactMap { channelId -> IndexPath? in
-            if let rowId = channels?.firstIndex(where: { $0.id == channelId }) {
-                return IndexPath(row: rowId, section: 0)
-            } else {
-                return nil
-            }
-        }
-        tableView.reloadRows(at: paths, with: .none)
-    }
-*/
-
-/*
-    private func saveContext(_ context: NSManagedObjectContext) {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                DispatchQueue.main.async {
-                    let nserror = error as NSError
-                    self.showErrorMessage("\(nserror), \(nserror.userInfo)")
-                }
-            }
-        }
-    }
-*/
-/*
-    private func showErrorMessage(_ message: String) {
-        print(message)
-        let alertController = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "OK", style: .default)
-        alertController.addAction(alertAction)
-        present(alertController, animated: true)
-    }
-*/
 
 }
 
@@ -402,8 +214,6 @@ extension HomeController: ChannelCellDelegate {
     func favoriteChanged(cell: UITableViewCell, channel: Channel, isFavorite: Bool) {
         if let row = tableView.indexPath(for: cell)?.row {
             channels[row].isFavorite = isFavorite
-
-//            saveContext(context)
             ChannelsProvider.shared.saveContext()
         }
     }

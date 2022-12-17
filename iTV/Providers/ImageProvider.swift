@@ -1,5 +1,5 @@
 //
-//  ImageManager.swift
+//  ImageProvider.swift
 //  iTV
 //
 //  Created by Яна Латышева on 24.11.2022.
@@ -7,15 +7,23 @@
 
 import UIKit
 
-final class ImageManager {
+final class ImageProvider {
 
-    private let apiClient: ApiClient
+    // MARK: - Properties
+    
+    private let apiClient: NetworkProvider
     private let cacheImages = NSCache<NSString, UIImage>()
 
-    init(with apiClient: ApiClient) {
+
+    // MARK: - Lifecycle
+
+    init(with apiClient: NetworkProvider) {
         self.apiClient = apiClient
     }
 
+
+    // MARK: - Methods
+    
     func clearCache() {
         cacheImages.removeAllObjects()
     }
