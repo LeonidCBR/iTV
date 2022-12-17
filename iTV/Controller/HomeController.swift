@@ -14,7 +14,7 @@ class HomeController: UIViewController { // UITableViewController {
 
     // MARK: - Properties
 
-    private let imageManager = ImageManager()
+    private let imageManager: ImageManager  //= ImageManager()
     private let channelCell = "channelCellIdentifier"
     private var channels: [Channel] = []
     private var searchBar: UISearchBar!
@@ -23,6 +23,15 @@ class HomeController: UIViewController { // UITableViewController {
 
 
     // MARK: - Lifecycle
+
+    init(with imageManager: ImageManager) {
+        self.imageManager = imageManager
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        return nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

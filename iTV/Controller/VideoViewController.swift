@@ -17,7 +17,7 @@ class VideoViewController: UIViewController {
     private var videoPlayer: AVPlayer!
     private var playerLayer: AVPlayerLayer!
 //    private var channel: Channel!
-    private var channelProperties: ChannelProperties!
+    private var channelProperties: ChannelProperties
     private let qualityCellIdentifier = "qualityCellIdentifier"
 
     private lazy var dismissButton: UIButton = {
@@ -89,7 +89,7 @@ class VideoViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        return nil
     }
 
     override func viewDidLoad() {

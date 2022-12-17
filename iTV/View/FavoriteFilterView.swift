@@ -33,7 +33,11 @@ class FavoriteFilterView: UIView {
     private let optionsCount: CGFloat = CGFloat(FavoriteFilterOption.allCases.count)
     private let filterCellIdentifier = "FavoriteFilterCell"
     weak var delegate: FavoriteFilterViewDelegate?
-    var selectedSegmentIndex: Int = 0
+    private(set) var selectedSegmentIndex: Int = 0 {
+        didSet {
+            delegate?.filterValueChanged()
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,6 +99,6 @@ extension FavoriteFilterView: UICollectionViewDelegate, UICollectionViewDataSour
             self.layoutIfNeeded()
         }
         selectedSegmentIndex = indexPath.row
-        delegate?.filterValueChanged()
+//        delegate?.filterValueChanged()
     }
 }

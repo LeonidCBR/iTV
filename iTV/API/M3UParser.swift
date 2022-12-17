@@ -22,7 +22,12 @@ final class M3UParser {
         // TODO: Consider to use AVAsset, AVAssetTrack, AVMetadataItem
 
         var mediaItems = [MediaItem]()
+
+        
+        // TODO: - Use ApiClient in order to get source data
         let lines = try String(contentsOf: source)
+
+
         var title = ""
         var bitRateString = ""
         lines.enumerateLines { line, _ in

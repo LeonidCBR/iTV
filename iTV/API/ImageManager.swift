@@ -9,7 +9,12 @@ import UIKit
 
 final class ImageManager {
 
+    private let apiClient: ApiClient
     private let cacheImages = NSCache<NSString, UIImage>()
+
+    init(with apiClient: ApiClient) {
+        self.apiClient = apiClient
+    }
 
     func clearCache() {
         cacheImages.removeAllObjects()
@@ -30,7 +35,7 @@ final class ImageManager {
             return
         }
 
-        ApiClient().downloadData(withUrl: imageUrl) { [weak self] result in
+        apiClient.downloadData(withUrl: imageUrl) { [weak self] result in
 
             // TODO: use async/await
 

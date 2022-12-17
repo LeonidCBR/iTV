@@ -7,6 +7,9 @@
 
 import Foundation
 
+
+// TODO: - Use async / await
+
 final class ApiClient {
     private let urlSession: URLSession
     
