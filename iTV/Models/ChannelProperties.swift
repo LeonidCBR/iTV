@@ -13,6 +13,7 @@ struct ChannelProperties: Decodable {
         case id
         case name = "name_ru"
         case url
+        // TODO: Consider to rename to "imagePath"
         case image
         case current
     }

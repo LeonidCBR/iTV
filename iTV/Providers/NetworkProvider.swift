@@ -26,43 +26,33 @@ final class NetworkProvider {
 
     // MARK: - Methods
     
-    func downloadData(withUrl url: URL,
-                      completionHandler: @escaping (Result<Data, ChannelError>) -> Void) {
+    func downloadData(withUrl url: URL) async throws -> Data {
         let request = URLRequest(url: url)
-        downloadData(with: request, completionHandler: completionHandler)
+        let data = try await downloadData(with: request)
+        return data
     }
 
-    func downloadData(with request: URLRequest,
-                      completionHandler: @escaping (Result<Data, ChannelError>) -> Void) {
-        let dataTask = urlSession.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completionHandler(.failure(.urlSessionError(error)))
-                return
-            }
-
-            guard let httpResponse = response as? HTTPURLResponse else {
-                completionHandler(.failure(.noResponse))
-                return
-            }
-
-            if !(200...299).contains(httpResponse.statusCode) {
-                let code = httpResponse.statusCode
-                if code == 401 {
-                    completionHandler(.failure(.unauthorized))
-                } else {
-                    completionHandler(.failure(.unhandledError(code)))
-                }
-                return
-            }
-
-            guard let mimeType = httpResponse.mimeType,
-                  (mimeType == "application/json") || ( mimeType.hasPrefix("image") ),
-                  let data = data else {
-                      completionHandler(.failure(.unexpectedData))
-                      return
-            }
-            completionHandler(.success(data))
+    func downloadData(with request: URLRequest) async throws -> Data {
+        let (data, response) = try await urlSession.data(for: request)
+        // Check response
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw ChannelError.noResponse
         }
-        dataTask.resume()
+        // Check status code
+        let code = httpResponse.statusCode
+        if !(200...299).contains(code) {
+            if code == 401 {
+                throw ChannelError.unauthorized
+            } else {
+                throw ChannelError.unhandledError(code)
+            }
+        }
+        // Check mime type
+        guard let mimeType = httpResponse.mimeType,
+              (mimeType == "application/json") || ( mimeType.hasPrefix("image") ) else {
+                  throw ChannelError.unexpectedData
+              }
+        return data
     }
+
 }

@@ -14,7 +14,7 @@ class HomeController: UIViewController {
 
     // MARK: - Properties
 
-    private let imageManager: ImageProvider
+    private let imageProvider: ImageProvider
     private let channelCell = "channelCellIdentifier"
     private var channels: [Channel] = []
     private var searchBar: UISearchBar!
@@ -24,8 +24,8 @@ class HomeController: UIViewController {
 
     // MARK: - Lifecycle
 
-    init(with imageManager: ImageProvider) {
-        self.imageManager = imageManager
+    init(with imageProvider: ImageProvider) {
+        self.imageProvider = imageProvider
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -150,27 +150,54 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             print("DEBUG: ID[\(channels[indexPath.row].id)] image is nil or empty.")
             return cell
         }
-        imageManager.downloadImage(with: imagePath) { result, path in
-            guard path == imagePath else {
-                print("DEBUG: Image path mismatch")
-                return
+
+        /* Should we use something like that?
+
+         cell.imagePath = imagePath
+         cell.setLogoImage(to: channelImage)
+
+         struct ChannelImage {
+            let image: UIImage
+            let path: String
+         }
+
+         func setLogoImage(to channelImage: ChannelImage) {
+            if channelImage.path == imagePath {
+                logoImage.image = channelImage.image
             }
-            if case .success(let image) = result {
+         }
+         */
+
+        Task {
+            if let image = try? await imageProvider.fetchImage(withPath: imagePath) {
                 cell.setLogoImage(to: image)
             }
         }
+//        imageManager.downloadImage(with: imagePath) { result, path in
+//            guard path == imagePath else {
+//                print("DEBUG: Image path mismatch")
+//                return
+//            }
+//            if case .success(let image) = result {
+//                cell.setLogoImage(to: image)
+//            }
+//        }
         return cell
     }
 
+    /**
+     There are two possible cases when we select a row:
+        1. The channel will be removed from the favorites and from the table,
+           if the favorite tab has been selected.
+        2. Present a video view controller while the "All" channels filter has been selected.
+     */
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        // Check if all channels are selected
+        // Check if "All" channels filter has been selected
         guard case .all = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex) else {
-            /**
-             There is the favorite tab has been selected
-             Delete the channel from favorites and update UI
-            */
+            /// Case 1.
+            /// Delete the channel from favorites and update UI
             print("DEBUG: Delete channel from favorites")
             let channel = channels[indexPath.row]
             channel.isFavorite = false
@@ -186,14 +213,16 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             return
         }
 
-        // Открываем плеер, так как выбраны "Все" каналы
+        /// Case 2.
+        /// Present a video view controller
         let channel = channels[indexPath.row]
         guard let _ = URL(string: channel.url) else {
             showErrorMessage("Неверная ссылка!")
             return
         }
         let channelProperties = ChannelProperties(from: channel)
-        let videoViewController = VideoViewController(with: channelProperties)
+        let videoViewController = VideoViewController(with: channelProperties, imageProvider: imageProvider)
+/*
         if !channel.image.isEmpty {
             imageManager.downloadImage(with: channel.image) { result, path in
                 if case .success(let image) = result {
@@ -201,8 +230,9 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
+*/
         videoViewController.modalPresentationStyle = .fullScreen
-        present(videoViewController, animated: true, completion: nil)
+        present(videoViewController, animated: true)
     }
 
 }

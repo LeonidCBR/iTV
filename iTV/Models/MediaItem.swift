@@ -7,6 +7,36 @@
 
 import Foundation
 
+// TODO: Use BitRateOption instead of MediaItem
+
+/*
+enum BitRateOption: CaseIterable {
+    case p240
+    case p360
+    case p480
+    case p720
+    case p1080
+    case k2
+    case k4
+    case Auto
+}
+
+extension BitRateOption: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .p240: return "240p"
+        case .p360: return "360p"
+        case .p480: return "480p"
+        case .p720: return "720p"
+        case .p1080: return "1080p"
+        case .k2: return "2k"
+        case .k4: return "4k"
+        case .Auto: return "Auto"
+        }
+    }
+}
+*/
+
 struct MediaItem {
     let title: String?
     let urlString: String?

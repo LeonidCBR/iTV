@@ -7,6 +7,8 @@
 
 import Foundation
 
+// TODO: Get rid of this struct
+/*
 struct M3UParser {
     let source: URL
 
@@ -57,3 +59,4 @@ struct M3UParser {
         return mediaItems
     }
 }
+*/

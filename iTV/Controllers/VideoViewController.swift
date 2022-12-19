@@ -17,6 +17,7 @@ class VideoViewController: UIViewController {
     private var videoPlayer: AVPlayer!
     private var playerLayer: AVPlayerLayer!
     private var channelProperties: ChannelProperties
+    private let imageProvider: ImageProvider
     private let qualityCellIdentifier = "qualityCellIdentifier"
 
     private lazy var dismissButton: UIButton = {
@@ -68,8 +69,9 @@ class VideoViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    init(with channelProperties: ChannelProperties) {
+    init(with channelProperties: ChannelProperties, imageProvider: ImageProvider) {
         self.channelProperties = channelProperties
+        self.imageProvider = imageProvider
         nameLabel.text = channelProperties.name
         titleLabel.text = channelProperties.title
         super.init(nibName: nil, bundle: nil)
@@ -92,7 +94,11 @@ class VideoViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         videoPlayer.play()
-        fetchMediaItems()
+
+
+        //fetchMediaItems()
+
+        
     }
 
     override func viewDidLayoutSubviews() {
@@ -107,6 +113,85 @@ class VideoViewController: UIViewController {
         return .landscapeLeft
     }
 
+    private func configureUI() {
+        view.backgroundColor = .black
+        configureVideoView()
+        configureDismissButton()
+        configureSettingsButton()
+        configureLogoImage()
+        configureTitleLabel()
+        configureNameLabel()
+        configureTableView()
+        configurePlayer()
+    }
+
+    private func configureVideoView() {
+        view.addSubview(videoView)
+        videoView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                         bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                         leading: view.safeAreaLayoutGuide.leadingAnchor,
+                         trailing: view.safeAreaLayoutGuide.trailingAnchor)
+    }
+
+    private func configureDismissButton() {
+        view.addSubview(dismissButton)
+        dismissButton.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor,
+                             paddingLeading: 23.0,
+                             width: 18,
+                             height: 18)
+    }
+
+    private func configureSettingsButton() {
+        view.addSubview(settingsButton)
+        settingsButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                              paddingBottom: 31.0,
+                              trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                              paddingTrailing: 19.0,
+                              width: 18,
+                              height: 18)
+    }
+
+    private func configureLogoImage() {
+        view.addSubview(logoImage)
+        logoImage.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                         paddingTop: 12,
+                         leading: dismissButton.trailingAnchor,
+                         paddingLeading: 23,
+                         width: 44.0,
+                         height: 44.0)
+        dismissButton.centerYAnchor.constraint(equalTo: logoImage.centerYAnchor).isActive = true
+
+        guard !channelProperties.image.isEmpty else { return }
+        Task {
+            let image = try? await imageProvider.fetchImage(withPath: channelProperties.image)
+            logoImage.image = image
+        }
+    }
+
+    private func configureTitleLabel() {
+        view.addSubview(titleLabel)
+        titleLabel.anchor(top: logoImage.topAnchor,
+                          leading: logoImage.trailingAnchor,
+                          paddingLeading: 24.0,
+                          trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                          paddingTrailing: 23.0)
+    }
+
+    private func configureNameLabel() {
+        view.addSubview(nameLabel)
+        nameLabel.anchor(top: titleLabel.bottomAnchor, paddingTop: 2.0,
+                         leading: titleLabel.leadingAnchor,
+                         trailing: titleLabel.trailingAnchor)
+    }
+
+    private func configureTableView() {
+        view.addSubview(tableView)
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 100.0,
+                    bottom: settingsButton.topAnchor, paddingBottom: 20.0,
+                    trailing: view.safeAreaLayoutGuide.trailingAnchor, paddingTrailing: 16.0,
+                    width: 100.0)
+    }
+
     private func configurePlayer() {
         guard let mediaUrl = URL(string: channelProperties.url) else {
             videoPlayer = AVPlayer()
@@ -119,56 +204,12 @@ class VideoViewController: UIViewController {
         playerLayer.videoGravity = .resize
         videoView.layer.addSublayer(playerLayer)
     }
-
-    private func configureUI() {
-        view.backgroundColor = .black
-        view.addSubview(videoView)
-        videoView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                         bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                         leading: view.safeAreaLayoutGuide.leadingAnchor,
-                         trailing: view.safeAreaLayoutGuide.trailingAnchor)
-
-        view.addSubview(dismissButton)
-        dismissButton.anchor(leading: view.safeAreaLayoutGuide.leadingAnchor, paddingLeading: 23.0,
-                             width: 18,
-                             height: 18)
-
-        view.addSubview(settingsButton)
-        settingsButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 31.0,
-                              trailing: view.safeAreaLayoutGuide.trailingAnchor, paddingTrailing: 19.0,
-                              width: 18,
-                              height: 18)
-
-        view.addSubview(logoImage)
-        logoImage.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 12,
-                         leading: dismissButton.trailingAnchor, paddingLeading: 23,
-                         width: 44.0,
-                         height: 44.0)
-
-        dismissButton.centerYAnchor.constraint(equalTo: logoImage.centerYAnchor).isActive = true
-
-        view.addSubview(titleLabel)
-        titleLabel.anchor(top: logoImage.topAnchor,
-                          leading: logoImage.trailingAnchor, paddingLeading: 24.0,
-                          trailing: view.safeAreaLayoutGuide.trailingAnchor, paddingTrailing: 23.0)
-
-        view.addSubview(nameLabel)
-        nameLabel.anchor(top: titleLabel.bottomAnchor, paddingTop: 2.0,
-                         leading: titleLabel.leadingAnchor,
-                         trailing: titleLabel.trailingAnchor)
-        configureTableView()
-        configurePlayer()
-    }
-
-    private func configureTableView() {
-        view.addSubview(tableView)
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 100.0,
-                    bottom: settingsButton.topAnchor, paddingBottom: 20.0,
-                    trailing: view.safeAreaLayoutGuide.trailingAnchor, paddingTrailing: 16.0,
-                    width: 100.0)
-    }
-
+/*
     private func fetchMediaItems() {
+
+        // TODO: - Consider to use it
+        // videoPlayer.currentItem?.preferredPeakBitRate
+
         // TODO: Do the work in the background by passing channelID
 
         print("DEBUG: Fetch media items in order to get a quality list")
@@ -185,10 +226,11 @@ class VideoViewController: UIViewController {
             print("DEBUG: Could not fetch media assets.")
         }
     }
+*/
 
-    func setLogoImage(to image: UIImage) {
-        logoImage.image = image
-    }
+//    func setLogoImage(to image: UIImage) {
+//        logoImage.image = image
+//    }
 
     
     // MARK: - Selectors

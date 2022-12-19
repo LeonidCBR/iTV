@@ -149,19 +149,14 @@ final class ChannelsProvider {
     /// Fetches the channels feed from the remote server, and imports it into Core Data.
     func importChannels() async throws {
 
-        // TODO: use NetworkProvider
 
-        let session = URLSession.shared
-        guard let (data, response) = try? await session.data(from: url),
-              let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200
-        else {
-            logger.debug("Failed to received valid response and/or data.")
-            throw ChannelError.missingData
-        }
+        // TODO: Inject instance of NetworkProvider
+
+        
+        let channelsData = try await NetworkProvider().downloadData(withUrl: url)
 
         do {
-            let channelPropertiesList = try parseChannelPropertiesList(from: data)
+            let channelPropertiesList = try parseChannelPropertiesList(from: channelsData)
             logger.debug("Received \(channelPropertiesList.count) records.")
 
             // Import the GeoJSON into Core Data.
