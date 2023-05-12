@@ -24,10 +24,11 @@ class HomeController: UIViewController {
     private var favoriteFilter: FavoriteFilterView!
     private var tableView: UITableView!
 
-
     // MARK: - Lifecycle
 
-    init(with imageProvider: ImageProvider, and channelsProvider: ChannelsProvider, and networkProvider: NetworkProvider) {
+    init(with imageProvider: ImageProvider,
+         and channelsProvider: ChannelsProvider,
+         and networkProvider: NetworkProvider) {
         self.imageProvider = imageProvider
         self.channelsProvider = channelsProvider
         self.networkProvider = networkProvider
@@ -46,7 +47,6 @@ class HomeController: UIViewController {
         loadPersistentChannels()
         importChannelsFromAPI()
     }
-
 
     // MARK: - Methods
 
@@ -125,19 +125,10 @@ class HomeController: UIViewController {
     private func importChannelsFromAPI() {
         Task {
             do {
-
-
-                // TODO: - According single responsibility principle
-                /// create ChannelDecoder in order to decode data
-                /// and get list of channel properties.
-
                 let channelsData = try await networkProvider.downloadData(withUrl: channelsURL)
-                try await channelsProvider.importChannels(from: channelsData)
-
-//                let channelsDecoder = ChannelsDecoder(from: channelsData)
-//                let channelProperties = channelsDecoder.channelProperties
-//                try await channelsProvider.saveChannels(from: channelProperties)
-
+                let channelsDecoder = try ChannelsDecoder(from: channelsData)
+                let channelPropertiesList = channelsDecoder.channelPropertiesList
+                try await channelsProvider.saveChannels(from: channelPropertiesList)
             } catch {
                 showErrorMessage(error.localizedDescription)
             }

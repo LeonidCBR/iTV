@@ -155,11 +155,8 @@ final class ChannelsProvider {
         return taskContext
     }
 
-    /// Fetches the channels feed from the remote server, and imports it into Core Data.
+    /*
     func importChannels(from channelsData: Data) async throws {
-
-        // TODO: Move this functionality to the ChannelDecoder
-
         do {
             let channelPropertiesList = try parseChannelPropertiesList(from: channelsData)
             logger.debug("Received \(channelPropertiesList.count) records.")
@@ -179,9 +176,13 @@ final class ChannelsProvider {
         let geoJSON = try jsonDecoder.decode(GeoJSON.self, from: data)
         return geoJSON.channelPropertiesList
     }
+    */
 
-    /// Uses `NSBatchInsertRequest` (BIR) to import a JSON dictionary into the Core Data store on a private queue.
-    private func saveChannels(from propertiesList: [ChannelProperties]) async throws {
+    /**
+     Imports the channels feed into Core Data.
+     Uses `NSBatchInsertRequest` (BIR) to import a JSON dictionary with  into the Core Data store on a private queue.
+     */
+    func saveChannels(from propertiesList: [ChannelProperties]) async throws {
         logger.debug("Start importing data to the store...")
         guard !propertiesList.isEmpty else { return }
 
