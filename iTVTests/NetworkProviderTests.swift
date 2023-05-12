@@ -80,10 +80,65 @@ final class NetworkProviderTests: XCTestCase {
         }
     }
 
-    // TODO: Test getting ChannelError.unauthorized error
+    func testNetworkProvider_WhenGivenCode401_ReturnUnauthorizedError() async {
+        let testURL = URL(string: "https://localhost")!
+        let testData = Data("{\"status\":\"ok\"}".utf8)
+        let testResponse = HTTPURLResponse(url: testURL,
+                                           statusCode: 401,
+                                           httpVersion: "1.1",
+                                           headerFields: ["Content-Type": "application/json"])
+        MockURLProtocol.stubResponse = testResponse
+        MockURLProtocol.stubData = testData
+        MockURLProtocol.error = nil
+        var didFailWithError: Error?
+        do {
+            _ = try await sut.downloadData(withUrl: testURL)
+        } catch {
+            didFailWithError = error
+        }
+        guard didFailWithError != nil else {
+            XCTFail("A unauthorized error should have been thrown but no error was thrown")
+            return
+        }
+        guard let channelError = didFailWithError as? ChannelError else {
+            XCTFail("An error type should be a ChannelError")
+            return
+        }
+        guard case .unauthorized = channelError else {
+            XCTFail("A unauthorized error should have been thrown but another error was thrown")
+            return
+        }
+    }
 
-    // TODO: Test getting ChannelError.unhandledError(code)
-
-    // TODO: Test getting throw ChannelError.unexpectedData
+    func testNetworkProvider_WhenGivenCode555_ReturnUnhandledError() async {
+        let testURL = URL(string: "https://localhost")!
+        let testData = Data("{\"status\":\"ok\"}".utf8)
+        let testResponse = HTTPURLResponse(url: testURL,
+                                           statusCode: 555,
+                                           httpVersion: "1.1",
+                                           headerFields: ["Content-Type": "application/json"])
+        MockURLProtocol.stubResponse = testResponse
+        MockURLProtocol.stubData = testData
+        MockURLProtocol.error = nil
+        var didFailWithError: Error?
+        do {
+            _ = try await sut.downloadData(withUrl: testURL)
+        } catch {
+            didFailWithError = error
+        }
+        guard didFailWithError != nil else {
+            XCTFail("An unhandled error should have been thrown but no error was thrown")
+            return
+        }
+        guard let channelError = didFailWithError as? ChannelError else {
+            XCTFail("An error type should be a ChannelError")
+            return
+        }
+        guard case let .unhandledError(statusCode) = channelError else {
+            XCTFail("An unhandled error should have been thrown but another error was thrown")
+            return
+        }
+        XCTAssertEqual(555, statusCode)
+    }
 
 }

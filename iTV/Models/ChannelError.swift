@@ -11,7 +11,7 @@ enum ChannelError: Error {
     case urlSessionError(_ error: Error)
     case noResponse
     case unauthorized
-    case unhandledError(_ status: Int)
+    case unhandledError(_ statusCode: Int)
     case unexpectedData
     case unexpectedJSON
     case unexpectedURL
