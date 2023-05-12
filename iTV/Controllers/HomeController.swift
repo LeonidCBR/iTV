@@ -14,7 +14,10 @@ class HomeController: UIViewController {
 
     // MARK: - Properties
 
+    private let channelsURL = URL(string: "http://limehd.online/playlist/channels.json")!
     private let imageProvider: ImageProvider
+    private let channelsProvider: ChannelsProvider
+    private let networkProvider: NetworkProvider
     private let channelCell = "channelCellIdentifier"
     private var channels: [Channel] = []
     private var searchBar: UISearchBar!
@@ -24,8 +27,10 @@ class HomeController: UIViewController {
 
     // MARK: - Lifecycle
 
-    init(with imageProvider: ImageProvider) {
+    init(with imageProvider: ImageProvider, and channelsProvider: ChannelsProvider, and networkProvider: NetworkProvider) {
         self.imageProvider = imageProvider
+        self.channelsProvider = channelsProvider
+        self.networkProvider = networkProvider
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -35,7 +40,8 @@ class HomeController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ChannelsProvider.shared.delegate = self
+//        ChannelsProvider.shared.delegate = self
+        channelsProvider.delegate = self
         configureUI()
         loadPersistentChannels()
         importChannelsFromAPI()
@@ -49,7 +55,7 @@ class HomeController: UIViewController {
     }
 
     private func configureUI() {
-        view.backgroundColor = K.bgColor
+        view.backgroundColor = bgColor // K.bgColor
         configureSearchBar()
         configureFavoriteFilter()
         configureTableView()
@@ -57,8 +63,8 @@ class HomeController: UIViewController {
 
     private func configureSearchBar() {
         searchBar = UISearchBar()
-        searchBar.backgroundColor = K.bgColor
-        searchBar.barTintColor = K.bgColor
+        searchBar.backgroundColor = bgColor // K.bgColor
+        searchBar.barTintColor = bgColor // K.bgColor
         searchBar.tintColor = .white
         searchBar.searchTextField.textColor = .white
         searchBar.delegate = self
@@ -81,7 +87,7 @@ class HomeController: UIViewController {
 
     private func configureTableView() {
         tableView = UITableView()
-        tableView.backgroundColor = K.dark
+        tableView.backgroundColor = darkColor // K.dark
         tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
         view.addSubview(tableView)
         tableView.anchor(top: favoriteFilter.bottomAnchor,
@@ -100,8 +106,10 @@ class HomeController: UIViewController {
         let idx = favoriteFilter.selectedSegmentIndex
         let favoriteFilterOption = FavoriteFilterOption(rawValue: idx)!
         do {
-            channels = try ChannelsProvider.shared.fetchChannels(searchText: searchBar.text, filter: favoriteFilterOption)
-        tableView.reloadData()
+//            channels = try ChannelsProvider.shared.fetchChannels(searchText: searchBar.text, filter: favoriteFilterOption)
+            channels = try channelsProvider.fetchChannels(searchText: searchBar.text, filter: favoriteFilterOption)
+
+            tableView.reloadData()
         } catch {
             let nserror = error as NSError
             showErrorMessage(nserror.localizedDescription)
@@ -117,7 +125,19 @@ class HomeController: UIViewController {
     private func importChannelsFromAPI() {
         Task {
             do {
-                try await ChannelsProvider.shared.importChannels()
+
+
+                // TODO: - According single responsibility principle
+                /// create ChannelDecoder in order to decode data
+                /// and get list of channel properties.
+
+                let channelsData = try await networkProvider.downloadData(withUrl: channelsURL)
+                try await channelsProvider.importChannels(from: channelsData)
+
+//                let channelsDecoder = ChannelsDecoder(from: channelsData)
+//                let channelProperties = channelsDecoder.channelProperties
+//                try await channelsProvider.saveChannels(from: channelProperties)
+
             } catch {
                 showErrorMessage(error.localizedDescription)
             }
@@ -125,7 +145,6 @@ class HomeController: UIViewController {
     }
 
 }
-
 
 // MARK: - Table view data source
 
@@ -140,7 +159,12 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: channelCell, for: indexPath) as! ChannelCell
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: channelCell,
+            for: indexPath) as? ChannelCell
+        else {
+            fatalError("Error: Cannot cast to ChannelCell")
+        }
         cell.delegate = self
         cell.clearLogoImage()
         cell.channel = channels[indexPath.row]
@@ -206,7 +230,8 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             // TODO: Consider to remove the channel from the list and remove the row
 
 //            saveContext(context)
-            ChannelsProvider.shared.saveContext()
+//            ChannelsProvider.shared.saveContext()
+            channelsProvider.saveContext()
 
 
             loadPersistentChannels()
@@ -244,7 +269,8 @@ extension HomeController: ChannelCellDelegate {
     func favoriteChanged(cell: UITableViewCell, channel: Channel, isFavorite: Bool) {
         if let row = tableView.indexPath(for: cell)?.row {
             channels[row].isFavorite = isFavorite
-            ChannelsProvider.shared.saveContext()
+//            ChannelsProvider.shared.saveContext()
+            channelsProvider.saveContext()
         }
     }
 }

@@ -73,7 +73,7 @@ class ChannelCell: UITableViewCell {
     private func configureUI() {
 //        selectionStyle = .none
         clipsToBounds = true
-        backgroundColor = K.bgColor
+        backgroundColor = bgColor // K.bgColor
 
         contentView.addSubview(logoImage)
         logoImage.anchor(leading: contentView.leadingAnchor, paddingLeading: 8,

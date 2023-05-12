@@ -33,7 +33,7 @@ class FavoriteFilterView: UIView {
     private let optionsCount: CGFloat = CGFloat(FavoriteFilterOption.allCases.count)
     private let filterCellIdentifier = "FavoriteFilterCell"
     weak var delegate: FavoriteFilterViewDelegate?
-    
+
     private(set) var selectedSegmentIndex: Int = 0 {
         didSet {
             delegate?.filterValueChanged()
@@ -78,17 +78,27 @@ extension FavoriteFilterView: UICollectionViewDelegate, UICollectionViewDataSour
         return FavoriteFilterOption.allCases.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: filterCellIdentifier, for: indexPath) as! FavoriteFilterCell
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: filterCellIdentifier,
+            for: indexPath) as? FavoriteFilterCell
+        else {
+            fatalError("Error: Cannot cast to FavoriteFilterCell!")
+        }
         cell.option = FavoriteFilterOption(rawValue: indexPath.row)
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / optionsCount, height: collectionView.frame.height)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
 

@@ -20,7 +20,7 @@ final class ChannelsProvider {
 
     let logger = Logger(subsystem: "com.motodolphin.iTV", category: "persistence")
 
-    let url = URL(string: "http://limehd.online/playlist/channels.json")!
+//    let url = URL(string: "http://limehd.online/playlist/channels.json")!
 
     // update fields by json values if the channel exists
     private let defaultMergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -33,7 +33,13 @@ final class ChannelsProvider {
     /// A peristent history token used for fetching transactions from the store.
     private var lastToken: NSPersistentHistoryToken?
 
-    static let shared = ChannelsProvider()
+
+
+    // TODO: - Consider to get rid of singleton!
+
+//    static let shared = ChannelsProvider()
+
+
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "iTV")
@@ -69,7 +75,8 @@ final class ChannelsProvider {
 
     // MARK: - Lifecycle
 
-    private init() {
+//    private init() {
+    init() {
         // Observe Core Data remote change notifications on the queue where the changes were made.
         notificationToken = NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: nil, queue: nil, using: { _ in
             self.logger.debug("Received a persistent store remote change notification.")
@@ -83,11 +90,13 @@ final class ChannelsProvider {
         })
 
         // Notify delegate in order to update UI
-        notificationMergeToken = NotificationCenter.default.addObserver(forName: NSManagedObjectContext.didMergeChangesObjectIDsNotification, object: persistentContainer.viewContext, queue: .main) { /*notification*/ _ in
+        notificationMergeToken = NotificationCenter.default.addObserver(
+            forName: NSManagedObjectContext.didMergeChangesObjectIDsNotification,
+            object: persistentContainer.viewContext, queue: .main) { /*notification*/ _ in
             self.logger.debug("Received a merge notification.")
             self.delegate?.dataDidUpdate()
         }
-        
+
     }
 
     deinit {
@@ -147,13 +156,9 @@ final class ChannelsProvider {
     }
 
     /// Fetches the channels feed from the remote server, and imports it into Core Data.
-    func importChannels() async throws {
+    func importChannels(from channelsData: Data) async throws {
 
-
-        // TODO: Inject instance of NetworkProvider
-
-        
-        let channelsData = try await NetworkProvider().downloadData(withUrl: url)
+        // TODO: Move this functionality to the ChannelDecoder
 
         do {
             let channelPropertiesList = try parseChannelPropertiesList(from: channelsData)

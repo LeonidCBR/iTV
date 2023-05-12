@@ -8,7 +8,6 @@
 import Foundation
 
 enum ChannelError: Error {
-
     case urlSessionError(_ error: Error)
     case noResponse
     case unauthorized

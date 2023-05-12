@@ -37,7 +37,7 @@ class FavoriteFilterCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = K.bgColor
+        backgroundColor = bgColor // K.bgColor
         addSubview(titleLabel)
         titleLabel.anchor(centerX: self.centerXAnchor,
                           centerY: self.centerYAnchor)

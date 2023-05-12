@@ -13,7 +13,8 @@ class ChannelsProviderTests: XCTestCase {
     var sut: ChannelsProvider!
 
     override func setUp() {
-        sut = ChannelsProvider.shared
+//        sut = ChannelsProvider.shared
+        sut = ChannelsProvider()
     }
 
     override func tearDown()  {

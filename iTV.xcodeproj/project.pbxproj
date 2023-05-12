@@ -21,6 +21,13 @@
 		D774910B293ED6F4002CE2D0 /* ChannelsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */; };
 		D785D9F3294988470011A79F /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D785D9F2294988470011A79F /* Channel.swift */; };
 		D7A7FFFF294C2E4F001AA01F /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A7FFFE294C2E4F001AA01F /* GeoJSON.swift */; };
+		D7E1E8732A0C7FB70006C463 /* ChannelsProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8722A0C7FB70006C463 /* ChannelsProviderIntegrationTests.swift */; };
+		D7E1E87A2A0C80C30006C463 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */; };
+		D7E1E87D2A0C80E90006C463 /* TestingSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E87C2A0C80E90006C463 /* TestingSceneDelegate.swift */; };
+		D7E1E87F2A0C80F50006C463 /* TestingRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E87E2A0C80F50006C463 /* TestingRootViewController.swift */; };
+		D7E1E8822A0CCA930006C463 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8812A0CCA930006C463 /* MockURLProtocol.swift */; };
+		D7E1E8842A0CCBD50006C463 /* NetworkProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8832A0CCBD50006C463 /* NetworkProviderTests.swift */; };
+		D7E1E8862A0E01C50006C463 /* ChannelsDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8852A0E01C50006C463 /* ChannelsDecoder.swift */; };
 		D7E965A8294D936F009ABB77 /* channels.json in Resources */ = {isa = PBXBuildFile; fileRef = D7E965A7294D936F009ABB77 /* channels.json */; };
 		D7E965AA294D9FD2009ABB77 /* TestingSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965A9294D9FD2009ABB77 /* TestingSceneDelegate.swift */; };
 		D7E965AC294D9FEA009ABB77 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965AB294D9FEA009ABB77 /* TestingAppDelegate.swift */; };
@@ -45,6 +52,13 @@
 			remoteGlobalIDString = D7FA0F12292D9D3F00EEFD17;
 			remoteInfo = iTV;
 		};
+		D7E1E8742A0C7FB70006C463 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7FA0F0B292D9D3F00EEFD17 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7FA0F12292D9D3F00EEFD17;
+			remoteInfo = iTV;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +77,14 @@
 		D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsProvider.swift; sourceTree = "<group>"; };
 		D785D9F2294988470011A79F /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		D7A7FFFE294C2E4F001AA01F /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSON.swift; sourceTree = "<group>"; };
+		D7E1E8702A0C7FB70006C463 /* iTVIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTVIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7E1E8722A0C7FB70006C463 /* ChannelsProviderIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsProviderIntegrationTests.swift; sourceTree = "<group>"; };
+		D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
+		D7E1E87C2A0C80E90006C463 /* TestingSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSceneDelegate.swift; sourceTree = "<group>"; };
+		D7E1E87E2A0C80F50006C463 /* TestingRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingRootViewController.swift; sourceTree = "<group>"; };
+		D7E1E8812A0CCA930006C463 /* MockURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		D7E1E8832A0CCBD50006C463 /* NetworkProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProviderTests.swift; sourceTree = "<group>"; };
+		D7E1E8852A0E01C50006C463 /* ChannelsDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsDecoder.swift; sourceTree = "<group>"; };
 		D7E965A7294D936F009ABB77 /* channels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels.json; sourceTree = "<group>"; };
 		D7E965A9294D9FD2009ABB77 /* TestingSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSceneDelegate.swift; sourceTree = "<group>"; };
 		D7E965AB294D9FEA009ABB77 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +105,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		D70F4029294D8287003CB566 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7E1E86D2A0C7FB70006C463 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -124,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				D70F4037294D8F35003CB566 /* Mocks */,
+				D7E1E8832A0CCBD50006C463 /* NetworkProviderTests.swift */,
 				D70F4035294D8524003CB566 /* ChannelsProviderTests.swift */,
 			);
 			path = iTVTests;
@@ -135,7 +165,27 @@
 				D7E965AB294D9FEA009ABB77 /* TestingAppDelegate.swift */,
 				D7E965A9294D9FD2009ABB77 /* TestingSceneDelegate.swift */,
 				D7E965AF294DA276009ABB77 /* TestingRootViewController.swift */,
+				D7E1E8812A0CCA930006C463 /* MockURLProtocol.swift */,
 				D7E965A7294D936F009ABB77 /* channels.json */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		D7E1E8712A0C7FB70006C463 /* iTVIntegrationTests */ = {
+			isa = PBXGroup;
+			children = (
+				D7E1E87B2A0C80CD0006C463 /* Mocks */,
+				D7E1E8722A0C7FB70006C463 /* ChannelsProviderIntegrationTests.swift */,
+			);
+			path = iTVIntegrationTests;
+			sourceTree = "<group>";
+		};
+		D7E1E87B2A0C80CD0006C463 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */,
+				D7E1E87C2A0C80E90006C463 /* TestingSceneDelegate.swift */,
+				D7E1E87E2A0C80F50006C463 /* TestingRootViewController.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -145,6 +195,7 @@
 			children = (
 				D7FA0F15292D9D3F00EEFD17 /* iTV */,
 				D70F402D294D8287003CB566 /* iTVTests */,
+				D7E1E8712A0C7FB70006C463 /* iTVIntegrationTests */,
 				D7FA0F14292D9D3F00EEFD17 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -154,6 +205,7 @@
 			children = (
 				D7FA0F13292D9D3F00EEFD17 /* iTV.app */,
 				D70F402C294D8287003CB566 /* iTVTests.xctest */,
+				D7E1E8702A0C7FB70006C463 /* iTVIntegrationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,6 +236,7 @@
 				D7399AE929332E7900825C60 /* FavoriteFilterOption.swift */,
 				D73EC89B29347F3F00C71BAF /* M3UParser.swift */,
 				D73EC89929347EEB00C71BAF /* MediaItem.swift */,
+				D7E1E8852A0E01C50006C463 /* ChannelsDecoder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -237,6 +290,24 @@
 			productReference = D70F402C294D8287003CB566 /* iTVTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D7E1E86F2A0C7FB70006C463 /* iTVIntegrationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7E1E8782A0C7FB70006C463 /* Build configuration list for PBXNativeTarget "iTVIntegrationTests" */;
+			buildPhases = (
+				D7E1E86C2A0C7FB70006C463 /* Sources */,
+				D7E1E86D2A0C7FB70006C463 /* Frameworks */,
+				D7E1E86E2A0C7FB70006C463 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D7E1E8752A0C7FB70006C463 /* PBXTargetDependency */,
+			);
+			name = iTVIntegrationTests;
+			productName = iTVIntegrationTests;
+			productReference = D7E1E8702A0C7FB70006C463 /* iTVIntegrationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D7FA0F12292D9D3F00EEFD17 /* iTV */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7FA0F2A292D9D4500EEFD17 /* Build configuration list for PBXNativeTarget "iTV" */;
@@ -244,6 +315,7 @@
 				D7FA0F0F292D9D3F00EEFD17 /* Sources */,
 				D7FA0F10292D9D3F00EEFD17 /* Frameworks */,
 				D7FA0F11292D9D3F00EEFD17 /* Resources */,
+				D7E1E8802A0CA62F0006C463 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -261,11 +333,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					D70F402B294D8287003CB566 = {
 						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = D7FA0F12292D9D3F00EEFD17;
+					};
+					D7E1E86F2A0C7FB70006C463 = {
+						CreatedOnToolsVersion = 14.3;
 						TestTargetID = D7FA0F12292D9D3F00EEFD17;
 					};
 					D7FA0F12292D9D3F00EEFD17 = {
@@ -288,6 +364,7 @@
 			targets = (
 				D7FA0F12292D9D3F00EEFD17 /* iTV */,
 				D70F402B294D8287003CB566 /* iTVTests */,
+				D7E1E86F2A0C7FB70006C463 /* iTVIntegrationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -298,6 +375,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7E965A8294D936F009ABB77 /* channels.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7E1E86E2A0C7FB70006C463 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,15 +396,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D7E1E8802A0CA62F0006C463 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint > /dev/null; then\n    swiftlint\nelse\n    echo \"error: SwiftLint does not exist!\"\n    exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D70F4028294D8287003CB566 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D7E965AC294D9FEA009ABB77 /* TestingAppDelegate.swift in Sources */,
+				D7E1E8842A0CCBD50006C463 /* NetworkProviderTests.swift in Sources */,
 				D7E965AA294D9FD2009ABB77 /* TestingSceneDelegate.swift in Sources */,
+				D7E1E8822A0CCA930006C463 /* MockURLProtocol.swift in Sources */,
 				D70F4036294D8524003CB566 /* ChannelsProviderTests.swift in Sources */,
 				D7E965B0294DA276009ABB77 /* TestingRootViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7E1E86C2A0C7FB70006C463 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7E1E87D2A0C80E90006C463 /* TestingSceneDelegate.swift in Sources */,
+				D7E1E8732A0C7FB70006C463 /* ChannelsProviderIntegrationTests.swift in Sources */,
+				D7E1E87A2A0C80C30006C463 /* TestingAppDelegate.swift in Sources */,
+				D7E1E87F2A0C80F50006C463 /* TestingRootViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +453,7 @@
 				D7A7FFFF294C2E4F001AA01F /* GeoJSON.swift in Sources */,
 				D70F295A292F35A100AC5702 /* ImageProvider.swift in Sources */,
 				D7399AEA29332E7900825C60 /* FavoriteFilterOption.swift in Sources */,
+				D7E1E8862A0E01C50006C463 /* ChannelsDecoder.swift in Sources */,
 				D7E965AE294DA0D5009ABB77 /* main.swift in Sources */,
 				D70F2954292F2A0300AC5702 /* NetworkProvider.swift in Sources */,
 				D75AC1112931E18E00FFCBCB /* VideoViewController.swift in Sources */,
@@ -359,6 +477,11 @@
 			isa = PBXTargetDependency;
 			target = D7FA0F12292D9D3F00EEFD17 /* iTV */;
 			targetProxy = D70F4030294D8287003CB566 /* PBXContainerItemProxy */;
+		};
+		D7E1E8752A0C7FB70006C463 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7FA0F12292D9D3F00EEFD17 /* iTV */;
+			targetProxy = D7E1E8742A0C7FB70006C463 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -407,6 +530,52 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTV.app/iTV";
+			};
+			name = Release;
+		};
+		D7E1E8762A0C7FB70006C463 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 973295K87L;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motodolphin.iTVIntegrationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/iTV";
+			};
+			name = Debug;
+		};
+		D7E1E8772A0C7FB70006C463 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 973295K87L;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.motodolphin.iTVIntegrationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iTV.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/iTV";
 			};
 			name = Release;
 		};
@@ -590,6 +759,15 @@
 			buildConfigurations = (
 				D70F4033294D8287003CB566 /* Debug */,
 				D70F4034294D8287003CB566 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7E1E8782A0C7FB70006C463 /* Build configuration list for PBXNativeTarget "iTVIntegrationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7E1E8762A0C7FB70006C463 /* Debug */,
+				D7E1E8772A0C7FB70006C463 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

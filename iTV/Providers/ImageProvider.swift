@@ -10,10 +10,9 @@ import UIKit
 final class ImageProvider {
 
     // MARK: - Properties
-    
+
     private let networkProvider: NetworkProvider
     private let cacheImages = NSCache<NSString, UIImage>()
-
 
     // MARK: - Lifecycle
 
@@ -21,12 +20,11 @@ final class ImageProvider {
         self.networkProvider = networkProvider
     }
 
-
     // MARK: - Methods
-    
-    func clearCache() {
-        cacheImages.removeAllObjects()
-    }
+
+//    func clearCache() {
+//        cacheImages.removeAllObjects()
+//    }
 
     func fetchImage(withPath imagePath: String) async throws -> UIImage {
         // Check if image exists in cache
@@ -34,11 +32,12 @@ final class ImageProvider {
             return cachedImage
         }
 
-        // Download image
+        // Check image path
         guard let imageUrl = URL(string: imagePath) else {
             throw ChannelError.unexpectedURL
         }
 
+        // Download image
         let imageData = try await networkProvider.downloadData(withUrl: imageUrl)
         if let image = UIImage(data: imageData) {
             // Add image to cache

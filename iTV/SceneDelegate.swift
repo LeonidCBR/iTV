@@ -10,19 +10,24 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var channelsProvider: ChannelsProvider?
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let apiClient = NetworkProvider()
-        let imageManager = ImageProvider(with: apiClient)
-        window?.rootViewController = HomeController(with: imageManager)
+        let networkProvider = NetworkProvider()
+        let imageProvider = ImageProvider(with: networkProvider)
+        let channelsProvider = ChannelsProvider()
+        self.channelsProvider = channelsProvider
+        window?.rootViewController = HomeController(with: imageProvider, and: channelsProvider, and: networkProvider)
         window?.makeKeyAndVisible()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        ChannelsProvider.shared.saveContext()
+//        ChannelsProvider.shared.saveContext()
+        channelsProvider?.saveContext()
     }
 
 }
-

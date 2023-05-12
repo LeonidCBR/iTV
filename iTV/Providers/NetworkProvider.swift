@@ -7,15 +7,11 @@
 
 import Foundation
 
-
-// TODO: - Use async / await
-
 final class NetworkProvider {
 
     // MARK: - Properties
-    
-    private let urlSession: URLSession
 
+    private let urlSession: URLSession
 
     // MARK: - Lifecycle
 
@@ -23,9 +19,8 @@ final class NetworkProvider {
         self.urlSession = urlSession
     }
 
-
     // MARK: - Methods
-    
+
     func downloadData(withUrl url: URL) async throws -> Data {
         let request = URLRequest(url: url)
         let data = try await downloadData(with: request)
