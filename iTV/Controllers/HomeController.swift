@@ -9,9 +9,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
-
 class HomeController: UIViewController {
-
     // MARK: - Properties
 
     private let channelsURL = URL(string: "http://limehd.online/playlist/channels.json")!
@@ -106,9 +104,8 @@ class HomeController: UIViewController {
         let idx = favoriteFilter.selectedSegmentIndex
         let favoriteFilterOption = FavoriteFilterOption(rawValue: idx)!
         do {
-//            channels = try ChannelsProvider.shared.fetchChannels(searchText: searchBar.text, filter: favoriteFilterOption)
-            channels = try channelsProvider.fetchChannels(searchText: searchBar.text, filter: favoriteFilterOption)
-
+            channels = try channelsProvider.fetchChannels(searchText: searchBar.text,
+                                                          filter: favoriteFilterOption)
             tableView.reloadData()
         } catch {
             let nserror = error as NSError
@@ -217,14 +214,9 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             let channel = channels[indexPath.row]
             channel.isFavorite = false
 
-
             // TODO: Consider to remove the channel from the list and remove the row
 
-//            saveContext(context)
-//            ChannelsProvider.shared.saveContext()
             channelsProvider.saveContext()
-
-
             loadPersistentChannels()
             return
         }
@@ -232,7 +224,7 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         /// Case 2.
         /// Present a video view controller
         let channel = channels[indexPath.row]
-        guard let _ = URL(string: channel.url) else {
+        guard URL(string: channel.url) != nil else {
             showErrorMessage("Неверная ссылка!")
             return
         }
@@ -253,7 +245,6 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
 
 }
 
-
 // MARK: - ChannelCellDelegate
 
 extension HomeController: ChannelCellDelegate {
@@ -265,7 +256,6 @@ extension HomeController: ChannelCellDelegate {
         }
     }
 }
-
 
 // MARK: - UISearchBarDelegate
 
@@ -289,7 +279,6 @@ extension HomeController: UISearchBarDelegate {
     }
 }
 
-
 // MARK: - FavoriteFilterViewDelegate
 
 extension HomeController: FavoriteFilterViewDelegate {
@@ -298,7 +287,6 @@ extension HomeController: FavoriteFilterViewDelegate {
         loadPersistentChannels()
     }
 }
-
 
 // MARK: - ChannelsProviderDelegate
 

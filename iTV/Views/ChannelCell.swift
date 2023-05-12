@@ -12,7 +12,6 @@ protocol ChannelCellDelegate: AnyObject {
 }
 
 class ChannelCell: UITableViewCell {
-
     // MARK: - Properties
 
     private let nameLabel: UILabel = {
@@ -34,9 +33,9 @@ class ChannelCell: UITableViewCell {
     }()
 
     private let logoImage: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .clear
-        return iv
+        let image = UIImageView()
+        image.backgroundColor = .clear
+        return image
     }()
 
     private lazy var favoriteButton: UIButton = {
@@ -55,7 +54,6 @@ class ChannelCell: UITableViewCell {
         }
     }
 
-
     // MARK: - Lifecycle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -66,7 +64,6 @@ class ChannelCell: UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
 
     // MARK: - Methods
 
@@ -84,7 +81,6 @@ class ChannelCell: UITableViewCell {
                                        constant: 8.0).isActive = true
         logoImage.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor,
                                           constant: -8.0).isActive = true
-
 
         contentView.addSubview(nameLabel)
         nameLabel.anchor(top: contentView.topAnchor, paddingTop: 12.0,
@@ -124,7 +120,6 @@ class ChannelCell: UITableViewCell {
     func setLogoImage(to image: UIImage) {
         logoImage.image = image
     }
-
 
     // MARK: - Selectors
 

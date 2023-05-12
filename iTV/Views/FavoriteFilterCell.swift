@@ -8,7 +8,6 @@
 import UIKit
 
 class FavoriteFilterCell: UICollectionViewCell {
-
     // MARK: - Properties
 
     private let titleLabel: UILabel = {
@@ -31,7 +30,6 @@ class FavoriteFilterCell: UICollectionViewCell {
 
         }
     }
-
 
     // MARK: - Lifecycle
 

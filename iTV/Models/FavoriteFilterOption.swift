@@ -20,4 +20,3 @@ enum FavoriteFilterOption: Int, CustomStringConvertible, CaseIterable {
         }
     }
 }
-

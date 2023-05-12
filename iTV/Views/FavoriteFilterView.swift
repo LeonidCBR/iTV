@@ -15,12 +15,12 @@ class FavoriteFilterView: UIView {
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
-        cv.delegate = self
-        cv.dataSource = self
-        cv.register(FavoriteFilterCell.self, forCellWithReuseIdentifier: filterCellIdentifier)
-        return cv
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.backgroundColor = .white
+        view.delegate = self
+        view.dataSource = self
+        view.register(FavoriteFilterCell.self, forCellWithReuseIdentifier: filterCellIdentifier)
+        return view
     }()
 
     private let underlineView: UIView = {
@@ -55,7 +55,13 @@ class FavoriteFilterView: UIView {
 
         // Set up constraint for leading anchor
         // this constraint will be using with animation
-        underlineViewLeadingAnchor = NSLayoutConstraint(item: underlineView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0)
+        underlineViewLeadingAnchor = NSLayoutConstraint(item: underlineView,
+                                                        attribute: .leading,
+                                                        relatedBy: .equal,
+                                                        toItem: self,
+                                                        attribute: .leading,
+                                                        multiplier: 1,
+                                                        constant: 0)
         underlineViewLeadingAnchor.isActive = true
 
         // Select default segment
@@ -68,7 +74,6 @@ class FavoriteFilterView: UIView {
     }
 
 }
-
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 

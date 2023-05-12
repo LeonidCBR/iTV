@@ -26,7 +26,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-//        ChannelsProvider.shared.saveContext()
         channelsProvider?.saveContext()
     }
 

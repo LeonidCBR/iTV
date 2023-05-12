@@ -15,31 +15,17 @@ protocol ChannelsProviderDelegate: AnyObject {
 }
 
 final class ChannelsProvider {
-
     // MARK: - Properties
 
     let logger = Logger(subsystem: "com.motodolphin.iTV", category: "persistence")
 
-//    let url = URL(string: "http://limehd.online/playlist/channels.json")!
-
-    // update fields by json values if the channel exists
-    private let defaultMergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-
     weak var delegate: ChannelsProviderDelegate?
-    
     private var notificationToken: NSObjectProtocol?
     private var notificationMergeToken: NSObjectProtocol?
-
+    /// Update fields by json values if the channel exists
+    private let defaultMergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     /// A peristent history token used for fetching transactions from the store.
     private var lastToken: NSPersistentHistoryToken?
-
-
-
-    // TODO: - Consider to get rid of singleton!
-
-//    static let shared = ChannelsProvider()
-
-
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "iTV")
@@ -56,7 +42,7 @@ final class ChannelsProvider {
         description.setOption(true as NSNumber,
                               forKey: NSPersistentHistoryTrackingKey)
 
-        container.loadPersistentStores { (storeDescription, error) in
+        container.loadPersistentStores { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
@@ -72,13 +58,13 @@ final class ChannelsProvider {
         return container
     }()
 
-
     // MARK: - Lifecycle
 
-//    private init() {
     init() {
         // Observe Core Data remote change notifications on the queue where the changes were made.
-        notificationToken = NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: nil, queue: nil, using: { _ in
+        notificationToken = NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange,
+                                                                   object: nil, queue: nil,
+                                                                   using: { _ in
             self.logger.debug("Received a persistent store remote change notification.")
             Task {
                 do {
@@ -109,9 +95,8 @@ final class ChannelsProvider {
         }
     }
 
-
     // MARK: - Methods
-    
+
     private func fetchPersistentHistoryTransactionsAndChanges() async throws {
         let taskContext = newTaskContext()
         taskContext.name = "persistentHistoryContext"
@@ -261,5 +246,3 @@ final class ChannelsProvider {
         }
     }
 }
-
-

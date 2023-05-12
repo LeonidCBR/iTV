@@ -8,7 +8,6 @@
 import UIKit
 
 final class ImageProvider {
-
     // MARK: - Properties
 
     private let networkProvider: NetworkProvider
@@ -31,12 +30,10 @@ final class ImageProvider {
         if let cachedImage = cacheImages.object(forKey: imagePath as NSString) {
             return cachedImage
         }
-
         // Check image path
         guard let imageUrl = URL(string: imagePath) else {
             throw ChannelError.unexpectedURL
         }
-
         // Download image
         let imageData = try await networkProvider.downloadData(withUrl: imageUrl)
         if let image = UIImage(data: imageData) {
@@ -46,7 +43,6 @@ final class ImageProvider {
         } else {
             throw ChannelError.unexpectedData
         }
-
     }
 
 }

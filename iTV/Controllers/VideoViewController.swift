@@ -9,7 +9,6 @@ import UIKit
 import AVFoundation
 
 class VideoViewController: UIViewController {
-
     // MARK: - Properties
 
     private var mediaItems: [MediaItem] = []
@@ -35,9 +34,9 @@ class VideoViewController: UIViewController {
     }()
 
     private let logoImage: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .clear
-        return iv
+        let image = UIImageView()
+        image.backgroundColor = .clear
+        return image
     }()
 
     private let titleLabel: UILabel = {
@@ -66,7 +65,6 @@ class VideoViewController: UIViewController {
         return table
     }()
 
-
     // MARK: - Lifecycle
 
     init(with channelProperties: ChannelProperties, imageProvider: ImageProvider) {
@@ -94,18 +92,13 @@ class VideoViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         videoPlayer.play()
-
-
         //fetchMediaItems()
-
-        
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         playerLayer.frame = videoView.bounds
     }
-
 
     // MARK: - Methods
 
@@ -232,7 +225,6 @@ class VideoViewController: UIViewController {
 //        logoImage.image = image
 //    }
 
-    
     // MARK: - Selectors
 
     @objc private func dismissButtonTapped() {
@@ -245,7 +237,6 @@ class VideoViewController: UIViewController {
     }
 
 }
-
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
