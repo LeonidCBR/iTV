@@ -15,8 +15,8 @@ struct ChannelsDecoder {
             // Decode the JSON data into a data model.
             let jsonDecoder = JSONDecoder()
             jsonDecoder.dateDecodingStrategy = .secondsSince1970
-            let geoJSON = try jsonDecoder.decode(GeoJSON.self, from: data)
-            channelPropertiesList = geoJSON.channelPropertiesList
+            let channelsFeed = try jsonDecoder.decode(ChannelsFeed.self, from: data)
+            channelPropertiesList = channelsFeed.channelPropertiesList
         } catch {
             throw ChannelError.wrongDataFormat(error: error)
         }

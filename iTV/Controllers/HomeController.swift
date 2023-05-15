@@ -12,7 +12,6 @@ import CoreData
 class HomeController: UIViewController {
     // MARK: - Properties
 
-    private let channelsURL = URL(string: "http://limehd.online/playlist/channels.json")!
     private let imageProvider: ImageProvider
     private let channelsProvider: ChannelsProvider
     private let networkProvider: NetworkProvider
@@ -122,7 +121,8 @@ class HomeController: UIViewController {
     private func importChannelsFromAPI() {
         Task {
             do {
-                let channelsData = try await networkProvider.downloadData(withUrl: channelsURL)
+                let channelsData = try await networkProvider.downloadData(
+                    withUrl: ChannelsFeed.channelsURL)
                 let channelsDecoder = try ChannelsDecoder(from: channelsData)
                 let channelPropertiesList = channelsDecoder.channelPropertiesList
                 try await channelsProvider.saveChannels(from: channelPropertiesList)

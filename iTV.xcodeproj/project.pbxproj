@@ -19,7 +19,7 @@
 		D75AC1112931E18E00FFCBCB /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75AC1102931E18E00FFCBCB /* VideoViewController.swift */; };
 		D774910B293ED6F4002CE2D0 /* ChannelsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */; };
 		D785D9F3294988470011A79F /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D785D9F2294988470011A79F /* Channel.swift */; };
-		D7A7FFFF294C2E4F001AA01F /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A7FFFE294C2E4F001AA01F /* GeoJSON.swift */; };
+		D7A7FFFF294C2E4F001AA01F /* ChannelsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A7FFFE294C2E4F001AA01F /* ChannelsFeed.swift */; };
 		D7E1E8732A0C7FB70006C463 /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8722A0C7FB70006C463 /* IntegrationTests.swift */; };
 		D7E1E87A2A0C80C30006C463 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */; };
 		D7E1E87D2A0C80E90006C463 /* TestingSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E87C2A0C80E90006C463 /* TestingSceneDelegate.swift */; };
@@ -74,7 +74,7 @@
 		D75AC1102931E18E00FFCBCB /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsProvider.swift; sourceTree = "<group>"; };
 		D785D9F2294988470011A79F /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
-		D7A7FFFE294C2E4F001AA01F /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSON.swift; sourceTree = "<group>"; };
+		D7A7FFFE294C2E4F001AA01F /* ChannelsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsFeed.swift; sourceTree = "<group>"; };
 		D7E1E8702A0C7FB70006C463 /* iTVIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTVIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7E1E8722A0C7FB70006C463 /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 			children = (
 				D785D9F2294988470011A79F /* Channel.swift */,
 				D70F2955292F2A7100AC5702 /* ChannelError.swift */,
-				D7A7FFFE294C2E4F001AA01F /* GeoJSON.swift */,
+				D7A7FFFE294C2E4F001AA01F /* ChannelsFeed.swift */,
 				D7FA0F30292DAAE400EEFD17 /* ChannelProperties.swift */,
 				D7399AE929332E7900825C60 /* FavoriteFilterOption.swift */,
 				D73EC89929347EEB00C71BAF /* MediaItem.swift */,
@@ -446,7 +446,7 @@
 				D7399AEE293387DE00825C60 /* FavoriteFilterView.swift in Sources */,
 				D785D9F3294988470011A79F /* Channel.swift in Sources */,
 				D70F2958292F2BE200AC5702 /* Constants.swift in Sources */,
-				D7A7FFFF294C2E4F001AA01F /* GeoJSON.swift in Sources */,
+				D7A7FFFF294C2E4F001AA01F /* ChannelsFeed.swift in Sources */,
 				D70F295A292F35A100AC5702 /* ImageProvider.swift in Sources */,
 				D7399AEA29332E7900825C60 /* FavoriteFilterOption.swift in Sources */,
 				D7E1E8862A0E01C50006C463 /* ChannelsDecoder.swift in Sources */,

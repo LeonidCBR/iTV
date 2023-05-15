@@ -23,7 +23,9 @@ import Foundation
  }
  */
 
-struct GeoJSON: Decodable {
+struct ChannelsFeed: Decodable {
+
+    static let channelsURL = URL(string: "http://limehd.online/playlist/channels.json")!
 
     private enum RootCodingKeys: String, CodingKey {
         case channels
