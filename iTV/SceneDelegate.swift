@@ -8,9 +8,8 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-    var channelsProvider: ChannelsProvider?
+    var coreDataStack: CoreDataStack?
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
@@ -19,14 +18,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let networkProvider = NetworkProvider()
         let imageProvider = ImageProvider(with: networkProvider)
-        let channelsProvider = ChannelsProvider()
-        self.channelsProvider = channelsProvider
-        window?.rootViewController = HomeController(with: imageProvider, and: channelsProvider, and: networkProvider)
-        window?.makeKeyAndVisible()
+        do {
+            let coreDataStack = try CoreDataStack()
+            self.coreDataStack = coreDataStack
+            let channelsProvider = ChannelsProvider(with: coreDataStack)
+            window?.rootViewController = HomeController(with: imageProvider,
+                                                        and: channelsProvider,
+                                                        and: networkProvider)
+            window?.makeKeyAndVisible()
+        } catch {
+            let blankViewController = UIViewController()
+            window?.rootViewController = blankViewController
+            window?.makeKeyAndVisible()
+            blankViewController.showErrorMessage(error.localizedDescription)
+        }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        channelsProvider?.saveContext()
+        Task {
+            do {
+                try await coreDataStack?.saveContext()
+            } catch {
+                window?.rootViewController?.showErrorMessage(error.localizedDescription)
+            }
+        }
     }
 
 }

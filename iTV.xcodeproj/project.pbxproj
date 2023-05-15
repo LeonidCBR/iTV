@@ -19,6 +19,10 @@
 		D75AC1112931E18E00FFCBCB /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75AC1102931E18E00FFCBCB /* VideoViewController.swift */; };
 		D774910B293ED6F4002CE2D0 /* ChannelsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */; };
 		D785D9F3294988470011A79F /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D785D9F2294988470011A79F /* Channel.swift */; };
+<<<<<<< HEAD
+=======
+		D7937EC72A11C79900904E86 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7937EC62A11C79900904E86 /* CoreDataStack.swift */; };
+>>>>>>> core-data-stack
 		D7A7FFFF294C2E4F001AA01F /* ChannelsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A7FFFE294C2E4F001AA01F /* ChannelsFeed.swift */; };
 		D7E1E8732A0C7FB70006C463 /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8722A0C7FB70006C463 /* IntegrationTests.swift */; };
 		D7E1E87A2A0C80C30006C463 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */; };
@@ -74,6 +78,10 @@
 		D75AC1102931E18E00FFCBCB /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsProvider.swift; sourceTree = "<group>"; };
 		D785D9F2294988470011A79F /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
+		D7937EC62A11C79900904E86 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+>>>>>>> core-data-stack
 		D7A7FFFE294C2E4F001AA01F /* ChannelsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsFeed.swift; sourceTree = "<group>"; };
 		D7E1E8702A0C7FB70006C463 /* iTVIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTVIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7E1E8722A0C7FB70006C463 /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
@@ -130,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				D774910A293ED6F3002CE2D0 /* ChannelsProvider.swift */,
+				D7937EC62A11C79900904E86 /* CoreDataStack.swift */,
 				D70F2953292F2A0200AC5702 /* NetworkProvider.swift */,
 				D70F2959292F35A100AC5702 /* ImageProvider.swift */,
 			);
@@ -459,6 +468,7 @@
 				D7FA0F19292D9D3F00EEFD17 /* SceneDelegate.swift in Sources */,
 				D7FA0F21292D9D3F00EEFD17 /* iTV.xcdatamodeld in Sources */,
 				D774910B293ED6F4002CE2D0 /* ChannelsProvider.swift in Sources */,
+				D7937EC72A11C79900904E86 /* CoreDataStack.swift in Sources */,
 				D7FA0F2E292D9FDB00EEFD17 /* HomeController.swift in Sources */,
 				D7FA0F39292DADD500EEFD17 /* Extensions.swift in Sources */,
 				D73EC89A29347EEB00C71BAF /* MediaItem.swift in Sources */,
