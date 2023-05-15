@@ -23,7 +23,7 @@ import Foundation
  }
  */
 
-struct GeoJSON: Decodable {
+struct ChannelsFeed: Decodable {
 
     private enum RootCodingKeys: String, CodingKey {
         case channels
