@@ -39,7 +39,6 @@ class HomeController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        ChannelsProvider.shared.delegate = self
         channelsProvider.delegate = self
         configureUI()
         loadPersistentChannels()
@@ -53,7 +52,7 @@ class HomeController: UIViewController {
     }
 
     private func configureUI() {
-        view.backgroundColor = bgColor // K.bgColor
+        view.backgroundColor = bgColor
         configureSearchBar()
         configureFavoriteFilter()
         configureTableView()
@@ -61,8 +60,8 @@ class HomeController: UIViewController {
 
     private func configureSearchBar() {
         searchBar = UISearchBar()
-        searchBar.backgroundColor = bgColor // K.bgColor
-        searchBar.barTintColor = bgColor // K.bgColor
+        searchBar.backgroundColor = bgColor
+        searchBar.barTintColor = bgColor
         searchBar.tintColor = .white
         searchBar.searchTextField.textColor = .white
         searchBar.delegate = self
@@ -85,7 +84,7 @@ class HomeController: UIViewController {
 
     private func configureTableView() {
         tableView = UITableView()
-        tableView.backgroundColor = darkColor // K.dark
+        tableView.backgroundColor = darkColor
         tableView.register(ChannelCell.self, forCellReuseIdentifier: channelCell)
         view.addSubview(tableView)
         tableView.anchor(top: favoriteFilter.bottomAnchor,
@@ -156,44 +155,16 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         cell.delegate = self
         cell.clearLogoImage()
         cell.channel = channels[indexPath.row]
-
         let imagePath = channels[indexPath.row].image
         guard !imagePath.isEmpty else {
             print("DEBUG: ID[\(channels[indexPath.row].id)] image is nil or empty.")
             return cell
         }
-
-        /* Should we use something like that?
-
-         cell.imagePath = imagePath
-         cell.setLogoImage(to: channelImage)
-
-         struct ChannelImage {
-            let image: UIImage
-            let path: String
-         }
-
-         func setLogoImage(to channelImage: ChannelImage) {
-            if channelImage.path == imagePath {
-                logoImage.image = channelImage.image
-            }
-         }
-         */
-
         Task {
             if let image = try? await imageProvider.fetchImage(withPath: imagePath) {
                 cell.setLogoImage(to: image)
             }
         }
-//        imageManager.downloadImage(with: imagePath) { result, path in
-//            guard path == imagePath else {
-//                print("DEBUG: Image path mismatch")
-//                return
-//            }
-//            if case .success(let image) = result {
-//                cell.setLogoImage(to: image)
-//            }
-//        }
         return cell
     }
 
@@ -205,7 +176,6 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
      */
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
         // Check if "All" channels filter has been selected
         guard case .all = FavoriteFilterOption(rawValue: favoriteFilter.selectedSegmentIndex) else {
             /// Case 1.
@@ -213,14 +183,11 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             print("DEBUG: Delete channel from favorites")
             let channel = channels[indexPath.row]
             channel.isFavorite = false
-
             // TODO: Consider to remove the channel from the list and remove the row
-
-            channelsProvider.saveContext()
+            //channelsProvider.saveContext()
             loadPersistentChannels()
             return
         }
-
         /// Case 2.
         /// Present a video view controller
         let channel = channels[indexPath.row]
@@ -230,15 +197,6 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         }
         let channelProperties = ChannelProperties(from: channel)
         let videoViewController = VideoViewController(with: channelProperties, imageProvider: imageProvider)
-/*
-        if !channel.image.isEmpty {
-            imageManager.downloadImage(with: channel.image) { result, path in
-                if case .success(let image) = result {
-                    videoViewController.setLogoImage(to: image)
-                }
-            }
-        }
-*/
         videoViewController.modalPresentationStyle = .fullScreen
         present(videoViewController, animated: true)
     }
@@ -251,8 +209,7 @@ extension HomeController: ChannelCellDelegate {
     func favoriteChanged(cell: UITableViewCell, channel: Channel, isFavorite: Bool) {
         if let row = tableView.indexPath(for: cell)?.row {
             channels[row].isFavorite = isFavorite
-//            ChannelsProvider.shared.saveContext()
-            channelsProvider.saveContext()
+            //channelsProvider.saveContext()
         }
     }
 }
