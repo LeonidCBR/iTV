@@ -9,15 +9,6 @@ import XCTest
 @testable import iTV
 
 class ChannelsDecoderTests: XCTestCase {
-    var sut: ChannelsProvider!
-
-    override func setUp() {
-        sut = ChannelsProvider()
-    }
-
-    override func tearDown() {
-        sut = nil
-    }
 
     func testChannelsDecoder_WhenGivenValidData_ReturnChannelPropertiesList() throws {
         let bundle = Bundle(for: ChannelsDecoderTests.self)
