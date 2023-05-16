@@ -81,7 +81,7 @@ final class ChannelsProvider {
                 return
             }
             self.logger.debug("No persistent history transactions found.")
-            throw ChannelError.persistentHistoryChangeError
+            throw PersistentError.persistentHistoryChangeError
         }
         logger.debug("Finished merging history changes.")
     }
@@ -121,7 +121,7 @@ final class ChannelsProvider {
                 return
             }
             self.logger.debug("Failed to execute batch insert request.")
-            throw ChannelError.batchInsertError
+            throw PersistentError.batchInsertError
         }
         logger.debug("Successfully inserted data.")
     }

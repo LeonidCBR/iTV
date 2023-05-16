@@ -70,11 +70,11 @@ final class NetworkProviderTests: XCTestCase {
             XCTFail("A noResponse error should have been thrown but no error was thrown")
             return
         }
-        guard let channelError = didFailWithError as? ChannelError else {
+        guard let networkError = didFailWithError as? NetworkError else {
             XCTFail("An error type should be a ChannelError")
             return
         }
-        guard case .noResponse = channelError else {
+        guard case .noResponse = networkError else {
             XCTFail("A noResponse error should have been thrown but another error was thrown")
             return
         }
@@ -100,11 +100,11 @@ final class NetworkProviderTests: XCTestCase {
             XCTFail("A unauthorized error should have been thrown but no error was thrown")
             return
         }
-        guard let channelError = didFailWithError as? ChannelError else {
+        guard let networkError = didFailWithError as? NetworkError else {
             XCTFail("An error type should be a ChannelError")
             return
         }
-        guard case .unauthorized = channelError else {
+        guard case .unauthorized = networkError else {
             XCTFail("A unauthorized error should have been thrown but another error was thrown")
             return
         }
@@ -130,11 +130,11 @@ final class NetworkProviderTests: XCTestCase {
             XCTFail("An unhandled error should have been thrown but no error was thrown")
             return
         }
-        guard let channelError = didFailWithError as? ChannelError else {
+        guard let networkError = didFailWithError as? NetworkError else {
             XCTFail("An error type should be a ChannelError")
             return
         }
-        guard case let .unhandledError(statusCode) = channelError else {
+        guard case let .unhandledError(statusCode) = networkError else {
             XCTFail("An unhandled error should have been thrown but another error was thrown")
             return
         }

@@ -30,21 +30,21 @@ final class NetworkProvider {
         let (data, response) = try await urlSession.data(for: request)
         // Check response
         guard let httpResponse = response as? HTTPURLResponse else {
-            throw ChannelError.noResponse
+            throw NetworkError.noResponse
         }
         // Check status code
         let code = httpResponse.statusCode
         if !(200...299).contains(code) {
             if code == 401 {
-                throw ChannelError.unauthorized
+                throw NetworkError.unauthorized
             } else {
-                throw ChannelError.unhandledError(code)
+                throw NetworkError.unhandledError(code)
             }
         }
         // Check mime type
         guard let mimeType = httpResponse.mimeType,
               (mimeType == "application/json") || ( mimeType.hasPrefix("image") ) else {
-                  throw ChannelError.unexpectedData
+                  throw NetworkError.unexpectedData
               }
         return data
     }

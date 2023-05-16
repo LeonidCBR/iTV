@@ -32,7 +32,7 @@ final class ImageProvider {
         }
         // Check image path
         guard let imageUrl = URL(string: imagePath) else {
-            throw ChannelError.unexpectedURL
+            throw NetworkError.unexpectedURL
         }
         // Download image
         let imageData = try await networkProvider.downloadData(withUrl: imageUrl)
@@ -41,7 +41,7 @@ final class ImageProvider {
             cacheImages.setObject(image, forKey: imagePath as NSString)
             return image
         } else {
-            throw ChannelError.unexpectedData
+            throw NetworkError.unexpectedData
         }
     }
 

@@ -22,7 +22,7 @@ class CoreDataStack {
             storeContainer.persistentStoreDescriptions = [persistentStoreDescription]
         }
         guard let description = storeContainer.persistentStoreDescriptions.first else {
-            throw ChannelError.persistentStoreDescriptionError
+            throw PersistentError.persistentStoreDescriptionError
         }
         // Enable persistent store remote change notifications
         /// - Tag: persistentStoreRemoteChange
@@ -70,7 +70,7 @@ class CoreDataStack {
                 try await saveContext(mainContext)
             }
         } catch {
-            throw ChannelError.unexpectedError(error: error)
+            throw PersistentError.unexpectedError(error: error)
         }
     }
 
