@@ -61,27 +61,17 @@ class CoreDataStack {
     }
 
     public func saveContext(_ context: NSManagedObjectContext) async throws {
-        if context != mainContext {
-            try await saveDerivedContext(context)
-            return
-        }
         do {
             try await context.perform {
                 try context.save()
+            }
+            /// if the saved context was a derived one then save the main context
+            if context != mainContext {
+                try await saveContext(mainContext)
             }
         } catch {
             throw ChannelError.unexpectedError(error: error)
         }
     }
 
-    public func saveDerivedContext(_ context: NSManagedObjectContext) async throws {
-        do {
-            try await context.perform {
-                try context.save()
-            }
-            try await saveContext(mainContext)
-        } catch {
-            throw ChannelError.unexpectedError(error: error)
-        }
-    }
 }
