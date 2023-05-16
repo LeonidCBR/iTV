@@ -14,9 +14,9 @@ class CoreDataStack {
     /// Update fields by json values if the channel exists
     let defaultMergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
-    init(inMemory: Bool = false) throws {
+    init(isEphemeral: Bool = false) throws {
         storeContainer = NSPersistentContainer(name: "iTV")
-        if inMemory {
+        if isEphemeral {
             let persistentStoreDescription = NSPersistentStoreDescription()
             persistentStoreDescription.type = NSInMemoryStoreType
             storeContainer.persistentStoreDescriptions = [persistentStoreDescription]
