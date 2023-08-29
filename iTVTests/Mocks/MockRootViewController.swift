@@ -1,5 +1,5 @@
 //
-//  TestingRootViewController.swift
+//  MockRootViewController.swift
 //  iTVTests
 //
 //  Created by Яна Латышева on 17.12.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TestingRootViewController: UIViewController {
+class MockRootViewController: UIViewController {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
