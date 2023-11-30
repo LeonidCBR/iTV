@@ -9,6 +9,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
+/// Main view controller
 class HomeController: UIViewController {
     // MARK: - Properties
 

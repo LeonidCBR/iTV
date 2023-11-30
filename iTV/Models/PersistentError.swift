@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Persistent errors
 enum PersistentError: Error {
     case batchInsertError
     case persistentHistoryChangeError

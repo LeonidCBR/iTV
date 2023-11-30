@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A service provides network
 final class NetworkProvider {
     // MARK: - Properties
 

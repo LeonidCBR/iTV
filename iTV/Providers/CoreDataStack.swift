@@ -65,7 +65,7 @@ class CoreDataStack {
             try await context.perform {
                 try context.save()
             }
-            /// if the saved context was a derived one then save the main context
+            // if the saved context was a derived one then save the main context
             if context != mainContext {
                 try await saveContext(mainContext)
             }

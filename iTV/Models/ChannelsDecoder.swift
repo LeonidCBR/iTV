@@ -7,12 +7,13 @@
 
 import Foundation
 
+/// A decoder of JSON data into a data model
 struct ChannelsDecoder {
     let channelPropertiesList: [ChannelProperties]
 
     init(from data: Data) throws {
         do {
-            // Decode the JSON data into a data model.
+            // Decode the data and populate list of channels
             let jsonDecoder = JSONDecoder()
             jsonDecoder.dateDecodingStrategy = .secondsSince1970
             let channelsFeed = try jsonDecoder.decode(ChannelsFeed.self, from: data)

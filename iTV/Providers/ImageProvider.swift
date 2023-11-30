@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// A service provides images
 final class ImageProvider {
     // MARK: - Properties
 

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Decoding data errors
 enum ChannelError: Error {
     case missingData
     case wrongDataFormat(error: Error)

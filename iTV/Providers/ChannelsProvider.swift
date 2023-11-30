@@ -14,6 +14,7 @@ protocol ChannelsProviderDelegate: AnyObject {
     func didGetError(_ error: Error)
 }
 
+/// A service provides channels
 final class ChannelsProvider {
     // MARK: - Properties
 
@@ -32,7 +33,7 @@ final class ChannelsProvider {
 
     init(with coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
-        /// Observe Core Data remote change notifications on the queue where the changes were made.
+        // Observe Core Data remote change notifications on the queue where the changes were made.
         notificationToken = NotificationCenter.default.addObserver(
             forName: .NSPersistentStoreRemoteChange,
             object: nil, queue: nil,
@@ -46,7 +47,7 @@ final class ChannelsProvider {
                 }
             }
         })
-        /// Notify delegate in order to update UI
+        // Notify delegate in order to update UI
         notificationMergeToken = NotificationCenter.default.addObserver(
             forName: NSManagedObjectContext.didMergeChangesObjectIDsNotification,
             object: coreDataStack.mainContext, queue: .main) { /*notification*/ _ in
@@ -66,12 +67,12 @@ final class ChannelsProvider {
 
     // MARK: - Methods
 
+    /// Execute the persistent history change since the last transaction.
     private func fetchPersistentHistoryTransactionsAndChanges() async throws {
         let taskContext = coreDataStack.newDerivedContext()
         taskContext.name = "persistentHistoryContext"
         logger.debug("Start fetching persistent history changes from the store...")
         try await taskContext.perform {
-            // Execute the persistent history change since the last transaction.
             /// - Tag: fetchHistory
             let changeRequest = NSPersistentHistoryChangeRequest.fetchHistory(after: self.lastToken)
             let historyResult = try taskContext.execute(changeRequest) as? NSPersistentHistoryResult
@@ -129,7 +130,7 @@ final class ChannelsProvider {
     private func newBatchInsertRequest(with propertyList: [ChannelProperties]) -> NSBatchInsertRequest {
         var index = 0
         let total = propertyList.count
-        /// Provide one dictionary at a time when the closure is called.
+        // Provide one dictionary at a time when the closure is called.
         let batchInsertRequest = NSBatchInsertRequest(entity: Channel.entity(), dictionaryHandler: { dictionary in
             guard index < total else { return true }
             dictionary.addEntries(from: propertyList[index].dictionaryValue)
