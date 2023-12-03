@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Network errors
 enum NetworkError: Error {
     case noResponse
     case unauthorized

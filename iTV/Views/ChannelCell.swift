@@ -11,6 +11,7 @@ protocol ChannelCellDelegate: AnyObject {
     func favoriteChanged(cell: UITableViewCell, channel: Channel, isFavorite: Bool)
 }
 
+/// A view represents information of the particular `Channel`
 class ChannelCell: UITableViewCell {
     // MARK: - Properties
 
@@ -46,8 +47,10 @@ class ChannelCell: UITableViewCell {
         return btn
     }()
 
+    /// A delegate will be notified of updated state of the `Channel`
     weak var delegate: ChannelCellDelegate?
 
+    /// A data model
     var channel: Channel? {
         didSet {
             updateUI()

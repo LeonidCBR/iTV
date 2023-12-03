@@ -7,25 +7,11 @@
 
 import Foundation
 
-/** JSON feed **
- {
-     "channels": [
-         {
-             "id": 10180,
-             "name_ru": "Матч! Премьер",
-             "url": "",
-             "image": "https://assets.iptv2022.com/static/channel/10180/logo_256_1658736853.png",
-             "current": {
-                 "title": "Fonbet Кубок России. \"Урал\" - ЦСКА",
-             },
-         }
-     ]
- }
- */
-
+/// Data with channels content will be decoded into the ChannelsFeed
 struct ChannelsFeed: Decodable {
 
-    static let channelsURL = URL(string: "http://limehd.online/playlist/channels.json")!
+    /// URL of the data with channels content
+    static let channelsURL = URL(string: "http://www.motodolphin.com/channels.json")!
 
     private enum RootCodingKeys: String, CodingKey {
         case channels
@@ -44,3 +30,19 @@ struct ChannelsFeed: Decodable {
         }
     }
 }
+
+/* JSON feed
+ {
+     "channels": [
+         {
+             "id": 10180,
+             "name_ru": "Матч! Премьер",
+             "url": "",
+             "image": "https://assets.iptv2022.com/static/channel/10180/logo_256_1658736853.png",
+             "current": {
+                 "title": "Fonbet Кубок России. \"Урал\" - ЦСКА",
+             },
+         }
+     ]
+ }
+*/

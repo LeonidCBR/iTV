@@ -1,5 +1,5 @@
 //
-//  TestingAppDelegate.swift
+//  MockAppDelegate.swift
 //  iTVTests
 //
 //  Created by Яна Латышева on 17.12.2022.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-@objc(TestingAppDelegate)
-class TestingAppDelegate: UIResponder, UIApplicationDelegate {
+@objc(MockAppDelegate)
+class MockAppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -29,7 +29,7 @@ class TestingAppDelegate: UIResponder, UIApplicationDelegate {
          Just set "Delegate Class Name" = ""
          */
         let sceneConfiguration = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
-        sceneConfiguration.delegateClass = TestingSceneDelegate.self
+        sceneConfiguration.delegateClass = MockSceneDelegate.self
         sceneConfiguration.storyboard = nil
         return sceneConfiguration
     }

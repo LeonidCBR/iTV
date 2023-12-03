@@ -25,17 +25,17 @@
 		D7937EC72A11C79900904E86 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7937EC62A11C79900904E86 /* CoreDataStack.swift */; };
 		D7A7FFFF294C2E4F001AA01F /* ChannelsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A7FFFE294C2E4F001AA01F /* ChannelsFeed.swift */; };
 		D7E1E8732A0C7FB70006C463 /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8722A0C7FB70006C463 /* IntegrationTests.swift */; };
-		D7E1E87A2A0C80C30006C463 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */; };
-		D7E1E87D2A0C80E90006C463 /* TestingSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E87C2A0C80E90006C463 /* TestingSceneDelegate.swift */; };
-		D7E1E87F2A0C80F50006C463 /* TestingRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E87E2A0C80F50006C463 /* TestingRootViewController.swift */; };
+		D7E1E87A2A0C80C30006C463 /* MockAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8792A0C80C30006C463 /* MockAppDelegate.swift */; };
+		D7E1E87D2A0C80E90006C463 /* MockSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E87C2A0C80E90006C463 /* MockSceneDelegate.swift */; };
+		D7E1E87F2A0C80F50006C463 /* MockRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E87E2A0C80F50006C463 /* MockRootViewController.swift */; };
 		D7E1E8822A0CCA930006C463 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8812A0CCA930006C463 /* MockURLProtocol.swift */; };
 		D7E1E8842A0CCBD50006C463 /* NetworkProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8832A0CCBD50006C463 /* NetworkProviderTests.swift */; };
 		D7E1E8862A0E01C50006C463 /* ChannelsDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1E8852A0E01C50006C463 /* ChannelsDecoder.swift */; };
 		D7E965A8294D936F009ABB77 /* channels.json in Resources */ = {isa = PBXBuildFile; fileRef = D7E965A7294D936F009ABB77 /* channels.json */; };
-		D7E965AA294D9FD2009ABB77 /* TestingSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965A9294D9FD2009ABB77 /* TestingSceneDelegate.swift */; };
-		D7E965AC294D9FEA009ABB77 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965AB294D9FEA009ABB77 /* TestingAppDelegate.swift */; };
+		D7E965AA294D9FD2009ABB77 /* MockSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965A9294D9FD2009ABB77 /* MockSceneDelegate.swift */; };
+		D7E965AC294D9FEA009ABB77 /* MockAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965AB294D9FEA009ABB77 /* MockAppDelegate.swift */; };
 		D7E965AE294DA0D5009ABB77 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965AD294DA0D5009ABB77 /* main.swift */; };
-		D7E965B0294DA276009ABB77 /* TestingRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965AF294DA276009ABB77 /* TestingRootViewController.swift */; };
+		D7E965B0294DA276009ABB77 /* MockRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E965AF294DA276009ABB77 /* MockRootViewController.swift */; };
 		D7FA0F17292D9D3F00EEFD17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */; };
 		D7FA0F19292D9D3F00EEFD17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */; };
 		D7FA0F21292D9D3F00EEFD17 /* iTV.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D7FA0F1F292D9D3F00EEFD17 /* iTV.xcdatamodeld */; };
@@ -85,17 +85,17 @@
 		D7A7FFFE294C2E4F001AA01F /* ChannelsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsFeed.swift; sourceTree = "<group>"; };
 		D7E1E8702A0C7FB70006C463 /* iTVIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTVIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7E1E8722A0C7FB70006C463 /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
-		D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
-		D7E1E87C2A0C80E90006C463 /* TestingSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSceneDelegate.swift; sourceTree = "<group>"; };
-		D7E1E87E2A0C80F50006C463 /* TestingRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingRootViewController.swift; sourceTree = "<group>"; };
+		D7E1E8792A0C80C30006C463 /* MockAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppDelegate.swift; sourceTree = "<group>"; };
+		D7E1E87C2A0C80E90006C463 /* MockSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSceneDelegate.swift; sourceTree = "<group>"; };
+		D7E1E87E2A0C80F50006C463 /* MockRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRootViewController.swift; sourceTree = "<group>"; };
 		D7E1E8812A0CCA930006C463 /* MockURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		D7E1E8832A0CCBD50006C463 /* NetworkProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProviderTests.swift; sourceTree = "<group>"; };
 		D7E1E8852A0E01C50006C463 /* ChannelsDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsDecoder.swift; sourceTree = "<group>"; };
 		D7E965A7294D936F009ABB77 /* channels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = channels.json; sourceTree = "<group>"; };
-		D7E965A9294D9FD2009ABB77 /* TestingSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSceneDelegate.swift; sourceTree = "<group>"; };
-		D7E965AB294D9FEA009ABB77 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
+		D7E965A9294D9FD2009ABB77 /* MockSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSceneDelegate.swift; sourceTree = "<group>"; };
+		D7E965AB294D9FEA009ABB77 /* MockAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppDelegate.swift; sourceTree = "<group>"; };
 		D7E965AD294DA0D5009ABB77 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		D7E965AF294DA276009ABB77 /* TestingRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingRootViewController.swift; sourceTree = "<group>"; };
+		D7E965AF294DA276009ABB77 /* MockRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRootViewController.swift; sourceTree = "<group>"; };
 		D7FA0F13292D9D3F00EEFD17 /* iTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -170,9 +170,9 @@
 		D70F4037294D8F35003CB566 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				D7E965AB294D9FEA009ABB77 /* TestingAppDelegate.swift */,
-				D7E965A9294D9FD2009ABB77 /* TestingSceneDelegate.swift */,
-				D7E965AF294DA276009ABB77 /* TestingRootViewController.swift */,
+				D7E965AB294D9FEA009ABB77 /* MockAppDelegate.swift */,
+				D7E965A9294D9FD2009ABB77 /* MockSceneDelegate.swift */,
+				D7E965AF294DA276009ABB77 /* MockRootViewController.swift */,
 				D7E1E8812A0CCA930006C463 /* MockURLProtocol.swift */,
 				D7E965A7294D936F009ABB77 /* channels.json */,
 			);
@@ -191,9 +191,9 @@
 		D7E1E87B2A0C80CD0006C463 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				D7E1E8792A0C80C30006C463 /* TestingAppDelegate.swift */,
-				D7E1E87C2A0C80E90006C463 /* TestingSceneDelegate.swift */,
-				D7E1E87E2A0C80F50006C463 /* TestingRootViewController.swift */,
+				D7E1E8792A0C80C30006C463 /* MockAppDelegate.swift */,
+				D7E1E87C2A0C80E90006C463 /* MockSceneDelegate.swift */,
+				D7E1E87E2A0C80F50006C463 /* MockRootViewController.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -343,7 +343,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					D70F402B294D8287003CB566 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -430,13 +430,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7E965AC294D9FEA009ABB77 /* TestingAppDelegate.swift in Sources */,
+				D7E965AC294D9FEA009ABB77 /* MockAppDelegate.swift in Sources */,
 				D7E1E8842A0CCBD50006C463 /* NetworkProviderTests.swift in Sources */,
 				D71FEE192A1311D700D3D7F2 /* ChannelsProviderTests.swift in Sources */,
-				D7E965AA294D9FD2009ABB77 /* TestingSceneDelegate.swift in Sources */,
+				D7E965AA294D9FD2009ABB77 /* MockSceneDelegate.swift in Sources */,
 				D7E1E8822A0CCA930006C463 /* MockURLProtocol.swift in Sources */,
 				D70F4036294D8524003CB566 /* ChannelsDecoderTests.swift in Sources */,
-				D7E965B0294DA276009ABB77 /* TestingRootViewController.swift in Sources */,
+				D7E965B0294DA276009ABB77 /* MockRootViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,10 +444,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7E1E87D2A0C80E90006C463 /* TestingSceneDelegate.swift in Sources */,
+				D7E1E87D2A0C80E90006C463 /* MockSceneDelegate.swift in Sources */,
 				D7E1E8732A0C7FB70006C463 /* IntegrationTests.swift in Sources */,
-				D7E1E87A2A0C80C30006C463 /* TestingAppDelegate.swift in Sources */,
-				D7E1E87F2A0C80F50006C463 /* TestingRootViewController.swift in Sources */,
+				D7E1E87A2A0C80C30006C463 /* MockAppDelegate.swift in Sources */,
+				D7E1E87F2A0C80F50006C463 /* MockRootViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +552,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 973295K87L;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -575,6 +576,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 973295K87L;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -628,6 +630,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -690,6 +693,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

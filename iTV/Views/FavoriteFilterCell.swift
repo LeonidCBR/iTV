@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// A view represents the option
 class FavoriteFilterCell: UICollectionViewCell {
     // MARK: - Properties
 

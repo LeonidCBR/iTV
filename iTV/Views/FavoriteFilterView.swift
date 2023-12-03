@@ -11,6 +11,7 @@ protocol FavoriteFilterViewDelegate: AnyObject {
     func filterValueChanged()
 }
 
+/// A view represents filter's options
 class FavoriteFilterView: UIView {
 
     private lazy var collectionView: UICollectionView = {

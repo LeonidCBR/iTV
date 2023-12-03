@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 
+/// A custom video player
 class VideoViewController: UIViewController {
     // MARK: - Properties
 
