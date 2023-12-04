@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// TV channel structure that will be analyzed from json data
 struct ChannelProperties: Decodable {
 
     private enum CodingKeys: String, CodingKey {

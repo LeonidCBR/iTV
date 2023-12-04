@@ -8,5 +8,6 @@ iTV is an iOS app that allows users to watch TV content from streaming services.
 
 ### Features
 
-- Discover and watch various TV content.
+- Fetching a list of TV channels from network API.
+- Batch inserts to Core Data persistent storage using ``NSBatchInsertRequest``.
 - Pin your favorite channels.
