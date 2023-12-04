@@ -65,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B840990D2B19CEBD008C44F5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D70F2953292F2A0200AC5702 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		D70F2955292F2A7100AC5702 /* ChannelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelError.swift; sourceTree = "<group>"; };
 		D70F2957292F2BE200AC5702 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -201,6 +202,7 @@
 		D7FA0F0A292D9D3F00EEFD17 = {
 			isa = PBXGroup;
 			children = (
+				B840990D2B19CEBD008C44F5 /* README.md */,
 				D7FA0F15292D9D3F00EEFD17 /* iTV */,
 				D70F402D294D8287003CB566 /* iTVTests */,
 				D7E1E8712A0C7FB70006C463 /* iTVIntegrationTests */,
