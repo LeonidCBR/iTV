@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B840990F2B1EB166008C44F5 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = B840990E2B1EB166008C44F5 /* Documentation.docc */; };
 		D70F2954292F2A0300AC5702 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2953292F2A0200AC5702 /* NetworkProvider.swift */; };
 		D70F2956292F2A7100AC5702 /* ChannelError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2955292F2A7100AC5702 /* ChannelError.swift */; };
 		D70F2958292F2BE200AC5702 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F2957292F2BE200AC5702 /* Constants.swift */; };
@@ -66,6 +67,7 @@
 
 /* Begin PBXFileReference section */
 		B840990D2B19CEBD008C44F5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B840990E2B1EB166008C44F5 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		D70F2953292F2A0200AC5702 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		D70F2955292F2A7100AC5702 /* ChannelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelError.swift; sourceTree = "<group>"; };
 		D70F2957292F2BE200AC5702 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				D7E965AD294DA0D5009ABB77 /* main.swift */,
 				D7FA0F16292D9D3F00EEFD17 /* AppDelegate.swift */,
 				D7FA0F18292D9D3F00EEFD17 /* SceneDelegate.swift */,
+				B840990E2B1EB166008C44F5 /* Documentation.docc */,
 			);
 			path = iTV;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				D7FA0F17292D9D3F00EEFD17 /* AppDelegate.swift in Sources */,
 				D7399AEE293387DE00825C60 /* FavoriteFilterView.swift in Sources */,
 				D71FEE1B2A13330A00D3D7F2 /* NetworkError.swift in Sources */,
+				B840990F2B1EB166008C44F5 /* Documentation.docc in Sources */,
 				D785D9F3294988470011A79F /* Channel.swift in Sources */,
 				D70F2958292F2BE200AC5702 /* Constants.swift in Sources */,
 				D7A7FFFF294C2E4F001AA01F /* ChannelsFeed.swift in Sources */,
