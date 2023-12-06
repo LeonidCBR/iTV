@@ -14,8 +14,8 @@ iTV is an iOS app that allows users to watch TV content from streaming services.
 
 <table>
 <tr>
-<td><img src="docs/images/screenshot@3x.png" width=270></td>
-<td><img src="docs/images/screenshot2@3x.png" width=270></td>
+<td><img src="docs/images/screenshot@3x.png" width="40%"></td>
+<td><img src="docs/images/screenshot2@3x.png" width="40%"></td>
 </tr>
 </table>
 
