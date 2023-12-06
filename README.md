@@ -12,9 +12,17 @@ iTV is an iOS app that allows users to watch TV content from streaming services.
 - Batch inserts to Core Data persistent storage using ``NSBatchInsertRequest``.
 - Pin your favorite channels.
 
- | 
- :---:|:---:
+<table>
+<tr>
+<td><img src="docs/images/screenshot@3x.png" width=270></td>
+<td><img src="docs/images/screenshot2@3x.png" width=270></td>
+</tr>
+</table>
+
+label 1 | label 2
+--- | ---
 ![An illustration displaying the UI for discovering of channels.](docs/images/screenshot@3x.png) | ![An illustration displaying the UI of favorite chammels.](docs/images/screenshot2@3x.png)
+
 
 ### Documentation
 
