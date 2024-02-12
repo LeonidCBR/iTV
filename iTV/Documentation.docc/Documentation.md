@@ -22,6 +22,12 @@ iTV is an iOS app that allows users to watch TV content from streaming services.
     }
 }
 
+@Row {
+    @Column {
+        ![An illustration displaying the UI of the player.](screenshot3.png)    
+    }
+}
+
 ## Topics
 
 ### Essentials
